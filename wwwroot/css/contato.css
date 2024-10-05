@@ -1,0 +1,99 @@
+body {
+    background-color: #f4f4f4; /* Cor de fundo suave */
+    font-family: 'IBM Plex Sans', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Usar mais espaço horizontal */
+    gap: 40px; /* Espaço entre as colunas */
+    max-width: 1200px; /* Definir uma largura máxima */
+    margin: 0 auto; /* Centralizar o container */
+    flex-direction: column;
+}
+
+.contact-info, .contact-form {
+    background-color: #ffffff; /* Fundo branco para as seções */
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    width: 100%; /* Ocupar toda a largura disponível */
+    position: relative;
+}
+
+.contact-info {
+    flex: 1; /* Fazer as colunas ocuparem a mesma largura */
+}
+
+.contact-form {
+    flex: 1; /* Fazer as colunas ocuparem a mesma largura */
+}
+
+    /* Estilo do quadrado que destaca as seções */
+    .contact-info::before,
+    .contact-form::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        left: -30px;
+        right: -30px;
+        bottom: -20px;
+        background-color: rgba(110, 63, 255, 0.1); /* Cor de fundo suave para o destaque */
+        border-radius: 10px;
+        z-index: -1;
+    }
+
+h2 {
+    background: linear-gradient(90deg, #6f2c91, #a463c8); /* Gradiente roxo */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    font-size: 2rem; /* Aumentar o tamanho da fonte */
+}
+
+.form-label {
+    font-weight: bold;
+    color: #6f2c91; /* Cor do rótulo */
+}
+
+input, textarea {
+    width: 100%; /* Ocupar toda a largura */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 1rem; /* Tamanho da fonte */
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn-primary {
+    background-color: #6f2c91; /* Cor do botão */
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #5b2275; /* Cor do botão ao passar o mouse */
+        transform: translateY(-2px); /* Efeito de elevação */
+    }
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .contact-info, .contact-form {
+        width: 100%; /* Ocupar toda a largura da tela em dispositivos móveis */
+        margin-bottom: 20px;
+    }
+}

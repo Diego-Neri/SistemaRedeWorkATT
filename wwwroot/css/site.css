@@ -1,0 +1,50 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px; /* Espaço para o footer */
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; /* Garantir que o corpo preencha a tela */
+}
+
+main {
+    flex-grow: 1; /* Força o conteúdo a crescer para empurrar o footer para baixo */
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Transições suaves nos links da navbar e dropdowns */
+.navbar-nav .nav-link, .navbar-nav .dropdown-toggle {
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+    .navbar-nav .nav-link:hover, .navbar-nav .dropdown-toggle:hover {
+        color: #007bff; /* Cor do texto ao passar o mouse */
+    }
+
+.navbar-toggler {
+    transition: background-color 0.3s ease;
+}
+
+    .navbar-toggler:hover {
+        background-color: #f8f9fa; /* Efeito hover no botão de menu */
+    }
+
+footer {
+    background-color: #1c2331;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+}

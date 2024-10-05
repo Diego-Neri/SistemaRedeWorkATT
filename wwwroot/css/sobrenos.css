@@ -1,0 +1,98 @@
+/* Estilos para a seção principal */
+.main-section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+    .main-section h1 {
+        font-size: 2.5em;
+        color: #333;
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
+
+    .main-section p {
+        font-size: 1.2em;
+        color: #666;
+        max-width: 800px;
+        margin: 0 auto 40px;
+    }
+
+.highlight {
+    color: #a463c8; /* Cor roxa */
+    font-weight: bold;
+}
+
+.main-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 50%;
+    margin-top: 20px;
+}
+
+/* Seção sobre o que fazemos */
+.section-what-we-do {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+    .section-what-we-do h2 {
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .section-what-we-do p {
+        font-size: 1.1em;
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+/* Estilos para a seção de valores em formato de cards */
+.section-values {
+    padding: 50px 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+    .section-values h2 {
+        font-size: 2.2em;
+        color: #333;
+        margin-bottom: 40px;
+    }
+
+.values-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px; /* Espaçamento entre os cards */
+}
+
+.value-card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.3s ease;
+    text-align: left;
+}
+
+    .value-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .value-card h3 {
+        color: #a463c8; /* Cor roxa */
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .value-card p {
+        color: #666;
+        font-size: 1em;
+        line-height: 1.6;
+    }
