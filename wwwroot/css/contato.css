@@ -1,99 +1,150 @@
+/* Variáveis para as cores */
+:root {
+    --primary-color: #6f2c91;
+    --secondary-color: #a463c8;
+    --background-color: #f4f4f4;
+    --text-color: #6f2c91;
+    --white: #ffffff;
+    --highlight-bg: rgba(110, 63, 255, 0.1);
+    --btn-hover-color: #5b2275;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --border-color: #ddd;
+    --input-focus-color: rgba(110, 63, 255, 0.4);
+}
+
 body {
-    background-color: #f4f4f4; /* Cor de fundo suave */
+    background-color: var(--background-color);
     font-family: 'IBM Plex Sans', sans-serif;
     margin: 0;
     padding: 20px;
+    color: #333;
+    line-height: 1.6; /* Melhor legibilidade */
 }
 
+/* Container Principal */
 .container {
     display: flex;
-    justify-content: center; /* Usar mais espaço horizontal */
-    gap: 40px; /* Espaço entre as colunas */
-    max-width: 1200px; /* Definir uma largura máxima */
-    margin: 0 auto; /* Centralizar o container */
+    justify-content: center;
     flex-direction: column;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    transition: all 0.5s ease; /* Transição para mudanças sutis */
 }
 
+/* Estilização das Seções */
 .contact-info, .contact-form {
-    background-color: #ffffff; /* Fundo branco para as seções */
-    border-radius: 10px;
+    background-color: var(--white);
+    border-radius: 12px; /* Cantos ligeiramente mais arredondados */
     padding: 40px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px var(--shadow-color); /* Sombra mais sutil */
     margin-bottom: 40px;
-    width: 100%; /* Ocupar toda a largura disponível */
     position: relative;
+    overflow: hidden; /* Para garantir que os efeitos visuais fiquem dentro dos limites */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.contact-info {
-    flex: 1; /* Fazer as colunas ocuparem a mesma largura */
-}
-
-.contact-form {
-    flex: 1; /* Fazer as colunas ocuparem a mesma largura */
-}
-
-    /* Estilo do quadrado que destaca as seções */
-    .contact-info::before,
-    .contact-form::before {
-        content: "";
-        position: absolute;
-        top: -20px;
-        left: -30px;
-        right: -30px;
-        bottom: -20px;
-        background-color: rgba(110, 63, 255, 0.1); /* Cor de fundo suave para o destaque */
-        border-radius: 10px;
-        z-index: -1;
+    /* Efeito ao passar o mouse */
+    .contact-info:hover, .contact-form:hover {
+        transform: translateY(-5px); /* Elevar um pouco ao hover */
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15); /* Efeito de sombra mais forte */
     }
 
+    /* Fundo de Destaque */
+    .contact-info::before, .contact-form::before {
+        content: "";
+        position: absolute;
+        top: -25px;
+        left: -35px;
+        right: -35px;
+        bottom: -25px;
+        background-color: var(--highlight-bg);
+        border-radius: 12px;
+        z-index: -1;
+        transition: all 0.3s ease;
+    }
+
+/* H2 Estilizado com Gradiente */
 h2 {
-    background: linear-gradient(90deg, #6f2c91, #a463c8); /* Gradiente roxo */
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
-    font-size: 2rem; /* Aumentar o tamanho da fonte */
+    font-size: 2.5rem; /* Tamanho da fonte um pouco maior */
+    font-weight: 700; /* Deixar mais grosso */
+    letter-spacing: 1px; /* Espaçamento entre letras */
+    text-transform: uppercase; /* Letras maiúsculas para maior impacto */
 }
 
+/* Rótulos dos Formulários */
 .form-label {
     font-weight: bold;
-    color: #6f2c91; /* Cor do rótulo */
+    color: var(--text-color);
+    font-size: 1.1rem; /* Um pouco maior para legibilidade */
+    margin-bottom: 8px;
+    display: block;
 }
 
+/* Inputs e Textareas */
 input, textarea {
-    width: 100%; /* Ocupar toda a largura */
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
     margin-bottom: 20px;
-    font-size: 1rem; /* Tamanho da fonte */
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
 }
 
-textarea {
-    resize: vertical;
-}
+    /* Foco nos Inputs */
+    input:focus, textarea:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 8px var(--input-focus-color); /* Destaque suave ao foco */
+    }
 
+/* Botão Principal */
 .btn-primary {
-    background-color: #6f2c91; /* Cor do botão */
+    background-color: var(--primary-color);
     border: none;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+    /* Efeito ao passar o mouse no botão */
     .btn-primary:hover {
-        background-color: #5b2275; /* Cor do botão ao passar o mouse */
-        transform: translateY(-2px); /* Efeito de elevação */
+        background-color: var(--btn-hover-color);
+        transform: translateY(-3px); /* Elevar ao passar o mouse */
     }
 
+/* Ajustes de Responsividade */
 @media (max-width: 768px) {
     .container {
-        flex-direction: column;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 2rem; /* Reduzir tamanho da fonte em telas menores */
     }
 
     .contact-info, .contact-form {
-        width: 100%; /* Ocupar toda a largura da tela em dispositivos móveis */
         margin-bottom: 20px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px; /* Aumentar um pouco o limite em telas grandes */
+    }
+
+    h2 {
+        font-size: 2rem; /* Título maior em telas grandes */
     }
 }
