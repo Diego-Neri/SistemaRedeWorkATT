@@ -1,50 +1,57 @@
-html {
-    font-size: 14px;
-    position: relative;
-    min-height: 100%;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-body {
-    margin-bottom: 60px; /* Espaço para o footer */
+/* Estilo para a navbar */
+.navbar {
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: background-color 0.3s ease-in-out;
     display: flex;
-    flex-direction: column;
-    min-height: 100%; /* Garantir que o corpo preencha a tela */
+    justify-content: space-between;
+    align-items: center;
 }
 
-main {
-    flex-grow: 1; /* Força o conteúdo a crescer para empurrar o footer para baixo */
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-/* Transições suaves nos links da navbar e dropdowns */
-.navbar-nav .nav-link, .navbar-nav .dropdown-toggle {
-    transition: color 0.3s ease, background-color 0.3s ease;
-}
-
-    .navbar-nav .nav-link:hover, .navbar-nav .dropdown-toggle:hover {
-        color: #007bff; /* Cor do texto ao passar o mouse */
+    .navbar-brand img.logo {
+        height: 40px;
+        max-width: 100%;
     }
 
-.navbar-toggler {
-    transition: background-color 0.3s ease;
-}
-
-    .navbar-toggler:hover {
-        background-color: #f8f9fa; /* Efeito hover no botão de menu */
+    /* Cor do link e efeito ao passar o mouse */
+    .nav-link {
+        color: #333;
+        font-weight: 500;
+        transition: color 0.2s ease;
     }
+
+        .nav-link:hover {
+            color: #00BFFF; /* Cor azul clara ao passar o mouse */
+            text-decoration: underline; /* Adiciona sublinhado */
+        }
+
+    /* Dropdown estilo minimalista */
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown-item {
+        transition: background-color 0.2s ease;
+    }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa; /* Efeito de destaque ao passar o mouse */
+        }
+
+    /* Estilo para o botão de menu em dispositivos menores */
+    .navbar-toggler {
+        border: none;
+        outline: none;
+    }
+
+.navbar-toggler-icon {
+    filter:
+}
 
 footer {
-    background-color: #1c2331;
-    padding: 10px 0;
+    background-color: #4b0082; /* Cor do rodapé */
+    width: 100%; /* Largura total */
     position: relative;
-    width: 100%;
+    bottom: 0;
+    left: 0;
 }
