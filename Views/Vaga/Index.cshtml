@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="@Url.Content("~/css/vagas.css")" />
+</head>
+<body>
+   
+            <div class="ferr">
+                <button class="teste">
+                    <img class="Um" src="@Url.Content("~/Content/Img/bolsa.png")" alt="" />
+                </button>
+                <button class="teste">
+                    <img class="Dois" src="@Url.Content("~/Content/Img/homi.png")" alt="" />
+                </button>
+                <button class="teste">
+                    <img class="Tres" src="@Url.Content("~/Content/Img/traco.png")" alt="" />
+                </button>
+            </div>
+       
+  
+
+    <main>
+        <div class="Sobre">
+            <h2>Resumo da Vaga</h2>
+            <button class="verMais">
+                <a href="@Url.Action("DescVaga", "Home")">Ver Mais</a>
+            </button>
+        </div>
+        <div class="Sobre">
+            <h2>Resumo da Vaga</h2>
+            <button class="verMais">
+                <a href="@Url.Action("DescVaga", "Home")">Ver Mais</a>
+            </button>
+        </div>
+        <div class="Sobre">
+            <h2>Resumo da Vaga</h2>
+            <button class="verMais">
+                <a href="@Url.Action("DescVaga", "Home")">Ver Mais</a>
+            </button>
+        </div>
+    </main>
+</body>
+</html>
