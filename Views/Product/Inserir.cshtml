@@ -1,0 +1,25 @@
+﻿@model SistemaRedeWork.Models.ProductModel
+
+<h2>Inserir Produto</h2>
+
+<form asp-controller="Product" asp-action="Inserir" method="post">
+    <div class="form-group">
+        <label for="Nome">Nome do Produto</label>
+        <input type="text" asp-for="Nome" class="form-control" placeholder="Nome do produto" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Preco">Preço</label>
+        <input type="number" asp-for="Preco" class="form-control" placeholder="Preço" step="0.01" />
+        <span asp-validation-for="Preco" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Descricao">Descrição</label>
+        <textarea asp-for="Descricao" class="form-control" placeholder="Descrição do produto"></textarea>
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Inserir Produto</button>
+</form>
