@@ -1,16 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SistemaRedeWork.Data;
 using SistemaRedeWork.Models;
 using System.Diagnostics;
 
 namespace SistemaRedeWork.Controllers {
     public class HomeController : Controller {
-        private readonly ILogger<HomeController> _logger;
+        private readonly BancoContext _context;
 
-        public HomeController(ILogger<HomeController> logger) {
-            _logger = logger;
+        public HomeController(BancoContext context) {
+            _context = context;
         }
 
         public IActionResult Index() {
+            var usuarios = _context.Usuarios.ToList(); // "Usuarios" é o DbSet na classe BancoContext
+
+            if (usuarios != null) {
+                ViewData["Message"] = $"Conexão bem-sucedida! Número de usuários: {usuarios.Count}";
+            } else {
+                ViewData["Message"] = "Falha na conexão com o banco de dados.";
+            }
             return View();
         }
 
