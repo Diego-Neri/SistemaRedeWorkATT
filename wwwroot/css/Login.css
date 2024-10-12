@@ -1,0 +1,108 @@
+﻿
+body {
+    background: linear-gradient(180deg, #4B0082 0%, #2B014C 100%);
+    color: #ffffff;
+    /*height: 100vh;*/
+   /* display: flex;*/
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+
+.container-login {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    height: 100vh;
+    padding: 0;
+}
+
+.info-box {
+    flex: 1;
+    margin-right: 50px;
+    display: flex;
+    align-items: center;
+}
+
+    .info-box h4 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #FFFFFF;
+        max-width: 500px;
+    }
+
+.login-box {
+    background-color: #1e1a32;
+    padding: 40px;
+    border-radius: 10px;
+    width: 350px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .login-box h4 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #FFFFFF;
+        text-align: center;
+    }
+
+    .login-box input {
+        background-color: #3d3557;
+        color: #ffffff;
+        border: none;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .login-box button {
+        background-color: #00ff00;
+        color: #000;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .login-box button:hover {
+            background-color: #00cc00;
+        }
+
+    .login-box a {
+        color: #00ff00;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+
+.info-box, .login-box {
+    color: #ffffff;
+}
+
+    /* Estilo para o botão "Voltar" dentro do login-box */
+    .login-box .btn-voltar {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background-color: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 18px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+
