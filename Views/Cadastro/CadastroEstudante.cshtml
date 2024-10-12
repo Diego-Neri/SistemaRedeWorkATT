@@ -1,10 +1,12 @@
-﻿﻿@{
+﻿@{
     ViewData["Title"] = "Cadastro - Estudante";
 }
 <link rel="stylesheet" href="~/css/CadastroEstudante.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,194 +16,288 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
 </head>
-<body>
-    
-    <div class="informacoes">
-        <h2>DADOS DO ESTUDANTE</h2>
-            <p>Segurança e Confidencialidade<br>A RedeWork garante a segurança e a confidencialidade de todos os dados pessoais introduzidos em meu cadastro.</p>
 
-    </div>
-    <main>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-center" style="color:#5D2CE7;">DADOS DO ESTUDANTE</h2>
+        <p class="text-center">Segurança e Confidencialidade<br>A RedeWork garante a segurança e a confidencialidade de todos os dados pessoais introduzidos em meu cadastro.</p>
+
         <form>
-            <section class="dados-pessoais">
-                
-                <label for="nome">NOME*</label>
-                <input type="text" id="nome" required>
-
-                <label for="sobrenome">SOBRENOME*</label>
-                <input type="text" id="sobrenome" required>
-
-                <label for="cpf">CPF*</label>
-                <input type="text" id="cpf" required>
-
-                <label for="telefone">TELEFONE*</label>
-                <input type="text" id="telefone" required>
-
-                <label for="rua">RUA*</label>
-                <input type="text" id="rua" required>
-
-                <label for="numero">NÚMERO*</label>
-                <input type="text" id="numero" required>
-
-                <label for="cidade">CIDADE*</label>
-                <select id="cidade" required>
-                    <option value="">Selecione</option>
-                    <option value="sao-paulo">São Paulo</option>
-                    <option value="rio-de-janeiro">Rio de Janeiro</option>
-                    <option value="belo-horizonte">Belo Horizonte</option>
-                    <option value="porto-alegre">Porto Alegre</option>
-                    <option value="curitiba">Curitiba</option>
-                    <option value="salvador">Salvador</option>
-                    <option value="recife">Recife</option>
-                    <option value="fortaleza">Fortaleza</option>
-                    <option value="brasilia">Brasília</option>
-                    <option value="natal">Natal</option>
-                </select>
-
-                <label for="estado">ESTADO*</label>
-                <select id="estado" required>
-                    <option value="">Selecione</option>
-                    <option value="ac">Acre</option>
-                    <option value="al">Alagoas</option>
-                    <option value="ap">Amapá</option>
-                    <option value="ba">Bahia</option>
-                    <option value="ce">Ceará</option>
-                    <option value="df">Distrito Federal</option>
-                    <option value="es">Espírito Santo</option>
-                    <option value="go">Goiás</option>
-                    <option value="ma">Maranhão</option>
-                    <option value="mt">Mato Grosso</option>
-                    <option value="ms">Mato Grosso do Sul</option>
-                    <option value="mg">Minas Gerais</option>
-                    <option value="pa">Pará</option>
-                    <option value="pb">Paraíba</option>
-                    <option value="pr">Paraná</option>
-                    <option value="pe">Pernambuco</option>
-                    <option value="pi">Piauí</option>
-                    <option value="rj">Rio de Janeiro</option>
-                    <option value="rn">Rio Grande do Norte</option>
-                    <option value="rs">Rio Grande do Sul</option>
-                    <option value="ro">Rondônia</option>
-                    <option value="rr">Roraima</option>
-                    <option value="sc">Santa Catarina</option>
-                    <option value="sp">São Paulo</option>
-                    <option value="se">Sergipe</option>
-                    <option value="to">Tocantins</option>
-                </select>
-
-                <label for="cep">CEP*</label>
-                <input type="text" id="cep" required>
-
-                <label for="email">EMAIL*</label>
-                <input type="email" id="email" required>
-
-                <label for="data-nascimento">DATA DE NASCIMENTO*</label>
-                <input type="date" id="data-nascimento" required>
-
-                <label for="senha">SENHA*</label>
-                <input type="password" id="senha" required>
-
-                <label for="confirmar-senha">CONFIRME A SENHA*</label>
-                <input type="password" id="confirmar-senha" required>
-                
-                <p>Dicas de segurança:<br>
-                • Sua senha deve conter 8 caracteres entre letras e números.<br>
-                • Sua senha deve ter pelo menos 1 caractere especial (Ex: !#$%^&*).</p>
-            </section>
-            
-            <section class="idiomas">
-                <h2>IDIOMAS</h2>
-                <div class="idioma">
-                    <label>
-                        <input type="checkbox" class="checkbox-idioma"> Português
-                    </label>
-                </div>
-                <div class="idioma">
-                    <label>
-                        <input type="checkbox" class="checkbox-idioma"> Inglês
-                    </label>
-                </div>
-                <div class="idioma">
-                    <label>
-                        <input type="checkbox" class="checkbox-idioma"> Espanhol
-                    </label>
-                </div>
-                <div class="idioma">
-                    <label>+ Incluir outro Idioma:</label>
-                    <input type="text" id="outro-idioma" placeholder="Digite o idioma">
-                </div>
-                <button type="button" id="adicionar-idioma">Adicionar</button>
-                
-                <ul id="lista-idiomas"></ul>
-            </section>
-            
-
-            <section class="habilidades">
-                <h2>HABILIDADES</h2>
-                <label for="tecnologias">CONHECIMENTOS EM TECNOLOGIA*</label>
-                <select id="tecnologias" required>
-                    <option value="">Selecione</option>
-                    <option value="desenvolvimento-web">Desenvolvimento Web</option>
-                    <option value="marketing-digital">Marketing Digital</option>
-                    <option value="banco-de-dados">Banco de Dados</option>
-                    <option value="outras-habilidades">Outras Habilidades</option>
-                    <option value="desenvolvimento-mobile">Desenvolvimento Mobile</option>
-                    <option value="inteligencia-artificial">Inteligência Artificial</option>
-                    <option value="machine-learning">Machine Learning</option>
-                    <option value="seguranca-da-informacao">Segurança da Informação</option>
-                    <option value="cloud-computing">Computação em Nuvem</option>
-                    <option value="gestao-de-projetos">Gestão de Projetos</option>
-                    <option value="design-ui-ux">Design UI/UX</option>
-                    <option value="análise-de-dados">Análise de Dados</option>
-                    <option value="internet-das-coisas">Internet das Coisas (IoT)</option>
-                    <option value="realidade-aumentada">Realidade Aumentada</option>
-                    <option value="realidade-virtual">Realidade Virtual</option>
-                    
-                </select>
-            </section>
-
-            <section class="informacoes-academicas">
-                <h2>INFORMAÇÕES ACADÊMICAS</h2>
-                <label for="instituicao">INSTITUIÇÃO DE ENSINO*</label>
-                <input type="text" id="instituicao" required>
-
-                <label for="periodo">PERÍODO*</label>
-                <input type="text" id="periodo" required>
-
-                <label for="curso">CURSO*</label>
-                <input type="text" id="curso" required>
-
-                <label for="semestre">SEMESTRE*</label>
-                <input type="text" id="semestre" required>
-            </section>
-
-            <div class="aceito-container">
-                <label>
-                    <input type="checkbox" id="aceito" required>
-                    <span class="aceito-text">Eu aceito as Condições Legais e a Política de Privacidade.</span>
-                </label>
+            <div class="mb-3">
+                <label for="nome" class="form-label" style="color:black">NOME*</label>
+                <input type="text" class="form-control" id="nome" required>
             </div>
 
-            <button type="submit">CADASTRAR-SE</button>
-            <p class="registro">Você é uma empresa? <a href="http://127.0.0.1:5500/CADASTRO%20EMPRESA/index.html" target="_blank">Cadastre-se aqui.</a></p>
+            <div class="mb-3">
+                <label for="sobrenome" class="form-label" style="color:black">SOBRENOME*</label>
+                <input type="text" class="form-control" id="sobrenome" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="cpf" class="form-label" style="color:black">CPF*</label>
+                <input type="text" class="form-control" id="cpf" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="telefone" class="form-label" style="color:black">TELEFONE*</label>
+                <input type="text" class="form-control" id="telefone" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label" style="color:black">EMAIL*</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="cep" class="form-label" style="color:black">CEP*</label>
+                <input type="text" class="form-control" id="cep" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="rua" class="form-label" style="color:black">RUA*</label>
+                <input type="text" class="form-control" id="rua" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="numero" class="form-label" style="color:black">NÚMERO*</label>
+                <input type="text" class="form-control" id="numero" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="estado" style="color:black">ESTADO*</label>
+                    <select id="estado" class="form-control" required>
+                        <option value="">Selecione</option>
+                        <option value="ac">Acre</option>
+                        <option value="al">Alagoas</option>
+                        <option value="ap">Amapá</option>
+                        <option value="am">Amazonas</option>
+                        <option value="ba">Bahia</option>
+                        <option value="ce">Ceará</option>
+                        <option value="df">Distrito Federal</option>
+                        <option value="es">Espírito Santo</option>
+                        <option value="go">Goiás</option>
+                        <option value="ma">Maranhão</option>
+                        <option value="mt">Mato Grosso</option>
+                        <option value="ms">Mato Grosso do Sul</option>
+                        <option value="mg">Minas Gerais</option>
+                        <option value="pa">Pará</option>
+                        <option value="pb">Paraíba</option>
+                        <option value="pr">Paraná</option>
+                        <option value="pe">Pernambuco</option>
+                        <option value="pi">Piauí</option>
+                        <option value="rj">Rio de Janeiro</option>
+                        <option value="rn">Rio Grande do Norte</option>
+                        <option value="rs">Rio Grande do Sul</option>
+                        <option value="ro">Rondônia</option>
+                        <option value="rr">Roraima</option>
+                        <option value="sc">Santa Catarina</option>
+                        <option value="sp">São Paulo</option>
+                        <option value="se">Sergipe</option>
+                        <option value="to">Tocantins</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+    <label for="cidade" style="color:black">CIDADE*</label>
+    <select id="cidade" class="form-control" required>
+        <option value="">Selecione</option>
+        <!-- Cidades de São Paulo -->
+        <option value="sao-paulo">São Paulo</option>
+        <option value="campinas">Campinas</option>
+        <option value="santos">Santos</option>
+        <option value="ribeirao-preto">Ribeirão Preto</option>
+        <option value="sao-jose-dos-campos">São José dos Campos</option>
+        <option value="sorocaba">Sorocaba</option>
+        <option value="jundiai">Jundiaí</option>
+        <option value="piracicaba">Piracicaba</option>
+
+        <!-- Cidades do Rio de Janeiro -->
+        <option value="rio-de-janeiro">Rio de Janeiro</option>
+        <option value="niteroi">Niterói</option>
+        <option value="petropolis">Petrópolis</option>
+        <option value="volta-redonda">Volta Redonda</option>
+        <option value="nova-iguacu">Nova Iguaçu</option>
+        <option value="duque-de-caxias">Duque de Caxias</option>
+        <option value="campos-dos-goytacazes">Campos dos Goytacazes</option>
+
+        <!-- Cidades de Minas Gerais -->
+        <option value="belo-horizonte">Belo Horizonte</option>
+        <option value="uberlandia">Uberlândia</option>
+        <option value="juiz-de-fora">Juiz de Fora</option>
+        <option value="contagem">Contagem</option>
+        <option value="betim">Betim</option>
+        <option value="montes-claros">Montes Claros</option>
+
+        <!-- Cidades da Bahia -->
+        <option value="salvador">Salvador</option>
+        <option value="feira-de-santana">Feira de Santana</option>
+        <option value="vitoria-da-conquista">Vitória da Conquista</option>
+        <option value="camaçari">Camaçari</option>
+        <option value="juazeiro">Juazeiro</option>
+        <option value="itabuna">Itabuna</option>
+
+        <!-- Cidades do Paraná -->
+        <option value="curitiba">Curitiba</option>
+        <option value="londrina">Londrina</option>
+        <option value="maringa">Maringá</option>
+        <option value="foz-do-iguacu">Foz do Iguaçu</option>
+        <option value="ponta-grossa">Ponta Grossa</option>
+        <option value="cascavel">Cascavel</option>
+
+        <!-- Cidades do Rio Grande do Sul -->
+        <option value="porto-alegre">Porto Alegre</option>
+        <option value="caxias-do-sul">Caxias do Sul</option>
+        <option value="pelotas">Pelotas</option>
+        <option value="santa-maria">Santa Maria</option>
+        <option value="novo-hamburgo">Novo Hamburgo</option>
+        <option value="passo-fundo">Passo Fundo</option>
+
+        <!-- Cidades de Pernambuco -->
+        <option value="recife">Recife</option>
+        <option value="olinda">Olinda</option>
+        <option value="caruaru">Caruaru</option>
+        <option value="petrolina">Petrolina</option>
+        <option value="jaboatao-dos-guararapes">Jaboatão dos Guararapes</option>
+        <option value="paulista">Paulista</option>
+
+        <!-- Cidades do Ceará -->
+        <option value="fortaleza">Fortaleza</option>
+        <option value="juazeiro-do-norte">Juazeiro do Norte</option>
+        <option value="sobral">Sobral</option>
+        <option value="maracanau">Maracanaú</option>
+        <option value="caucaia">Caucaia</option>
+        <option value="iguatu">Iguatu</option>
+
+        <!-- Cidades do Distrito Federal -->
+        <option value="brasilia">Brasília</option>
+        <option value="taguatinga">Taguatinga</option>
+        <option value="gama">Gama</option>
+        <option value="ceilandia">Ceilândia</option>
+        <option value="aguas-claras">Águas Claras</option>
+        <option value="samambaia">Samambaia</option>
+
+    </select>
+</div>
+            </div>
+
+            <h4>INFORMAÇÕES ACADÊMICAS</h4>
+
+<div class="mb-3">
+    <label for="instituicao" class="form-label" style="color:black">INSTITUIÇÃO DE ENSINO*</label>
+    <select class="form-select" id="instituicao" required>
+        <option value="">Selecione</option>
+        <option value="universidade-federal">Universidade Federal</option>
+        <option value="universidade-estadual">Universidade Estadual</option>
+        <option value="universidade-privada">Universidade Privada</option>
+        <option value="centro-universitario">Centro Universitário</option>
+        <option value="faculdade-tecnica">Faculdade Técnica</option>
+        <option value="instituto-tecnologico">Instituto Tecnológico</option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="periodo" class="form-label" style="color:black">PERÍODO*</label>
+    <select class="form-select" id="periodo" required>
+        <option value="">Selecione</option>
+        <option value="integral">Integral</option>
+        <option value="noturno">Noturno</option>
+        <option value="semi-integral">Semi-Integral</option>
+        <option value="a-distancia">A Distância</option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="curso" class="form-label" style="color:black">CURSO*</label>
+    <select class="form-select" id="curso" required>
+        <option value="">Selecione</option>
+        <option value="administracao">Administração</option>
+        <option value="ciencias-da-computacao">Ciências da Computação</option>
+        <option value="engenharia-de-software">Engenharia de Software</option>
+        <option value="design-grafico">Design Gráfico</option>
+        <option value="psicologia">Psicologia</option>
+        <option value="marketing">Marketing</option>
+        <option value="educacao-fisica">Educação Física</option>
+        <option value="medicina">Medicina</option>
+        <option value="direito">Direito</option>
+        <option value="engenharia-civil">Engenharia Civil</option>
+        <option value="outras">Outras</option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="semestre" class="form-label" style="color:black">SEMESTRE*</label>
+    <select class="form-select" id="semestre" required>
+        <option value="">Selecione</option>
+        <option value="1">1º Semestre</option>
+        <option value="2">2º Semestre</option>
+        <option value="3">3º Semestre</option>
+        <option value="4">4º Semestre</option>
+        <option value="5">5º Semestre</option>
+        <option value="6">6º Semestre</option>
+        <option value="7">7º Semestre</option>
+        <option value="8">8º Semestre</option>
+        <option value="9">9º Semestre</option>
+        <option value="10">10º Semestre</option>
+        <option value="outro">Outro</option>
+    </select>
+</div>
+
+
+            <div class="mb-3">
+                <label for="data-nascimento" class="form-label" style="color:black">DATA DE NASCIMENTO*</label>
+                <input type="date" class="form-control" id="data-nascimento" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="senha" class="form-label" style="color:black">SENHA*</label>
+                <input type="password" class="form-control" id="senha" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmar-senha" class="form-label" style="color:black">CONFIRME A SENHA*</label>
+                <input type="password" class="form-control" id="confirmar-senha" required>
+                <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="aceito" required>
+                <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">CADASTRAR-SE</button>
+            <p class="mt-3 text-center">Você é uma empresa? <a href="http://127.0.0.1:5500/CADASTRO%20EMPRESA/index.html" target="_blank">Cadastre-se aqui.</a></p>
         </form>
-    </main>
+    </div>
 
-    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('cep').addEventListener('blur', function () {
+            var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+            if (cep.length === 8) {
+                var url = `https://viacep.com.br/ws/${cep}/json/`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!("erro" in data)) {
+                            document.getElementById('rua').value = data.logradouro;
+                        } else {
+                            alert('CEP não encontrado.');
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Erro ao buscar o CEP: ', error);
+                        alert('Erro ao buscar o CEP. Tente novamente.');
+                    });
+            } else {
+                alert('Por favor, insira um CEP válido.');
+            }
+        });
+    </script>
 </body>
+
 </html>
-<script>        
-    document.getElementById("adicionar-idioma").addEventListener("click", function () {
-        var novoIdioma = document.getElementById("outro-idioma").value; // Pega o valor do input
-        if (novoIdioma) {
-            var li = document.createElement("li"); // Cria um novo elemento de lista
-            li.textContent = novoIdioma; // Define o texto do novo elemento
-            document.getElementById("lista-idiomas").appendChild(li); // Adiciona o novo elemento à lista
-            document.getElementById("outro-idioma").value = ""; // Limpa o campo de texto
-        } else {
-            alert("Por favor, digite um idioma."); // Alerta se o campo estiver vazio
-        }
-    });
-
-
-</script>
