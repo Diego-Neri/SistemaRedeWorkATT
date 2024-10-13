@@ -6,37 +6,37 @@ using SistemaRedeWork.Repositorio;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Recuperar a string de conexão do appsettings.json (ajustar se necessário)
+// Recuperar a string de conexï¿½o do appsettings.json (ajustar se necessï¿½rio)
 var connectionString = builder.Configuration.GetConnectionString("MariaDB");
 
-// Configuração do DbContext para MariaDB
+// Configuraï¿½ï¿½o do DbContext para MariaDB
 builder.Services.AddDbContext<BancoContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 23)))
 );
 
-// Adicionar serviços ao container
+// Adicionar serviï¿½os ao container
 builder.Services.AddControllersWithViews();
 
-// Registrar os serviços de dependências para injeção de dependência (DI)
+// Registrar os serviï¿½os de dependï¿½ncias para injeï¿½ï¿½o de dependï¿½ncia (DI)
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-// Registrando os repositórios e helpers como serviços escopados
+// Registrando os repositï¿½rios e helpers como serviï¿½os escopados
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<ISessao, Sessao>();
 builder.Services.AddScoped<IEmail, Email>();
 
-// Configuração de sessão
+// Configuraï¿½ï¿½o de sessï¿½o
 builder.Services.AddSession(options => {
-    options.Cookie.HttpOnly = true; // Melhor segurança para cookies
-    options.Cookie.IsEssential = true; // Necessário para que as sessões funcionem corretamente no GDPR
+    options.Cookie.HttpOnly = true; // Melhor seguranï¿½a para cookies
+    options.Cookie.IsEssential = true; // Necessï¿½rio para que as sessï¿½es funcionem corretamente no GDPR
 });
 
 var app = builder.Build();
 
-// Configuração do pipeline de requisição HTTP
+// Configuraï¿½ï¿½o do pipeline de requisiï¿½ï¿½o HTTP
 if (!app.Environment.IsDevelopment()) {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); // Habilitar HSTS para ambientes de produção
+    app.UseHsts(); // Habilitar HSTS para ambientes de produï¿½ï¿½o
 }
 
 // Middleware para redirecionamento HTTPS
@@ -46,13 +46,13 @@ app.UseStaticFiles();
 // Habilitar o roteamento
 app.UseRouting();
 
-// Habilitar sessões
+// Habilitar sessï¿½es
 app.UseSession();
 
-// Middleware de autorização
+// Middleware de autorizaï¿½ï¿½o
 app.UseAuthorization();
 
-// Definir as rotas padrão do MVC
+// Definir as rotas padrï¿½o do MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"

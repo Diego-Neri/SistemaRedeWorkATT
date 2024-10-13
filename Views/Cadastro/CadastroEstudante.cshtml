@@ -1,4 +1,5 @@
-﻿@{
+﻿@model EstudanteModel
+@{
     ViewData["Title"] = "Cadastro - Estudante";
 }
 <link rel="stylesheet" href="~/css/CadastroEstudante.css" asp-append-version="true" />
@@ -22,282 +23,358 @@
         <h2 class="text-center" style="color:#5D2CE7;">DADOS DO ESTUDANTE</h2>
         <p class="text-center">Segurança e Confidencialidade<br>A RedeWork garante a segurança e a confidencialidade de todos os dados pessoais introduzidos em meu cadastro.</p>
 
-        <form>
-            <div class="mb-3">
-                <label for="nome" class="form-label" style="color:black">NOME*</label>
-                <input type="text" class="form-control" id="nome" required>
-            </div>
+        <main>
+            @using (Html.BeginForm("CadastroEstudante", "Cadastro", FormMethod.Post)) {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Nome)
+                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @required = "required", placeholder = "Digite o seu nome" })
+                    @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                <label for="sobrenome" class="form-label" style="color:black">SOBRENOME*</label>
-                <input type="text" class="form-control" id="sobrenome" required>
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Sobrenome)
+                    @Html.TextBoxFor(m => m.Sobrenome, new { @class = "form-control", @required = "required", placeholder = "Digite o seu sobrenome" })
+                    @Html.ValidationMessageFor(m => m.Sobrenome, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                <label for="cpf" class="form-label" style="color:black">CPF*</label>
-                <input type="text" class="form-control" id="cpf" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="telefone" class="form-label" style="color:black">TELEFONE*</label>
-                <input type="text" class="form-control" id="telefone" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label" style="color:black">EMAIL*</label>
-                <input type="email" class="form-control" id="email" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="cep" class="form-label" style="color:black">CEP*</label>
-                <input type="text" class="form-control" id="cep" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="rua" class="form-label" style="color:black">RUA*</label>
-                <input type="text" class="form-control" id="rua" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="numero" class="form-label" style="color:black">NÚMERO*</label>
-                <input type="text" class="form-control" id="numero" required>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="estado" style="color:black">ESTADO*</label>
-                    <select id="estado" class="form-control" required>
-                        <option value="">Selecione</option>
-                        <option value="ac">Acre</option>
-                        <option value="al">Alagoas</option>
-                        <option value="ap">Amapá</option>
-                        <option value="am">Amazonas</option>
-                        <option value="ba">Bahia</option>
-                        <option value="ce">Ceará</option>
-                        <option value="df">Distrito Federal</option>
-                        <option value="es">Espírito Santo</option>
-                        <option value="go">Goiás</option>
-                        <option value="ma">Maranhão</option>
-                        <option value="mt">Mato Grosso</option>
-                        <option value="ms">Mato Grosso do Sul</option>
-                        <option value="mg">Minas Gerais</option>
-                        <option value="pa">Pará</option>
-                        <option value="pb">Paraíba</option>
-                        <option value="pr">Paraná</option>
-                        <option value="pe">Pernambuco</option>
-                        <option value="pi">Piauí</option>
-                        <option value="rj">Rio de Janeiro</option>
-                        <option value="rn">Rio Grande do Norte</option>
-                        <option value="rs">Rio Grande do Sul</option>
-                        <option value="ro">Rondônia</option>
-                        <option value="rr">Roraima</option>
-                        <option value="sc">Santa Catarina</option>
-                        <option value="sp">São Paulo</option>
-                        <option value="se">Sergipe</option>
-                        <option value="to">Tocantins</option>
-                    </select>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CPF)
+                    @Html.TextBoxFor(m => m.CPF, new { @class = "form-control", @required = "required", placeholder = "Digite o seu CPF" })
+                    @Html.ValidationMessageFor(m => m.CPF, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group col-md-6">
-    <label for="cidade" style="color:black">CIDADE*</label>
-    <select id="cidade" class="form-control" required>
-        <option value="">Selecione</option>
-        <!-- Cidades de São Paulo -->
-        <option value="sao-paulo">São Paulo</option>
-        <option value="campinas">Campinas</option>
-        <option value="santos">Santos</option>
-        <option value="ribeirao-preto">Ribeirão Preto</option>
-        <option value="sao-jose-dos-campos">São José dos Campos</option>
-        <option value="sorocaba">Sorocaba</option>
-        <option value="jundiai">Jundiaí</option>
-        <option value="piracicaba">Piracicaba</option>
+                    @Html.LabelFor(m => m.Sexo)
+                    @Html.DropDownListFor(m => m.Sexo, new SelectList(new[]
+                             {
+                new SelectListItem { Value = "", Text = "Selecione" },
+                new SelectListItem { Value = "M", Text = "Masculino" },
+                new SelectListItem { Value = "F", Text = "Feminino" },
+                new SelectListItem { Value = "?", Text = "Prefiro não informar" }
+                }, "Value", "Text"), new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Sexo, "", new { @class = "text-danger" })
+                </div>
 
-        <!-- Cidades do Rio de Janeiro -->
-        <option value="rio-de-janeiro">Rio de Janeiro</option>
-        <option value="niteroi">Niterói</option>
-        <option value="petropolis">Petrópolis</option>
-        <option value="volta-redonda">Volta Redonda</option>
-        <option value="nova-iguacu">Nova Iguaçu</option>
-        <option value="duque-de-caxias">Duque de Caxias</option>
-        <option value="campos-dos-goytacazes">Campos dos Goytacazes</option>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Telefone)
+                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control", placeholder = "Digite o número do seu telefone", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+                </div>
 
-        <!-- Cidades de Minas Gerais -->
-        <option value="belo-horizonte">Belo Horizonte</option>
-        <option value="uberlandia">Uberlândia</option>
-        <option value="juiz-de-fora">Juiz de Fora</option>
-        <option value="contagem">Contagem</option>
-        <option value="betim">Betim</option>
-        <option value="montes-claros">Montes Claros</option>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email)
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type = "email", placeholder = "Digite o seu e-mail", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
 
-        <!-- Cidades da Bahia -->
-        <option value="salvador">Salvador</option>
-        <option value="feira-de-santana">Feira de Santana</option>
-        <option value="vitoria-da-conquista">Vitória da Conquista</option>
-        <option value="camaçari">Camaçari</option>
-        <option value="juazeiro">Juazeiro</option>
-        <option value="itabuna">Itabuna</option>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CEP)
+                    @Html.TextBoxFor(model => model.CEP, new { @class = "form-control", @required = "required", placeholder = "Digite o seu CEP" })
+                    @Html.ValidationMessageFor(m => m.CEP, "", new { @class = "text-danger" })
+                </div>
 
-        <!-- Cidades do Paraná -->
-        <option value="curitiba">Curitiba</option>
-        <option value="londrina">Londrina</option>
-        <option value="maringa">Maringá</option>
-        <option value="foz-do-iguacu">Foz do Iguaçu</option>
-        <option value="ponta-grossa">Ponta Grossa</option>
-        <option value="cascavel">Cascavel</option>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Rua)
+                    @Html.TextBoxFor(model => model.Rua, new { @class = "form-control", @required = "required", placeholder = "Informe sua rua" })
+                    @Html.ValidationMessageFor(m => m.Rua, "", new { @class = "text-danger" })
+                </div>
 
-        <!-- Cidades do Rio Grande do Sul -->
-        <option value="porto-alegre">Porto Alegre</option>
-        <option value="caxias-do-sul">Caxias do Sul</option>
-        <option value="pelotas">Pelotas</option>
-        <option value="santa-maria">Santa Maria</option>
-        <option value="novo-hamburgo">Novo Hamburgo</option>
-        <option value="passo-fundo">Passo Fundo</option>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Numero)
+                    @Html.TextBoxFor(model => model.Numero, new { @class = "form-control", @required = "required", placeholder = "Informe o número da rua" })
+                    @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "text-danger" })
+                </div>
 
-        <!-- Cidades de Pernambuco -->
-        <option value="recife">Recife</option>
-        <option value="olinda">Olinda</option>
-        <option value="caruaru">Caruaru</option>
-        <option value="petrolina">Petrolina</option>
-        <option value="jaboatao-dos-guararapes">Jaboatão dos Guararapes</option>
-        <option value="paulista">Paulista</option>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.Estado, "ESTADO")
+                        @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
+                                 {
+                    new { Value = "", Text = "Selecione" },
+                    new { Value = "ac", Text = "Acre" },
+                    new { Value = "al", Text = "Alagoas" },
+                    new { Value = "ap", Text = "Amapá" },
+                    new { Value = "am", Text = "Amazonas" },
+                    new { Value = "ba", Text = "Bahia" },
+                    new { Value = "ce", Text = "Ceará" },
+                    new { Value = "df", Text = "Distrito Federal" },
+                    new { Value = "es", Text = "Espírito Santo" },
+                    new { Value = "go", Text = "Goiás" },
+                    new { Value = "ma", Text = "Maranhão" },
+                    new { Value = "mt", Text = "Mato Grosso" },
+                    new { Value = "ms", Text = "Mato Grosso do Sul" },
+                    new { Value = "mg", Text = "Minas Gerais" },
+                    new { Value = "pa", Text = "Pará" },
+                    new { Value = "pb", Text = "Paraíba" },
+                    new { Value = "pr", Text = "Paraná" },
+                    new { Value = "pe", Text = "Pernambuco" },
+                    new { Value = "pi", Text = "Piauí" },
+                    new { Value = "rj", Text = "Rio de Janeiro" },
+                    new { Value = "rn", Text = "Rio Grande do Norte" },
+                    new { Value = "rs", Text = "Rio Grande do Sul" },
+                    new { Value = "ro", Text = "Rondônia" },
+                    new { Value = "rr", Text = "Roraima" },
+                    new { Value = "sc", Text = "Santa Catarina" },
+                    new { Value = "sp", Text = "São Paulo" },
+                    new { Value = "se", Text = "Sergipe" },
+                    new { Value = "to", Text = "Tocantins" }
 
-        <!-- Cidades do Ceará -->
-        <option value="fortaleza">Fortaleza</option>
-        <option value="juazeiro-do-norte">Juazeiro do Norte</option>
-        <option value="sobral">Sobral</option>
-        <option value="maracanau">Maracanaú</option>
-        <option value="caucaia">Caucaia</option>
-        <option value="iguatu">Iguatu</option>
+                    }, "Value", "Text"), new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+                    </div>
 
-        <!-- Cidades do Distrito Federal -->
-        <option value="brasilia">Brasília</option>
-        <option value="taguatinga">Taguatinga</option>
-        <option value="gama">Gama</option>
-        <option value="ceilandia">Ceilândia</option>
-        <option value="aguas-claras">Águas Claras</option>
-        <option value="samambaia">Samambaia</option>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.Cidade, "CIDADE")
+                        @Html.DropDownListFor(m => m.Cidade, new SelectList(new[]
+                                 {
+                    new { Value = "", Text = "Selecione" },
+                    new { Value = "sao-paulo", Text = "São Paulo" },
+                    new { Value = "campinas", Text = "Campinas" },
+                    new { Value = "santos", Text = "Santos" },
+                    new { Value = "ribeirao-preto", Text = "Ribeirão Preto" },
+                    new { Value = "sao-jose-dos-campos", Text = "São José dos Campos" },
+                    new { Value = "sorocaba", Text = "Sorocaba" },
+                    new { Value = "jundiai", Text = "Jundiaí" },
+                    new { Value = "piracicaba", Text = "Piracicaba" },
+                    new { Value = "rio-de-janeiro", Text = "Rio de Janeiro" },
+                    new { Value = "niteroi", Text = "Niterói" },
+                    new { Value = "petropolis", Text = "Petrópolis" },
+                    new { Value = "volta-redonda", Text = "Volta Redonda" },
+                    new { Value = "nova-iguacu", Text = "Nova Iguaçu" },
+                    new { Value = "duque-de-caxias", Text = "Duque de Caxias" },
+                    new { Value = "campos-dos-goytacazes", Text = "Campos dos Goytacazes" },
+                    new { Value = "belo-horizonte", Text = "Belo Horizonte" },
+                    new { Value = "uberlandia", Text = "Uberlândia" },
+                    new { Value = "juiz-de-fora", Text = "Juiz de Fora" },
+                    new { Value = "contagem", Text = "Contagem" },
+                    new { Value = "betim", Text = "Betim" },
+                    new { Value = "montes-claros", Text = "Montes Claros" },
+                    new { Value = "salvador", Text = "Salvador" },
+                    new { Value = "feira-de-santana", Text = "Feira de Santana" },
+                    new { Value = "vitoria-da-conquista", Text = "Vitória da Conquista" },
+                    new { Value = "camaçari", Text = "Camaçari" },
+                    new { Value = "juazeiro", Text = "Juazeiro" },
+                    new { Value = "itabuna", Text = "Itabuna" },
+                    new { Value = "curitiba", Text = "Curitiba" },
+                    new { Value = "londrina", Text = "Londrina" },
+                    new { Value = "maringa", Text = "Maringá" },
+                    new { Value = "foz-do-iguacu", Text = "Foz do Iguaçu" },
+                    new { Value = "ponta-grossa", Text = "Ponta Grossa" },
+                    new { Value = "cascavel", Text = "Cascavel" },
+                    new { Value = "porto-alegre", Text = "Porto Alegre" },
+                    new { Value = "caxias-do-sul", Text = "Caxias do Sul" },
+                    new { Value = "pelotas", Text = "Pelotas" },
+                    new { Value = "santa-maria", Text = "Santa Maria" },
+                    new { Value = "novo-hamburgo", Text = "Novo Hamburgo" },
+                    new { Value = "passo-fundo", Text = "Passo Fundo" },
+                    new { Value = "recife", Text = "Recife" },
+                    new { Value = "olinda", Text = "Olinda" },
+                    new { Value = "caruaru", Text = "Caruaru" },
+                    new { Value = "petrolina", Text = "Petrolina" },
+                    new { Value = "jaboatao-dos-guararapes", Text = "Jaboatão dos Guararapes" },
+                    new { Value = "paulista", Text = "Paulista" },
+                    new { Value = "maceio", Text = "Maceió" },
+                    new { Value = "aracaju", Text = "Aracaju" },
+                    new { Value = "teresina", Text = "Teresina" },
+                    new { Value = "fortaleza", Text = "Fortaleza" },
+                    new { Value = "vitoria", Text = "Vitória" },
+                    new { Value = "belém", Text = "Belém" },
+                    new { Value = "manaus", Text = "Manaus" },
+                    new { Value = "boa-vista", Text = "Boa Vista" },
+                    new { Value = "rio-branco", Text = "Rio Branco" },
+                    new { Value = "palmas", Text = "Palmas" },
+                    new { Value = "macapa", Text = "Macapá" },
+                    new { Value = "salvador", Text = "Salvador" },
+                    new { Value = "teresopolis", Text = "Teresópolis" },
+                    new { Value = "petrópolis", Text = "Petrópolis" },
+                    new { Value = "nova-friburgo", Text = "Nova Friburgo" },
+                    new { Value = "volta-redonda", Text = "Volta Redonda" }
+                    }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-    </select>
-</div>
-            </div>
+                <br />
+                <br />
+                <h4>INFORMAÇÕES ACADÊMICAS</h4>
 
-            <h4>INFORMAÇÕES ACADÊMICAS</h4>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Instituicao, "Instituição")
+                    @Html.DropDownListFor(m => m.Instituicao, new SelectList(new List<SelectListItem>
+                {
+                new SelectListItem { Value = "", Text = "Selecione" },
+                new SelectListItem { Value = "universidade-federal", Text = "Universidade Federal" },
+                new SelectListItem { Value = "universidade-estadual", Text = "Universidade Estadual" },
+                new SelectListItem { Value = "universidade-privada", Text = "Universidade Privada" },
+                new SelectListItem { Value = "centro-universitario", Text = "Centro Universitário" },
+                new SelectListItem { Value = "faculdade-tecnica", Text = "Faculdade Técnica" },
+                new SelectListItem { Value = "instituto-tecnologico", Text = "Instituto Tecnológico" }
+                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Instituicao, "", new { @class = "text-danger" })
+                </div>
 
-<div class="mb-3">
-    <label for="instituicao" class="form-label" style="color:black">INSTITUIÇÃO DE ENSINO*</label>
-    <select class="form-select" id="instituicao" required>
-        <option value="">Selecione</option>
-        <option value="universidade-federal">Universidade Federal</option>
-        <option value="universidade-estadual">Universidade Estadual</option>
-        <option value="universidade-privada">Universidade Privada</option>
-        <option value="centro-universitario">Centro Universitário</option>
-        <option value="faculdade-tecnica">Faculdade Técnica</option>
-        <option value="instituto-tecnologico">Instituto Tecnológico</option>
-    </select>
-</div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Periodo, "Período")
+                    @Html.DropDownListFor(m => m.Periodo, new SelectList(new List<SelectListItem>
+                {
+                new SelectListItem { Value = "", Text = "Selecione" },
+                new SelectListItem { Value = "integral", Text = "Integral" },
+                new SelectListItem { Value = "noturno", Text = "Noturno" },
+                new SelectListItem { Value = "semi-integral", Text = "Semi-Integral" },
+                new SelectListItem { Value = "a-distancia", Text = "A Distância" }
+                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Periodo, "", new { @class = "text-danger" })
+                </div>
 
-<div class="mb-3">
-    <label for="periodo" class="form-label" style="color:black">PERÍODO*</label>
-    <select class="form-select" id="periodo" required>
-        <option value="">Selecione</option>
-        <option value="integral">Integral</option>
-        <option value="noturno">Noturno</option>
-        <option value="semi-integral">Semi-Integral</option>
-        <option value="a-distancia">A Distância</option>
-    </select>
-</div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Curso, new { @class = "form-label", style = "color:black" })
+                    @Html.DropDownListFor(m => m.Curso, new SelectList(new List<SelectListItem>
+                {
+                new SelectListItem { Value = "", Text = "Selecione" },
+                new SelectListItem { Value = "ciencias-da-computacao", Text = "Ciências da Computação" },
+                new SelectListItem { Value = "engenharia-de-software", Text = "Engenharia de Software" },
+                new SelectListItem { Value = "sistemas-de-informacao", Text = "Sistemas de Informação" },
+                new SelectListItem { Value = "analise-e-desenvolvimento-de-sistemas", Text = "Análise e Desenvolvimento de Sistemas" },
+                new SelectListItem { Value = "seguranca-da-informacao", Text = "Segurança da Informação" },
+                new SelectListItem { Value = "redes-de-computadores", Text = "Redes de Computadores" },
+                new SelectListItem { Value = "banco-de-dados", Text = "Banco de Dados" },
+                new SelectListItem { Value = "ciencia-de-dados", Text = "Ciência de Dados" },
+                new SelectListItem { Value = "inteligencia-artificial", Text = "Inteligência Artificial" },
+                new SelectListItem { Value = "engenharia-de-computacao", Text = "Engenharia de Computação" },
+                new SelectListItem { Value = "gestao-de-ti", Text = "Gestão de Tecnologia da Informação" },
+                new SelectListItem { Value = "jogos-digitais", Text = "Jogos Digitais" },
+                new SelectListItem { Value = "tecnologia-da-informacao", Text = "Tecnologia da Informação" },
+                new SelectListItem { Value = "engenharia-eletronica", Text = "Engenharia Eletrônica" },
+                new SelectListItem { Value = "engenharia-de-telecomunicacoes", Text = "Engenharia de Telecomunicações" },
+                new SelectListItem { Value = "automacao-industrial", Text = "Automação Industrial" },
+                new SelectListItem { Value = "robotica", Text = "Robótica" },
+                new SelectListItem { Value = "mecatronica-industrial", Text = "Mecatrônica Industrial" },
+                new SelectListItem { Value = "biotecnologia", Text = "Biotecnologia" },
+                new SelectListItem { Value = "internet-das-coisas", Text = "Internet das Coisas (IoT)" },
+                new SelectListItem { Value = "big-data", Text = "Big Data" },
+                new SelectListItem { Value = "desenvolvimento-web", Text = "Desenvolvimento Web" },
+                new SelectListItem { Value = "desenvolvimento-mobile", Text = "Desenvolvimento Mobile" },
+                new SelectListItem { Value = "cloud-computing", Text = "Computação em Nuvem (Cloud Computing)" },
+                new SelectListItem { Value = "realidade-virtual-e-aumentada", Text = "Realidade Virtual e Aumentada" },
+                new SelectListItem { Value = "blockchain", Text = "Blockchain" },
+                new SelectListItem { Value = "cybersecurity", Text = "Cibersegurança" },
+                new SelectListItem { Value = "arquitetura-de-software", Text = "Arquitetura de Software" },
+                new SelectListItem { Value = "devops", Text = "DevOps" },
+                new SelectListItem { Value = "engenharia-de-dados", Text = "Engenharia de Dados" },
+                new SelectListItem { Value = "testes-de-software", Text = "Testes de Software" },
+                new SelectListItem { Value = "outras", Text = "Outras" }
+                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Curso, "", new { @class = "text-danger" })
+                </div>
 
-<div class="mb-3">
-    <label for="curso" class="form-label" style="color:black">CURSO*</label>
-    <select class="form-select" id="curso" required>
-        <option value="">Selecione</option>
-        <option value="administracao">Administração</option>
-        <option value="ciencias-da-computacao">Ciências da Computação</option>
-        <option value="engenharia-de-software">Engenharia de Software</option>
-        <option value="design-grafico">Design Gráfico</option>
-        <option value="psicologia">Psicologia</option>
-        <option value="marketing">Marketing</option>
-        <option value="educacao-fisica">Educação Física</option>
-        <option value="medicina">Medicina</option>
-        <option value="direito">Direito</option>
-        <option value="engenharia-civil">Engenharia Civil</option>
-        <option value="outras">Outras</option>
-    </select>
-</div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Semestre, new { @class = "form-label", style = "color:black" })
+                    @Html.DropDownListFor(m => m.Semestre, new SelectList(new List<SelectListItem>
+                {
+                new SelectListItem { Value = "", Text = "Selecione" },
+                new SelectListItem { Value = "1", Text = "1º Semestre" },
+                new SelectListItem { Value = "2", Text = "2º Semestre" },
+                new SelectListItem { Value = "3", Text = "3º Semestre" },
+                new SelectListItem { Value = "4", Text = "4º Semestre" },
+                new SelectListItem { Value = "5", Text = "5º Semestre" },
+                new SelectListItem { Value = "6", Text = "6º Semestre" },
+                new SelectListItem { Value = "7", Text = "7º Semestre" },
+                new SelectListItem { Value = "8", Text = "8º Semestre" },
+                new SelectListItem { Value = "9", Text = "9º Semestre" },
+                new SelectListItem { Value = "10", Text = "10º Semestre" },
+                new SelectListItem { Value = "outro", Text = "Outro" }
+                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Semestre, "", new { @class = "text-danger" })
+                </div>
 
-<div class="mb-3">
-    <label for="semestre" class="form-label" style="color:black">SEMESTRE*</label>
-    <select class="form-select" id="semestre" required>
-        <option value="">Selecione</option>
-        <option value="1">1º Semestre</option>
-        <option value="2">2º Semestre</option>
-        <option value="3">3º Semestre</option>
-        <option value="4">4º Semestre</option>
-        <option value="5">5º Semestre</option>
-        <option value="6">6º Semestre</option>
-        <option value="7">7º Semestre</option>
-        <option value="8">8º Semestre</option>
-        <option value="9">9º Semestre</option>
-        <option value="10">10º Semestre</option>
-        <option value="outro">Outro</option>
-    </select>
-</div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.DataNascimento, "Data de Nascimento")
+                    @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required", placeholder = "Informe a sua data de nascimento", type = "date" })
+                    @Html.ValidationMessageFor(m => m.DataNascimento, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Senha)
+                    @Html.PasswordFor(m => m.Senha, new { @class = "form-control", @required = "required", placeholder = "Informe sua senha" })
+                    @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                    <span id="senha-error" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.ConfirmarSenha, "Confirmar senha")
+                    @Html.PasswordFor(m => m.ConfirmarSenha, new { @class = "form-control", @required = "required", placeholder = "Confirme a sua senha" })
+                    @Html.ValidationMessageFor(m => m.ConfirmarSenha, "", new { @class = "text-danger" })
+                    <span id="confirmarSenha-error" class="text-danger"></span>
+                    <br />
+                    <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
+                </div>
 
 
-            <div class="mb-3">
-                <label for="data-nascimento" class="form-label" style="color:black">DATA DE NASCIMENTO*</label>
-                <input type="date" class="form-control" id="data-nascimento" required>
-            </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="aceito" required>
+                    <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
+                </div>
 
-            <div class="mb-3">
-                <label for="senha" class="form-label" style="color:black">SENHA*</label>
-                <input type="password" class="form-control" id="senha" required>
-            </div>
+                <button type="submit" class="btn btn-primary" id="submit-btn">CADASTRAR-SE</button>
+                <p class="mt-3 text-center">Você é uma empresa? <a href="http://127.0.0.1:5500/CADASTRO%20EMPRESA/index.html" target="_blank">Cadastre-se aqui.</a></p>
+            }
+        </main>
 
-            <div class="mb-3">
-                <label for="confirmar-senha" class="form-label" style="color:black">CONFIRME A SENHA*</label>
-                <input type="password" class="form-control" id="confirmar-senha" required>
-                <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
-            </div>
-
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="aceito" required>
-                <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
-            </div>
-
-            <button type="submit" class="btn btn-primary">CADASTRAR-SE</button>
-            <p class="mt-3 text-center">Você é uma empresa? <a href="http://127.0.0.1:5500/CADASTRO%20EMPRESA/index.html" target="_blank">Cadastre-se aqui.</a></p>
-        </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        document.getElementById('cep').addEventListener('blur', function () {
-            var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-
-            if (cep.length === 8) {
-                var url = `https://viacep.com.br/ws/${cep}/json/`;
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!("erro" in data)) {
-                            document.getElementById('rua').value = data.logradouro;
-                        } else {
-                            alert('CEP não encontrado.');
-                        }
-                    })
-                    .catch(error => {
-                        console.log('Erro ao buscar o CEP: ', error);
-                        alert('Erro ao buscar o CEP. Tente novamente.');
-                    });
-            } else {
-                alert('Por favor, insira um CEP válido.');
-            }
-        });
-    </script>
 </body>
 
 </html>
+<script>
+    document.getElementById('CEP').addEventListener('blur', function () {
+        var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+        if (cep.length === 8) {
+            var url = `https://viacep.com.br/ws/${cep}/json/`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (!("erro" in data)) {
+                        document.getElementById('Rua').value = data.logradouro;
+                    } else {
+                        alert('CEP não encontrado.');
+                    }
+                })
+                .catch(error => {
+                    console.log('Erro ao buscar o CEP: ', error);
+                    alert('Erro ao buscar o CEP. Tente novamente.');
+                });
+        } else {
+            alert('Por favor, insira um CEP válido.');
+        }
+    });
+
+    document.querySelector("#submit-btn").addEventListener("click", function (e) {
+        var senha = document.querySelector("#Senha").value;
+        var confirmarSenha = document.querySelector("#ConfirmarSenha").value;
+        var senhaError = document.querySelector("#senha-error");
+        var confirmarSenhaError = document.querySelector("#confirmarSenha-error");
+
+        //Limpa a mensagem de erro
+        senhaError.textContent = "";
+        confirmarSenhaError.textContent = "";
+
+        //Validacao de senha e confirmacao de senha 
+        if (senha !== confirmarSenha) {
+            e.preventDefault(); //impede o envio do formulario
+            confirmarSenhaError.textContent = "As senhas não coincidem.";
+        }
+
+        //Validacao para verificar se a senha tem pelomenos 8 caracteres
+        if (senha.length < 8) {
+            e.preventDefault(); // Impede o envio do form
+            confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
+        }
+
+    });
+
+</script>

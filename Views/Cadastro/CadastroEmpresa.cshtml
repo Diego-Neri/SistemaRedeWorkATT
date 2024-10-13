@@ -1,4 +1,5 @@
-﻿﻿@{
+﻿@model EmpresaModel﻿
+@{
     ViewData["Title"] = "Cadastro - Empresa";
 }
 <link rel="stylesheet" href="~/css/CadastroEmpresa.css" asp-append-version="true" />
@@ -26,200 +27,165 @@
                 </div>
 
                 <main>
-                    <form>
+                    @using (Html.BeginForm("CadastroEmpresa", "Cadastro", FormMethod.Post)) {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", placeholder = "Digite o seu e-mail" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+
 
                         <div class="form-group">
-                            <label for="email" style="color:black">EMAIL*</label>
-                            <input type="email" class="form-control" id="email" required>
+                            @Html.LabelFor(m => m.Usuario)
+                            @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @required = "required", placeholder = "Digite o nome do usuário" })
+                            @Html.ValidationMessageFor(m => m.Usuario, "", new { @class = "text-danger" })
                         </div>
-
-                        <div class="form-group">
-                            <label for="senha" style="color:black">SENHA*</label>
-                            <input type="password" class="form-control" id="senha" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="confirma-senha" style="color:black">CONFIRME A SENHA*</label>
-                            <input type="password" class="form-control" id="confirma-senha" required>
-                        </div>
-
-                        <div class="alert alert-info">
-                            <strong>Dicas de segurança:</strong>
-                            <ul>
-                                <li>Sua senha deve conter pelo menos 8 caracteres, incluindo letras e números.</li>
-                                <li>Sua senha deve ter pelo menos 1 caractere especial (Ex: !$#%^&*).</li>
-                            </ul>
-                        </div>
-
-                        <!-- Mensagem de erro -->
-                        <div id="senha-erro" class="alert alert-danger" style="display:none;"></div>
-
-                        <div class="form-group">
-                            <label for="usuario" style="color:black">USUÁRIO*</label>
-                            <input type="text" class="form-control" id="usuario" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="razao-social" style="color:black">RAZÃO SOCIAL*</label>
-                            <input type="text" class="form-control" id="razao-social" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cnpj" style="color:black">CNPJ*</label>
-                            <input type="text" class="form-control" id="cnpj" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="telefone" style="color:black">TELEFONE*</label>
-                            <input type="text" class="form-control" id="telefone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="site" style="color:black">SITE</label>
-                            <input type="url" class="form-control" id="site">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="linkedin" style="color:black">LINKEDIN</label>
-                            <input type="url" class="form-control" id="linkedin">
-                        </div>
-
                         
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="estado" style="color:black">ESTADO*</label>
-                                <select id="estado" class="form-control" required>
-                                    <option value="">Selecione</option>
-                                    <option value="ac">Acre</option>
-                                    <option value="al">Alagoas</option>
-                                    <option value="ap">Amapá</option>
-                                    <option value="am">Amazonas</option>
-                                    <option value="ba">Bahia</option>
-                                    <option value="ce">Ceará</option>
-                                    <option value="df">Distrito Federal</option>
-                                    <option value="es">Espírito Santo</option>
-                                    <option value="go">Goiás</option>
-                                    <option value="ma">Maranhão</option>
-                                    <option value="mt">Mato Grosso</option>
-                                    <option value="ms">Mato Grosso do Sul</option>
-                                    <option value="mg">Minas Gerais</option>
-                                    <option value="pa">Pará</option>
-                                    <option value="pb">Paraíba</option>
-                                    <option value="pr">Paraná</option>
-                                    <option value="pe">Pernambuco</option>
-                                    <option value="pi">Piauí</option>
-                                    <option value="rj">Rio de Janeiro</option>
-                                    <option value="rn">Rio Grande do Norte</option>
-                                    <option value="rs">Rio Grande do Sul</option>
-                                    <option value="ro">Rondônia</option>
-                                    <option value="rr">Roraima</option>
-                                    <option value="sc">Santa Catarina</option>
-                                    <option value="sp">São Paulo</option>
-                                    <option value="se">Sergipe</option>
-                                    <option value="to">Tocantins</option>
-
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="cidade" style="color:black">CIDADE*</label>
-                                <select id="cidade" class="form-control" required>
-                                    <option value="">Selecione</option>
-                                    <!-- Cidades de São Paulo -->
-                                    <option value="sao-paulo">São Paulo</option>
-                                    <option value="campinas">Campinas</option>
-                                    <option value="santos">Santos</option>
-                                    <option value="ribeirao-preto">Ribeirão Preto</option>
-                                    <option value="sao-jose-dos-campos">São José dos Campos</option>
-                                    <option value="sorocaba">Sorocaba</option>
-                                    <option value="jundiai">Jundiaí</option>
-                                    <option value="piracicaba">Piracicaba</option>
-
-                                    <!-- Cidades do Rio de Janeiro -->
-                                    <option value="rio-de-janeiro">Rio de Janeiro</option>
-                                    <option value="niteroi">Niterói</option>
-                                    <option value="petropolis">Petrópolis</option>
-                                    <option value="volta-redonda">Volta Redonda</option>
-                                    <option value="nova-iguacu">Nova Iguaçu</option>
-                                    <option value="duque-de-caxias">Duque de Caxias</option>
-                                    <option value="campos-dos-goytacazes">Campos dos Goytacazes</option>
-
-                                    <!-- Cidades de Minas Gerais -->
-                                    <option value="belo-horizonte">Belo Horizonte</option>
-                                    <option value="uberlandia">Uberlândia</option>
-                                    <option value="juiz-de-fora">Juiz de Fora</option>
-                                    <option value="contagem">Contagem</option>
-                                    <option value="betim">Betim</option>
-                                    <option value="montes-claros">Montes Claros</option>
-
-                                    <!-- Cidades da Bahia -->
-                                    <option value="salvador">Salvador</option>
-                                    <option value="feira-de-santana">Feira de Santana</option>
-                                    <option value="vitoria-da-conquista">Vitória da Conquista</option>
-                                    <option value="camaçari">Camaçari</option>
-                                    <option value="juazeiro">Juazeiro</option>
-                                    <option value="itabuna">Itabuna</option>
-
-                                    <!-- Cidades do Paraná -->
-                                    <option value="curitiba">Curitiba</option>
-                                    <option value="londrina">Londrina</option>
-                                    <option value="maringa">Maringá</option>
-                                    <option value="foz-do-iguacu">Foz do Iguaçu</option>
-                                    <option value="ponta-grossa">Ponta Grossa</option>
-                                    <option value="cascavel">Cascavel</option>
-
-                                    <!-- Cidades do Rio Grande do Sul -->
-                                    <option value="porto-alegre">Porto Alegre</option>
-                                    <option value="caxias-do-sul">Caxias do Sul</option>
-                                    <option value="pelotas">Pelotas</option>
-                                    <option value="santa-maria">Santa Maria</option>
-                                    <option value="novo-hamburgo">Novo Hamburgo</option>
-                                    <option value="passo-fundo">Passo Fundo</option>
-
-                                    <!-- Cidades de Pernambuco -->
-                                    <option value="recife">Recife</option>
-                                    <option value="olinda">Olinda</option>
-                                    <option value="caruaru">Caruaru</option>
-                                    <option value="petrolina">Petrolina</option>
-                                    <option value="jaboatao-dos-guararapes">Jaboatão dos Guararapes</option>
-                                    <option value="paulista">Paulista</option>
-
-                                    <!-- Cidades do Ceará -->
-                                    <option value="fortaleza">Fortaleza</option>
-                                    <option value="juazeiro-do-norte">Juazeiro do Norte</option>
-                                    <option value="sobral">Sobral</option>
-                                    <option value="maracanau">Maracanaú</option>
-                                    <option value="caucaia">Caucaia</option>
-                                    <option value="iguatu">Iguatu</option>
-
-                                    <!-- Cidades do Distrito Federal -->
-                                    <option value="brasilia">Brasília</option>
-                                    <option value="taguatinga">Taguatinga</option>
-                                    <option value="gama">Gama</option>
-                                    <option value="ceilandia">Ceilândia</option>
-                                    <option value="aguas-claras">Águas Claras</option>
-                                    <option value="samambaia">Samambaia</option>
-
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.RazaoSocial, "Razão Social")
+                            @Html.TextBoxFor(m => m.RazaoSocial, new { @class = "form-control", @required = "required", placeholder = "Digite a razão social" })
+                            @Html.ValidationMessageFor(m => m.RazaoSocial, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
-                            <label for="cep" style="color:black">CEP*</label>
-                            <input type="text" class="form-control" id="cep" required>
+                            @Html.LabelFor(m => m.CNPJ)
+                            @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control", @required = "required", placeholder = "Digite o CNPJ" })
+                            @Html.ValidationMessageFor(m => m.CNPJ, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Telefone)
+                            @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control", @required = "required", placeholder = "Digite o telefone" })
+                            @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Site)
+                            @Html.TextBoxFor(m => m.Site, new { @class = "form-control", @required = "required", placeholder = "Digite o site da empresa" })
+                            @Html.ValidationMessageFor(m => m.Site, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Linkedin)
+                            @Html.TextBoxFor(m => m.Linkedin, new { @class = "form-control", @required = "required", placeholder = "Digite o perfil do LinkedIn" })
+                            @Html.ValidationMessageFor(m => m.Linkedin, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group col-md-8">
-                                <label for="rua" style="color:black">RUA*</label>
-                                <input type="text" class="form-control" id="rua" required>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(m => m.Estado, "ESTADO")
+                                @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
+                                         {
+                            new { Value = "", Text = "Selecione" },
+                            new { Value = "ac", Text = "Acre" },
+                            new { Value = "al", Text = "Alagoas" },
+                            new { Value = "ap", Text = "Amapá" },
+                            new { Value = "am", Text = "Amazonas" },
+                            new { Value = "ba", Text = "Bahia" },
+                            new { Value = "ce", Text = "Ceará" },
+                            new { Value = "df", Text = "Distrito Federal" },
+                            new { Value = "es", Text = "Espírito Santo" },
+                            new { Value = "go", Text = "Goiás" },
+                            new { Value = "ma", Text = "Maranhão" },
+                            new { Value = "mt", Text = "Mato Grosso" },
+                            new { Value = "ms", Text = "Mato Grosso do Sul" },
+                            new { Value = "mg", Text = "Minas Gerais" },
+                            new { Value = "pa", Text = "Pará" },
+                            new { Value = "pb", Text = "Paraíba" },
+                            new { Value = "pr", Text = "Paraná" },
+                            new { Value = "pe", Text = "Pernambuco" },
+                            new { Value = "pi", Text = "Piauí" },
+                            new { Value = "rj", Text = "Rio de Janeiro" },
+                            new { Value = "rn", Text = "Rio Grande do Norte" },
+                            new { Value = "rs", Text = "Rio Grande do Sul" },
+                            new { Value = "ro", Text = "Rondônia" },
+                            new { Value = "rr", Text = "Roraima" },
+                            new { Value = "sc", Text = "Santa Catarina" },
+                            new { Value = "sp", Text = "São Paulo" },
+                            new { Value = "se", Text = "Sergipe" },
+                            new { Value = "to", Text = "Tocantins" }
+
+                            // Adicione os demais estados aqui
+                            }, "Value", "Text"), new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group col-md-4">
-                                <label for="numero" style="color:black">NÚMERO*</label>
-                                <input type="text" class="form-control" id="numero" required>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(m => m.Cidade, "CIDADE")
+                                @Html.DropDownListFor(m => m.Cidade, new SelectList(new[]
+                                         {
+                            new { Value = "", Text = "Selecione" },
+                            // Cidades de São Paulo
+                            new { Value = "sao-paulo", Text = "São Paulo" },
+                            new { Value = "campinas", Text = "Campinas" },
+                            new { Value = "santos", Text = "Santos" },
+                            new { Value = "ribeirao-preto", Text = "Ribeirão Preto" },
+                            new { Value = "rio-de-janeiro", Text = "Rio de Janeiro" },
+                            new { Value = "niteroi", Text = "Niterói" },
+                            new { Value = "petropolis", Text = "Petrópolis" },
+                            new { Value = "belo-horizonte", Text = "Belo Horizonte" },
+                            new { Value = "uberlandia", Text = "Uberlândia" },
+                            new { Value = "juiz-de-fora", Text = "Juiz de Fora" },
+                            new { Value = "salvador", Text = "Salvador" },
+                            new { Value = "feira-de-santana", Text = "Feira de Santana" },
+                            new { Value = "vitoria-da-conquista", Text = "Vitória da Conquista" },
+                            new { Value = "curitiba", Text = "Curitiba" },
+                            new { Value = "londrina", Text = "Londrina" },
+                            new { Value = "maringa", Text = "Maringá" },
+                            new { Value = "porto-alegre", Text = "Porto Alegre" },
+                            new { Value = "caxias-do-sul", Text = "Caxias do Sul" },
+                            new { Value = "recife", Text = "Recife" },
+                            new { Value = "olinda", Text = "Olinda" },
+                            new { Value = "fortaleza", Text = "Fortaleza" },
+                            new { Value = "juazeiro-do-norte", Text = "Juazeiro do Norte" },
+                            new { Value = "sobral", Text = "Sobral" },
+                            new { Value = "brasilia", Text = "Brasília" },
+                            new { Value = "taguatinga", Text = "Taguatinga" },
+                            new { Value = "gama", Text = "Gama" },
+                            new { Value = "manaus", Text = "Manaus" },
+                            new { Value = "belem", Text = "Belém" },
+                            new { Value = "goiania", Text = "Goiânia" },
+                            new { Value = "vitoria", Text = "Vitória" }
+
+                            // Outras cidades...
+                            }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
                             </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CEP)
+                            @Html.TextBoxFor(m => m.CEP, new { @class = "form-control", @required = "required", placeholder = "Digite o CEP", id = "cep" })
+                            @Html.ValidationMessageFor(m => m.CEP, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Rua)
+                            @Html.TextBoxFor(m => m.Rua, new { @class = "form-control", @required = "required", placeholder = "Digite o nome da rua", id = "rua" })
+                            @Html.ValidationMessageFor(m => m.Rua, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Numero)
+                            @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @required = "required", placeholder = "Digite o número" })
+                            @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Senha)
+                            @Html.PasswordFor(m => m.Senha, new { @class = "form-control", @required = "required", placeholder = "Informe sua senha" })
+                            @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                            <span id="senha-error" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.ConfirmarSenha, "Confirmar senha")
+                            @Html.PasswordFor(m => m.ConfirmarSenha, new { @class = "form-control", @required = "required", placeholder = "Confirme a sua senha" })
+                            @Html.ValidationMessageFor(m => m.ConfirmarSenha, "", new { @class = "text-danger" })
+                            <span id="confirmarSenha-error" class="text-danger"></span>
+                            <br />
+                            <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
                         </div>
 
                         <div class="form-group form-check">
@@ -227,19 +193,19 @@
                             <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block"  asp-action="" asp-controller="" asp-action="">CADASTRAR-SE</button>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">CADASTRAR-SE</button>
 
-                        <p class="registro text-center mt-3">Você é um estudante? <a asp-action="" asp-controller="" asp-action="">Cadastre-se aqui.</a></p>
-                    </form>
+                        <p class="registro text-center mt-3">Você é um estudante? <a asp-action="CadastroEstudante" asp-controller="Cadastro">Cadastre-se aqui.</a></p>
+                    }
                 </main>
             </div>
         </div>
     </div>
 
-
 </body>
 
 </html>
+
 <script>
     document.getElementById('cep').addEventListener('blur', function () {
         var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
@@ -263,4 +229,27 @@
         }
     });
 
+    document.querySelector("#submit-btn").addEventListener("click", function (e) {
+        var senha = document.querySelector("#Senha").value;
+        var confirmarSenha = document.querySelector("#ConfirmarSenha").value;
+        var senhaError = document.querySelector("#senha-error");
+        var confirmarSenhaError = document.querySelector("#confirmarSenha-error");
+
+        //Limpa a mensagem de erro
+        senhaError.textContent = "";
+        confirmarSenhaError.textContent = "";
+
+        //Validacao de senha e confirmacao de senha
+        if (senha !== confirmarSenha) {
+            e.preventDefault(); //impede o envio do formulario
+            confirmarSenhaError.textContent = "As senhas não coincidem.";
+        }
+
+        //Validacao para verificar se a senha tem pelomenos 8 caracteres
+        if (senha.length < 8) {
+            e.preventDefault(); // Impede o envio do form
+            confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
+        }
+
+    });
 </script>
