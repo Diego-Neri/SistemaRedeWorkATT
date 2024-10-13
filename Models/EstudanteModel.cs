@@ -1,8 +1,13 @@
-﻿namespace SistemaRedeWork.Models {
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SistemaRedeWork.Models {
     public class EstudanteModel {
+        [Key]
         public int Id { get; set; }
 
-        public string Nome { get; set; }   
+        public string Nome { get; set; }
         public string Sobrenome { get; set; }
 
         public string CPF { get; set; }
@@ -38,7 +43,22 @@
         public string ConfirmarSenha { get; set; }
 
 
+    }
+    public class LoginEstudanteModel {
 
+        [Key]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Digite o login")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Digite a senha")]
+        public string Senha { get; set; }
+        public string? Nome { get; set; }
+        public string? Sobrenome { get; set; }
+
+        [ForeignKey("EstudanteModel")]
+        public int EstudanteId { get; set; }
 
     }
 }

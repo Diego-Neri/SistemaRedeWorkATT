@@ -42,7 +42,7 @@ namespace SistemaRedeWork.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("ConfirmaSenha")
+                    b.Property<string>("ConfirmarSenha")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -175,6 +175,68 @@ namespace SistemaRedeWork.Migrations
                     b.ToTable("Estudantes", (string)null);
                 });
 
+            modelBuilder.Entity("SistemaRedeWork.Models.LoginEmpresaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CNPJ")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RazaoSocial")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmpresaId");
+
+                    b.ToTable("LoginEmpresas");
+                });
+
+            modelBuilder.Entity("SistemaRedeWork.Models.LoginEstudanteModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("EstudanteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Sobrenome")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginEstudantes");
+                });
+
             modelBuilder.Entity("SistemaRedeWork.Models.UsuarioModel", b =>
                 {
                     b.Property<int>("Id")
@@ -201,9 +263,6 @@ namespace SistemaRedeWork.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Perfil")
-                        .HasColumnType("int");
-
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -211,6 +270,17 @@ namespace SistemaRedeWork.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios", (string)null);
+                });
+
+            modelBuilder.Entity("SistemaRedeWork.Models.LoginEmpresaModel", b =>
+                {
+                    b.HasOne("SistemaRedeWork.Models.EmpresaModel", "Empresa")
+                        .WithMany()
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
                 });
 #pragma warning restore 612, 618
         }

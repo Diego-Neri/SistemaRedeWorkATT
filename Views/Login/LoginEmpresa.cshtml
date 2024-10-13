@@ -90,9 +90,24 @@
 </head>
 <body>
 
-    <div class="container-login">
+    @if (TempData["MensagemErro"] != null) {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
 
-        <img src="./content/img/LogoBranca.png"/>
+    @if (TempData["MensagemSucesso"] != null) {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+
+    <div class="container-login">
+        <img src="./content/img/LogoBranca.png" alt="Logo da Empresa" />
+
         <!-- Caixa de informações -->
         <div class="info-box">
             <h4>Sua empresa + nossos estudantes = soluções criativas e eficientes!</h4>
@@ -102,7 +117,8 @@
         <div class="login-box">
             <h4>Bem-vindo(a)!</h4>
             <p>Preencha os campos abaixo com os seus dados de acesso.</p>
-            @using (Html.BeginForm("Login", "Account", FormMethod.Post)) {
+
+            @using (Html.BeginForm("LoginEmpresa", "Login", FormMethod.Post)) {
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email)
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Digite o seu e-mail" })
@@ -115,9 +131,11 @@
                 </div>
                 <button type="submit" class="btn-login">Acessar</button>
             }
+
             <p class="mt-3">Não possui uma conta? <a href="#">Criar minha conta</a></p>
         </div>
     </div>
+
 
 </body>
 </html>

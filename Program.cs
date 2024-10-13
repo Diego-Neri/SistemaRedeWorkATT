@@ -1,8 +1,6 @@
-using ControleDeContatos.Repositorio;
 using Microsoft.EntityFrameworkCore;
 using SistemaRedeWork.Data;
-using SistemaRedeWork.Helper;
-using SistemaRedeWork.Repositorio;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,14 +14,14 @@ builder.Services.AddDbContext<BancoContext>(options =>
 
 // Adicionar servi�os ao container
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+
 
 // Registrar os servi�os de depend�ncias para inje��o de depend�ncia (DI)
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Registrando os reposit�rios e helpers como servi�os escopados
-builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
-builder.Services.AddScoped<ISessao, Sessao>();
-builder.Services.AddScoped<IEmail, Email>();
+
 
 // Configura��o de sess�o
 builder.Services.AddSession(options => {

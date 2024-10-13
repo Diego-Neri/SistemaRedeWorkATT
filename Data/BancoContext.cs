@@ -10,6 +10,8 @@ namespace SistemaRedeWork.Data {
         public DbSet<UsuarioModel> Usuarios { get; set; }
         public DbSet<EmpresaModel> Empresas { get; set; }
         public DbSet<EstudanteModel> Estudantes { get; set; }
+        public DbSet<LoginEmpresaModel> LoginEmpresas { get; set; }
+        public DbSet<LoginEstudanteModel> LoginEstudantes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);

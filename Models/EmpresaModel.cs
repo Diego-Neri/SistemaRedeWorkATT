@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaRedeWork.Models {
     public class EmpresaModel {
+        [Key]
         public int Id { get; set; }
 
         //[Required]
@@ -46,5 +48,26 @@ namespace SistemaRedeWork.Models {
 
         //[Required(ErrorMessage = "A confirmação da senha é obrigatória.")]
         public string ConfirmarSenha { get; set; }
+    }
+
+    public class LoginEmpresaModel {
+        [Key]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "O e-mail é obrigatório")]
+        [EmailAddress(ErrorMessage = "Digite um e-mail válido")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "A senha é obrigatória")]
+        public string Password { get; set; }
+
+        public string? CNPJ { get; set; }
+        public string? RazaoSocial { get; set; }
+
+        // Chave estrangeira para vincular com a Empresa
+        [ForeignKey("EmpresaModel")]
+        public int EmpresaId { get; set; }
+
+        public EmpresaModel? Empresa { get; set; }
     }
 }
