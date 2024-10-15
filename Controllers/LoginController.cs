@@ -4,6 +4,10 @@ using SistemaRedeWork.Models; // Certifique-se de incluir o namespace do seu mod
 
 using Microsoft.EntityFrameworkCore;
 using SistemaRedeWork.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 public class LoginController : Controller {
     private readonly BancoContext _context;
@@ -37,8 +41,27 @@ public class LoginController : Controller {
                 .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email && l.Password == loginEmpresa.Password);
 
             if (login != null) {
+                // Criar as claims do usuário
+                var claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, login.Email),
+                new Claim("FullName", login.Email),
+                new Claim(ClaimTypes.Role, "User") // Pode definir o papel do usuário
+            };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties {
+                    IsPersistent = loginEmpresa.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
+                };
+
+                // Configurar a autenticação do usuário
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
                 TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("EmpresaLogado", "Login");
             }
 
             TempData["MensagemErro"] = $"E-mail ou senha inválidos! Tente novamente.";
@@ -46,6 +69,13 @@ public class LoginController : Controller {
 
         return View(loginEmpresa);
     }
+
+    [Authorize]
+    public IActionResult EmpresaLogado() {
+
+        return View();
+    }
+
 
     [HttpGet]
     public IActionResult LoginEstudante() {
@@ -66,8 +96,27 @@ public class LoginController : Controller {
                 .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email && l.Senha == loginEstudante.Senha);
 
             if (login != null) {
+                // Criar as claims do usuário
+                var claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, login.Email),
+                new Claim("FullName", login.Email),
+                new Claim(ClaimTypes.Role, "User") // Pode definir o papel do usuário
+            };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties {
+                    IsPersistent = loginEstudante.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
+                };
+
+                // Configurar a autenticação do usuário
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
                 TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("EstudanteLogado", "Login");
             }
 
             TempData["MensagemErro"] = $"E-mail ou senha inválidos! Tente novamente.";
@@ -76,5 +125,10 @@ public class LoginController : Controller {
         return View(loginEstudante);
     }
 
+    [Authorize]
+    public IActionResult EstudanteLogado() {
+
+        return View();
+    }
 
 }

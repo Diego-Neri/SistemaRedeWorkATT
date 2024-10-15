@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SistemaRedeWork.Data;
 
@@ -20,8 +21,18 @@ builder.Services.AddHttpContextAccessor();
 // Registrar os servi�os de depend�ncias para inje��o de depend�ncia (DI)
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-// Registrando os reposit�rios e helpers como servi�os escopados
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options => {
+        //Empresas
+        options.LoginPath = "/Login/EmpresaLogado"; // Caminho para a página de login
+        options.LogoutPath = "/LoginEmpresa/Logout"; // Caminho para a página de logout
+        options.AccessDeniedPath = "/Home/AcessoNegado"; // Caminho para a página de acesso negado
 
+        //Estudantes
+        options.LoginPath = "/Login/EstudanteLogado"; // Caminho para a página de login
+        options.LogoutPath = "/LoginEmpresa/Logout"; // Caminho para a página de logout
+        options.AccessDeniedPath = "/Home/AcessoNegado"; // Caminho para a página de acesso negado
+    }); ;
 
 // Configura��o de sess�o
 builder.Services.AddSession(options => {
@@ -47,7 +58,8 @@ app.UseRouting();
 // Habilitar sess�es
 app.UseSession();
 
-// Middleware de autoriza��o
+// Habilitar autenticação e autorização
+app.UseAuthentication(); // Adicionar autenticação antes da autorização
 app.UseAuthorization();
 
 // Definir as rotas padr�o do MVC

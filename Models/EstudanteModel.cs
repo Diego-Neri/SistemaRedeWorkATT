@@ -60,5 +60,7 @@ namespace SistemaRedeWork.Models {
         [ForeignKey("EstudanteModel")]
         public int EstudanteId { get; set; }
 
+        public bool RememberMe { get; set; } // Adiciona a propriedade RememberMe
+
     }
 }

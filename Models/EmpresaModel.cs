@@ -69,5 +69,6 @@ namespace SistemaRedeWork.Models {
         public int EmpresaId { get; set; }
 
         public EmpresaModel? Empresa { get; set; }
+        public bool RememberMe { get; set; } // Adiciona a propriedade RememberMe
     }
 }

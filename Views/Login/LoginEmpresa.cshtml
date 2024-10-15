@@ -129,6 +129,11 @@
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Digite sua senha" })
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
+
+                <div>
+                    <input asp-for="RememberMe" type="checkbox" />
+                    <label asp-for="RememberMe">Lembrar-me</label>
+                </div>
                 <button type="submit" class="btn-login">Acessar</button>
             }
 
