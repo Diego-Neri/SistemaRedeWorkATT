@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using SistemaRedeWork.Models; // Certifique-se de incluir o namespace do seu modelo
+using System.Security.Cryptography;
 
 using Microsoft.EntityFrameworkCore;
 using SistemaRedeWork.Data;
+using System.Text;
 
 public class LoginController : Controller {
     private readonly BancoContext _context;
@@ -36,7 +38,8 @@ public class LoginController : Controller {
             var login = await _context.LoginEmpresas
                 .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email && l.Password == loginEmpresa.Password);
 
-            if (login != null) {
+            // Verifica se o usuário existe e compara a senha
+            if (login != null && VerifyPassword(loginEmpresa.Password, login.Password)) {
                 TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
                 return RedirectToAction("Index", "Home");
             }
@@ -62,10 +65,12 @@ public class LoginController : Controller {
         }
 
         if (ModelState.IsValid) {
+            // Busca o usuário no banco de dados
             var login = await _context.LoginEstudantes
-                .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email && l.Senha == loginEstudante.Senha);
+                .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email);
 
-            if (login != null) {
+            // Verifica se o usuário existe e compara a senha
+            if (login != null && VerifyPassword(loginEstudante.Senha, login.Senha)) {
                 TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
                 return RedirectToAction("Index", "Home");
             }
@@ -77,4 +82,19 @@ public class LoginController : Controller {
     }
 
 
+    private bool VerifyPassword(string inputPassword, string storedHashedPassword) {
+        // Hasheia a senha de entrada e compara com a senha armazenada
+        var hashedInputPassword = HashPassword(inputPassword);
+        return hashedInputPassword == storedHashedPassword;
+    }
+
+    public string HashPassword(string password) {
+        using (var sha256 = SHA256.Create()) {
+            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(bytes);
+        }
+    }
+
 }
+
+

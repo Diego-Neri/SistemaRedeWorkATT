@@ -1,0 +1,86 @@
+﻿@model SistemaRedeWork.Models.ResetCodeViewModel
+
+@{
+    ViewData["HideFooter"] = true;
+    // ViewData["HiderNavbar"] = true;
+}
+
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+@if (TempData["MensagemErro"] != null) {
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h2 class="h4">Validação do Código de Redefinição de Senha</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="ValidateResetCode" method="post">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" asp-for="Email" class="form-control" id="email" placeholder="Insira seu email">
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resetCode">Código de Redefinição</label>
+                            <input type="text" asp-for="ResetCode" class="form-control" id="resetCode" placeholder="Insira o código recebido">
+                            <span class="text-danger" asp-validation-for="ResetCode"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Validar Código</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .card {
+        border-radius: 10px;
+        border: none;
+    }
+
+    .card-header {
+        background-color: #5D2CE7;
+        color: white;
+        border-bottom: none;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .btn-primary {
+        background-color: #5D2CE7;
+        border-color: #007bff;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+    }
+</style>

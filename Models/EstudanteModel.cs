@@ -58,7 +58,12 @@ namespace SistemaRedeWork.Models {
         public string? Sobrenome { get; set; }
 
         [ForeignKey("EstudanteModel")]
-        public int EstudanteId { get; set; }
+        public int? EstudanteId { get; set; }
+
+        public virtual EstudanteModel? Estudante { get; set; } // Navegação
+
+        public string? ResetCode { get; set; }
+        public DateTime? ResetCodeExpiration { get; set; }
 
     }
 }

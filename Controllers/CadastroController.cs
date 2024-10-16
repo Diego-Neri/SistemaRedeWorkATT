@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaRedeWork.Data;
 using SistemaRedeWork.Models;
+using SistemaRedeWork.Controllers;
 
 public class CadastroController : Controller {
 
@@ -94,7 +95,8 @@ public class CadastroController : Controller {
                     Senha = estudante.Senha,
                     EstudanteId = estudante.Id,
                     Nome = estudante.Nome,
-                    Sobrenome = estudante.Sobrenome
+                    Sobrenome = estudante.Sobrenome,
+                    ResetCode = "" // Valor inicial para evitar erro de nulidade
                 };
                 _context.LoginEstudantes.Add(loginEstudante);
                 _context.SaveChanges();

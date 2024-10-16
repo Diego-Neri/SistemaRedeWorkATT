@@ -12,8 +12,8 @@ using SistemaRedeWork.Data;
 namespace SistemaRedeWork.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20241013210922_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241016180423_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -228,6 +228,13 @@ namespace SistemaRedeWork.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("ResetCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ResetCodeExpiration")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -236,6 +243,8 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EstudanteId");
 
                     b.ToTable("LoginEstudantes");
                 });
@@ -284,6 +293,17 @@ namespace SistemaRedeWork.Migrations
                         .IsRequired();
 
                     b.Navigation("Empresa");
+                });
+
+            modelBuilder.Entity("SistemaRedeWork.Models.LoginEstudanteModel", b =>
+                {
+                    b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
+                        .WithMany()
+                        .HasForeignKey("EstudanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Estudante");
                 });
 #pragma warning restore 612, 618
         }
