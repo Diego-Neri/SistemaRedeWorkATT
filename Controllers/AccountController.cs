@@ -19,7 +19,7 @@ namespace SistemaRedeWork.Controllers {
             return View();
         }
 
-       
+
         [HttpPost]
         public IActionResult ForgotPassword(string email) {
             var user = _context.LoginEstudantes.FirstOrDefault(u => u.Email == email);
@@ -55,8 +55,76 @@ namespace SistemaRedeWork.Controllers {
 
             MailMessage mailMessage = new MailMessage {
                 From = new MailAddress("diegotrampo500@gmail.com"),
-                Subject = "Redefinição de Senha",
-                Body = $"Seu código para redefinir a senha é: {resetCode}",
+                Subject = "RedeWork - Redefinicão de senha",
+                Body = $@"
+                                            <html>
+                                              <body style='font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0;'>
+                                                <table width='100%' cellpadding='0' cellspacing='0' style='margin: 0; padding: 20px 0;'>
+                                                  <tr>
+                                                    <td align='center'>
+                                                      <table width='600' cellpadding='0' cellspacing='0' style='background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden;'>
+                                                        <!-- Header -->
+                                                        <tr>
+                                                          <td style='background-color: #007BFF; padding: 20px; text-align: center;'>
+                                                            <img src='https://via.placeholder.com/200x50?text=LinkUp' alt='LinkUp Logo' style='max-width: 200px;'>
+                                                          </td>
+                                                        </tr>
+
+                                                        <!-- Body -->
+                                                        <tr>
+                                                          <td style='padding: 30px;'>
+                                                            <h1 style='font-size: 24px; color: #333333; margin-bottom: 20px; text-align: center;'>Solicitação de Redefinição de Senha</h1>
+                
+                                                            <p style='font-size: 16px; color: #333333; line-height: 1.6;'>
+                                                              Olá,
+                                                            </p>
+                                                            <p style='font-size: 16px; color: #333333; line-height: 1.6;'>
+                                                              Recebemos uma solicitação para redefinir sua senha. Se você não fez essa solicitação, entre em contato imediatamente com nosso suporte técnico.
+                                                            </p>
+                                                            <p style='font-size: 16px; color: #333333; line-height: 1.6;'>
+                                                              Sua nova senha é:
+                                                            </p>
+                
+                                                            <div style='text-align: center; margin: 20px 0;'>
+                                                              <span style='font-size: 24px; color: #ffffff; background-color: #D9534F; padding: 15px 30px; border-radius: 5px; display: inline-block; font-weight: bold;'>
+                                                                {resetCode}
+                                                              </span>
+                                                            </div>
+                
+                                                            <p style='font-size: 16px; color: #333333; line-height: 1.6;'>
+                                                              Caso precise de mais assistência, nossa equipe de suporte está disponível para ajudá-lo. Entre em contato conosco pelo e-mail abaixo:
+                                                            </p>
+
+                                                            <p style='font-size: 18px; text-align: center;'>
+                                                              <a href='mailto:suporte@dominio.com' style='color: #007BFF; font-weight: bold; text-decoration: none;'>suporte@dominio.com</a>
+                                                            </p>
+                
+                                                            <hr style='border: none; border-top: 1px solid #dddddd; margin: 30px 0;' />
+
+                                                            <p style='font-size: 14px; color: #888888; text-align: center;'>
+                                                              Este é um e-mail automatizado enviado por <strong>RedeWork</strong>. Por favor, não responda a este e-mail.
+                                                            </p>
+                                                          </td>
+                                                        </tr>
+
+                                                        <!-- Footer -->
+                                                        <tr>
+                                                          <td style='background-color: #f7f7f7; padding: 20px; text-align: center;'>
+                                                            <p style='font-size: 14px; color: #888888;'>
+                                                              © 2024 RedeWork. Todos os direitos reservados.
+                                                            </p>
+                                                            <p style='font-size: 14px; color: #888888;'>
+                                                              Rua Exemplo, 123 - São Paulo - SP
+                                                            </p>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </table>
+                                              </body>
+                                            </html>",
+
                 IsBodyHtml = true // Usar HTML no corpo do e-mail
             };
 
@@ -83,8 +151,8 @@ namespace SistemaRedeWork.Controllers {
             var user = _context.LoginEstudantes.FirstOrDefault(u => u.Email == model.Email);
 
             if (user == null) {
-                TempData["MensagemErro"] = "Usuário não encontrado."; 
-                    return View(); // Certifique-se de que você está retornando a view correta
+                TempData["MensagemErro"] = "Usuário não encontrado.";
+                return View(); // Certifique-se de que você está retornando a view correta
             }
 
             if (string.IsNullOrEmpty(user.ResetCode)) {
