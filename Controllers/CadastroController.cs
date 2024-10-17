@@ -44,7 +44,8 @@ public class CadastroController : Controller {
                     Password = empresa.Senha,
                     EmpresaId = empresa.Id,
                     CNPJ = empresa.CNPJ,
-                    RazaoSocial = empresa.RazaoSocial
+                    RazaoSocial = empresa.RazaoSocial,
+                    ResetCode = "" // Valor inicial para evitar erro de nulidade
                 };
 
                 _context.LoginEmpresas.Add(loginEmpresa);

@@ -20,6 +20,19 @@
 
 <body class="bg-light">
     <div class="container mt-5">
+        @if (TempData["MensagemErro"] != null) {
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+                @TempData["MensagemErro"]
+            </div>
+        }
+
+        @if (TempData["MensagemSucesso"] != null) {
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+                @TempData["MensagemSucesso"]
+            </div>
+        }
         <h2 class="text-center" style="color:#5D2CE7;">DADOS DO ESTUDANTE</h2>
         <p class="text-center">Segurança e Confidencialidade<br>A RedeWork garante a segurança e a confidencialidade de todos os dados pessoais introduzidos em meu cadastro.</p>
 

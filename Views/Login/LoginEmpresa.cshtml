@@ -135,6 +135,11 @@
                     <label asp-for="RememberMe">Lembrar-me</label>
                 </div>
                 <button type="submit" class="btn-login">Acessar</button>
+
+                <p class="mb-4 text-sm mx-auto">
+                    Esqueceu sua senha?
+                    <a asp-action="ForgotPasswordEmpresa" asp-controller="Account" class="text-primary text-gradient font-weight-bold">Redefinir minha senha</a>
+                </p>
             }
 
             <p class="mt-3">Não possui uma conta? <a asp-area="" asp-controller="Cadastro" asp-action="CadastroEmpresa">Criar minha conta</a></p>

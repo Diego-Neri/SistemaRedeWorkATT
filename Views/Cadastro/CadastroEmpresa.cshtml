@@ -17,6 +17,20 @@
 
 <body class="bg-light">
 
+    @if (TempData["MensagemErro"] != null) {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    @if (TempData["MensagemSucesso"] != null) {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
     <div class="container my-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
