@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaRedeWork.Data;
 
@@ -11,9 +12,11 @@ using SistemaRedeWork.Data;
 namespace SistemaRedeWork.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    partial class BancoContextModelSnapshot : ModelSnapshot
+    [Migration("20241014234357_Autenticacao")]
+    partial class Autenticacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,7 +225,7 @@ namespace SistemaRedeWork.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("EstudanteId")
+                    b.Property<int>("EstudanteId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -230,12 +233,6 @@ namespace SistemaRedeWork.Migrations
 
                     b.Property<bool>("RememberMe")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("ResetCode")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("ResetCodeExpiration")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Senha")
                         .IsRequired()
@@ -245,8 +242,6 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EstudanteId");
 
                     b.ToTable("LoginEstudantes");
                 });
@@ -295,15 +290,6 @@ namespace SistemaRedeWork.Migrations
                         .IsRequired();
 
                     b.Navigation("Empresa");
-                });
-
-            modelBuilder.Entity("SistemaRedeWork.Models.LoginEstudanteModel", b =>
-                {
-                    b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
-                        .WithMany()
-                        .HasForeignKey("EstudanteId");
-
-                    b.Navigation("Estudante");
                 });
 #pragma warning restore 612, 618
         }

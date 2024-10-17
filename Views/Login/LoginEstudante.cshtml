@@ -60,6 +60,11 @@
                     @Html.PasswordFor(m => m.Senha, new { @class = "form-control", placeholder = "Digite sua senha" })
                     @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
                 </div>
+
+                <div>
+                    <input asp-for="RememberMe" type="checkbox" />
+                    <label asp-for="RememberMe">Lembrar-me</label>
+                </div>
                 <button type="submit" class="btn-login">Acessar</button>
 
                 <p class="mb-4 text-sm mx-auto">
@@ -73,3 +78,12 @@
 
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        settimeout(function () {
+            $(".alert").fadeout("slow", function () {
+                $(this).alert('close');
+            });
+        }, 5000);
+    });
+</script>

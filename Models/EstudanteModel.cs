@@ -65,5 +65,7 @@ namespace SistemaRedeWork.Models {
         public string? ResetCode { get; set; }
         public DateTime? ResetCodeExpiration { get; set; }
 
+        public bool RememberMe { get; set; } // Adiciona a propriedade RememberMe
+
     }
 }
