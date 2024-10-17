@@ -65,9 +65,9 @@ namespace SistemaRedeWork.Controllers {
                                                       <table width='600' cellpadding='0' cellspacing='0' style='background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden;'>
                                                         <!-- Header -->
                                                         <tr>
-                                                          <td style='background-color: #007BFF; padding: 20px; text-align: center;'>
-                                                            <img src='https://via.placeholder.com/200x50?text=LinkUp' alt='LinkUp Logo' style='max-width: 200px;'>
-                                                          </td>
+                                                          <td style='background: linear-gradient(to right, #a17bc4, #5D2CE7); padding: 5px; text-align: center;'>
+                                                             <img src='https://i.imgur.com/uscpPaC.png' alt='RedeWork Logo' style='max-width: 200px;'>
+                                                           </td>
                                                         </tr>
 
                                                         <!-- Body -->
