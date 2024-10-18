@@ -27,6 +27,11 @@ public class LoginController : Controller {
         return View();
     }
 
+    [Authorize]
+    public IActionResult EmpresaLogado() {
+
+        return View();
+    }
 
     [HttpPost]
     public async Task<IActionResult> LoginEmpresa(LoginEmpresaModel loginEmpresa) {
@@ -39,8 +44,9 @@ public class LoginController : Controller {
         }
 
         if (ModelState.IsValid) {
+            // Busca o usuário no banco de dados
             var login = await _context.LoginEmpresas
-                .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email && l.Password == loginEmpresa.Password);
+                .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email);
 
             if (login != null) {
                 // Criar as claims do usuário
@@ -72,17 +78,32 @@ public class LoginController : Controller {
         return View(loginEmpresa);
     }
 
-    [Authorize]
-    public IActionResult EmpresaLogado() {
+    //private bool VerificaSenha(string inputPassword, string storedHashedPassword) {
+    //    // Hasheia a senha de entrada e compara com a senha armazenada
+    //    var hashedInputPassword = HashPasswordEmpresa(inputPassword);
+    //    return hashedInputPassword == storedHashedPassword;
+    //}
 
-        return View();
-    }
+    //public string HashPasswordEmpresa(string password) {
+    //    using (var sha256 = SHA256.Create()) {
+    //        var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+    //        return Convert.ToBase64String(bytes);
+    //    }
+    //}
+
+
+
+
+
+
 
 
     [HttpGet]
     public IActionResult LoginEstudante() {
         return View();
     }
+
+
     [HttpPost]
     public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudante) {
         if (!ModelState.IsValid) {

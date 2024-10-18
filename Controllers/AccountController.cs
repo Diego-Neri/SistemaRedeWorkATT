@@ -238,7 +238,7 @@ namespace SistemaRedeWork.Controllers {
         [HttpPost]
         [Route("ResetPasswordEmpresa")]
         public IActionResult ResetPasswordEmpresa(ResetPasswordViewModel model) {
-            // Certifique-se de que o email está sendo passado corretamente
+            //  ver se que o email está sendo passado corretamente
             var user = _context.LoginEmpresas. FirstOrDefault(u => u.Email == model.Email);
 
             if (user == null) {
@@ -251,7 +251,7 @@ namespace SistemaRedeWork.Controllers {
                 return View(); // Retorne a view correta
             }
 
-            user.Password = HashPassword(model.NewPassword); // Hash da nova senha
+            user.Password = HashPassword(model.NewPassword); // criptografa a nova senha
             //user.ResetCode = null; // Limpar o código após a redefinição
             user.ResetCodeExpiration = null; // Limpar a expiração do código
 
@@ -266,7 +266,7 @@ namespace SistemaRedeWork.Controllers {
             return RedirectToAction("LoginEmpresa", "Login"); // Redirecionar para a página de login
         }
 
-
+        //Método para criptografar essa bosta
         public string HashPassword(string password) {
             using (var sha256 = SHA256.Create()) {
                 var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));

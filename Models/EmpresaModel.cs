@@ -66,7 +66,7 @@ namespace SistemaRedeWork.Models {
 
         // Chave estrangeira para vincular com a Empresa
         [ForeignKey("EmpresaModel")]
-        public int EmpresaId { get; set; }
+        public int? EmpresaId { get; set; }
 
         public EmpresaModel? Empresa { get; set; }
 
