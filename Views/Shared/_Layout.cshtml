@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        @if (ViewData["HiderNavbar"] == null || (bool)ViewData["HiderNavbar"] == false) {
+        @if (ViewData["HideNavbar"] == null || (bool)ViewData["HideNavbar"] == false) {
             <nav class ="navbar navbar-expand-sm navbar-light bg-white border-bottom mb-3 shadow-sm">
                 <div class="container-fluid d-flex justify-content-between align-items-center">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="position: absolute; left: 15px; top: 10px;">

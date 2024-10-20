@@ -102,6 +102,7 @@ public class CadastroController : Controller {
                 _context.LoginEstudantes.Add(loginEstudante);
                 _context.SaveChanges();
 
+                TempData["MensagemSucesso"] = $"Cadastro criado com sucesso. Seja Bem-Vindo!!";
                 return RedirectToAction("Sucesso");
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);

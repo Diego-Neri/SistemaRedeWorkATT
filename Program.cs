@@ -29,15 +29,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Home/AcessoNegado"; // Caminho para a página de acesso negado
 
         //Estudantes
-        options.LoginPath = "/Login/EstudanteLogado"; // Caminho para a página de login
+        options.LoginPath = "/Login/_EstudanteLogado"; // Caminho para a página de login
         options.LogoutPath = "/LoginEmpresa/Logout"; // Caminho para a página de logout
         options.AccessDeniedPath = "/Home/AcessoNegado"; // Caminho para a página de acesso negado
     }); ;
 
-// Configura��o de sess�o
-builder.Services.AddSession(options => {
-    options.Cookie.HttpOnly = true; // Melhor seguran�a para cookies
-    options.Cookie.IsEssential = true; // Necess�rio para que as sess�es funcionem corretamente no GDPR
+// Adicionar serviços de sessão
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tempo de expiração da sessão
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();

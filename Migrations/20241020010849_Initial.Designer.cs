@@ -12,8 +12,8 @@ using SistemaRedeWork.Data;
 namespace SistemaRedeWork.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20241017144405_addTokenEmpresa")]
-    partial class addTokenEmpresa
+    [Migration("20241020010849_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,95 @@ namespace SistemaRedeWork.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("SistemaRedeWork.Models.Arquivos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<byte[]>("Dados")
+                        .IsRequired()
+                        .HasColumnType("longblob");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Arquivos");
+                });
+
+            modelBuilder.Entity("SistemaRedeWork.Models.CurriculoModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Certificado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Curso")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("DataNascimento")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Educacao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Experiencia")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Habilidade")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Idioma")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NomeCompleto")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Objetivo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Semestre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Universidade")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Curriculo");
+                });
 
             modelBuilder.Entity("SistemaRedeWork.Models.EmpresaModel", b =>
                 {
@@ -193,7 +282,7 @@ namespace SistemaRedeWork.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("EmpresaId")
+                    b.Property<int?>("EmpresaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
@@ -299,9 +388,7 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.HasOne("SistemaRedeWork.Models.EmpresaModel", "Empresa")
                         .WithMany()
-                        .HasForeignKey("EmpresaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmpresaId");
 
                     b.Navigation("Empresa");
                 });

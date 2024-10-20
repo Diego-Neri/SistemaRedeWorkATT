@@ -1,0 +1,236 @@
+﻿@model EstudanteModel
+@{
+    ViewData["HideFooter"] = true;
+    ViewData["HideNavBar"] = true;
+
+    var vagasCadastradas = new List<(string Titulo, string Descricao)>
+                    {
+        ("Vaga 1", "Descrição detalhada da Vaga 1."),
+        ("Vaga 2", "Descrição detalhada da Vaga 2."),
+        ("Vaga 3", "Descrição detalhada da Vaga 3."),
+        ("Vaga 4", "Descrição detalhada da Vaga 4."),
+        ("Vaga 5", "Descrição detalhada da Vaga 5.")
+    };
+}
+@if (ViewData["NavBarLogado"] == null || (bool)ViewData["NavBarLogado"] == false)
+{
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="EmpresaLogado" >
+                <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">@(!string.IsNullOrEmpty(Model.Nome) ? $"Olá, {Model.Nome}" : "Olá, visitante")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" style="color:black" asp-controller="Perfil" asp-action="PerfilEstudante" asp-route-id="@Model.Id">Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:black" asp-controller="Perfil" asp-action="Curriculo" asp-route-id="@Model.Id">Currículo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+}
+<div class="container">
+    @if (!string.IsNullOrEmpty(Model.Nome)) {
+        <div class="welcome-message">
+            <h2 class="welcome-message">Olá, @Model.Nome!</h2>
+            <br />
+            <p class="welcome-message">Estamos aqui para ajudar você a encontrar a vaga perfeita. Explore as opções e dê o próximo passo na sua carreira!</p>
+        </div>
+    } else {
+        <h2 class="welcome-message">Olá, estudante</h2>
+    }
+    @for (int i = 0; i < (vagasCadastradas.Count + 2) / 3; i++) {
+        <div class="row mb-3">
+            <!-- Adiciona uma margem inferior para espaçamento -->
+            @for (int j = 0; j < 3; j++) {
+                var index = i * 3 + j;
+                if (index < vagasCadastradas.Count) {
+                    <div class="col-sm">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                @vagasCadastradas[index].Titulo
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@vagasCadastradas[index].Titulo</h5>
+                                <p class="card-text">Um exemplo de texto de suporte abaixo como uma introdução natural ao conteúdo adicional.</p>
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal" onclick="openModal('@vagasCadastradas[index].Titulo', '@vagasCadastradas[index].Descricao')">Ver mais</a>
+                            </div>
+                            <div class="card-footer text-body-secondary">
+                                <!-- Aqui você pode adicionar informações adicionais, como a data da vaga, se necessário -->
+                                <small>2 days ago</small>
+                            </div>
+                        </div>
+                    </div>
+                } else {
+                    <div class="col-sm">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                Sem Vaga
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Sem Vaga</h5>
+                                <p class="card-text">No momento, não há vagas cadastradas.</p>
+                                <a href="#" class="btn btn-primary" disabled>Ver mais</a>
+                            </div>
+                            <div class="card-footer text-body-secondary">
+                                <!-- Você pode adicionar um texto fixo ou deixar em branco -->
+                                <small>N/A</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vagaModalLabel">Detalhes da Vaga</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 id="vagaTitulo" class="text-primary"></h5>
+                <p id="vagaDescricao"></p>
+                <a href="#" class="btn btn-success">Inscrever-se</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .offcanvas-header {
+        background: linear-gradient(135deg, #6a0dad, #b03f7f); /* Cor do fundo do cabeçalho do menu lateral */
+        color: white; /* Cor do texto do cabeçalho */
+        padding: 15px; /* Adiciona espaçamento interno */
+    }
+
+    .offcanvas-body {
+        background-color: #f8f9fa; /* Fundo claro para a área do menu */
+        padding: 20px; /* Adiciona mais espaçamento interno */
+        border-right: 2px solid #343a40; /* Adiciona uma borda ao lado direito do menu */
+    }
+
+    .nav-item a {
+        display: block; /* Garante que os links ocupem toda a largura do container */
+        padding: 10px 15px; /* Adiciona espaçamento interno aos links */
+        margin-bottom: 10px; /* Espaço entre os links */
+        background: linear-gradient(135deg, #6a0dad, #b03f7f); /* Cor de fundo do link */
+        color: white; /* Cor do texto dos links */
+        border-radius: 5px; /* Bordas arredondadas */
+        text-align: center; /* Centraliza o texto dos links */
+        text-decoration: none; /* Remove sublinhado */
+        transition: background-color 0.3s ease; /* Animação suave no hover */
+    }
+
+    img.logo {
+        height: 40px;
+        max-width: 100%;
+    }
+
+    .navbar-toggler-icon {
+        background-color: black;
+    }
+
+    .navbar {
+        margin-bottom: 50px;
+    }
+
+    .row {
+        margin-bottom: 20px; /* Adiciona espaço entre as fileiras de cards */
+    }
+
+    .card {
+        transition: transform 0.3s;
+        margin-bottom: 20px; /* Opcional, caso você queira mais espaço entre os próprios cards */
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .container {
+        margin-top: 60px;
+    }
+
+    .welcome-message {
+        font-size: 2em;
+        color: black;
+        background: linear-gradient(135deg, #6a0dad, #b03f7f);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 20px;
+        text-align: center;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+        .welcome-message h2 {
+            display: block; /* Garantir que h2 esteja em um bloco */
+            margin-bottom: 10px; /* Ajuste o espaço entre o h2 e o p */
+        }
+
+        .welcome-message p {
+            font-size: 1.5em; /* Pode reduzir um pouco o tamanho para melhor proporção */
+            color: black;
+            background: linear-gradient(135deg, #6a0dad, #b03f7f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: block; /* Garantir que o parágrafo esteja em um bloco */
+        }
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const welcomeMessage = document.querySelector('.welcome-message');
+        const text = welcomeMessage.textContent;
+        welcomeMessage.textContent = '';
+
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                welcomeMessage.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, 3);
+            } else {
+                welcomeMessage.style.opacity = 1;
+            }
+        }
+
+        type();
+    });
+
+    function openModal(titulo, descricao) {
+        document.getElementById('vagaTitulo').innerText = titulo;
+        document.getElementById('vagaDescricao').innerText = descricao;
+    }
+</script>

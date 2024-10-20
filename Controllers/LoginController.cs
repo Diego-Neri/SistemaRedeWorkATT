@@ -106,53 +106,71 @@ public class LoginController : Controller {
 
     [HttpPost]
     public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudante) {
+        // Verifica se o modelo está válido
         if (!ModelState.IsValid) {
             foreach (var entry in ModelState) {
                 foreach (var error in entry.Value.Errors) {
                     Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
                 }
             }
+            // Retorna a view com os erros de validação
+            return View(loginEstudante);
         }
 
-        if (ModelState.IsValid) {
-            // Busca o usuário no banco de dados
-            var login = await _context.LoginEstudantes
-                .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email);
+        // Busca o usuário no banco de dados
+        var login = await _context.LoginEstudantes
+            .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email && l.Senha == loginEstudante.Senha);
 
-            if (login != null) {
-                // Criar as claims do usuário
-                var claims = new List<Claim> {
-                new Claim(ClaimTypes.Name, login.Email),
-                new Claim("FullName", login.Email),
-                new Claim(ClaimTypes.Role, "User") // Pode definir o papel do usuário
+        // Verifica se o login foi encontrado
+        if (login != null) {
+            // Salva o nome do usuário na sessão
+            HttpContext.Session.SetString("NomeUsuario", $"{login.Nome}");
+
+            // Criar as claims do usuário
+            var claims = new List<Claim> {
+            new Claim(ClaimTypes.Name, login.Email),
+            new Claim("FullName", $"{login.Nome} {login.Sobrenome}"),
+            new Claim(ClaimTypes.Role, "User") // Pode definir o papel do usuário
+        };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties {
+                IsPersistent = loginEstudante.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
             };
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            // Configurar a autenticação do usuário
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
 
-                var authProperties = new AuthenticationProperties {
-                    IsPersistent = loginEstudante.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
-                };
-
-                // Configurar a autenticação do usuário
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
-
-                TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
-                return RedirectToAction("EstudanteLogado", "Login");
-            }
-
-            TempData["MensagemErro"] = $"E-mail ou senha inválidos! Tente novamente.";
+            TempData["MensagemSucesso"] = "Login realizado com sucesso! Bem-vindo!";
+            return RedirectToAction("_EstudanteLogado", new { id = login.Id }); // Redirecionar para EstudanteLogado com o ID
         }
 
+        TempData["MensagemErro"] = "E-mail ou senha inválidos! Tente novamente.";
         return View(loginEstudante);
     }
 
-    [Authorize]
-    public IActionResult EstudanteLogado() {
 
-        return View();
+    [Authorize]
+    public IActionResult _EstudanteLogado(int id) {
+
+        var estudante = _context.Estudantes.FirstOrDefault(e => e.Id == id);
+        if (estudante == null) {
+            return NotFound(); // Retorna 404 se o estudante não for encontrado
+        }
+
+        // Preencher o modelo com os dados do estudante
+        var model = new EstudanteModel {
+            Id = estudante.Id,
+            Nome = estudante.Nome
+           
+            // Adicione outros campos necessários
+        };
+
+        return View(model); // Certifique-se de retornar a view com o modelo preenchido
     }
 
     private bool VerifyPassword(string inputPassword, string storedHashedPassword) {

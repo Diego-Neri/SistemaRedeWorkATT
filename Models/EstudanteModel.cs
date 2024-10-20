@@ -42,7 +42,9 @@ namespace SistemaRedeWork.Models {
 
         public string ConfirmarSenha { get; set; }
 
-
+        public static implicit operator List<object>(EstudanteModel v) {
+            throw new NotImplementedException();
+        }
     }
     public class LoginEstudanteModel {
 

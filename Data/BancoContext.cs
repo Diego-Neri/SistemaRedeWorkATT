@@ -13,6 +13,11 @@ namespace SistemaRedeWork.Data {
         public DbSet<LoginEmpresaModel> LoginEmpresas { get; set; }
         public DbSet<LoginEstudanteModel> LoginEstudantes { get; set; }
 
+        public DbSet<CurriculoModel> Curriculo { get; set; }
+
+        public DbSet<Arquivos> Arquivos { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 

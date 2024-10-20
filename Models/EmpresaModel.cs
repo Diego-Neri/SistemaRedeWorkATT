@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace SistemaRedeWork.Models {
     public class EmpresaModel {
@@ -74,4 +75,7 @@ namespace SistemaRedeWork.Models {
         public DateTime? ResetCodeExpiration { get; set; }
         public bool RememberMe { get; set; } // Adiciona a propriedade RememberMe
     }
+
+
+    
 }
