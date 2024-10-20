@@ -146,7 +146,7 @@ public class LoginController : Controller {
                 authProperties);
 
             TempData["MensagemSucesso"] = "Login realizado com sucesso! Bem-vindo!";
-            return RedirectToAction("_EstudanteLogado", new { id = login.Id }); // Redirecionar para EstudanteLogado com o ID
+            return RedirectToAction("EstudanteLogado", new { id = login.Id }); // Redirecionar para EstudanteLogado com o ID
         }
 
         TempData["MensagemErro"] = "E-mail ou senha inválidos! Tente novamente.";
@@ -154,9 +154,7 @@ public class LoginController : Controller {
     }
 
 
-    [Authorize]
-    public IActionResult _EstudanteLogado(int id) {
-
+    public IActionResult EstudanteLogado(int id) {
         var estudante = _context.Estudantes.FirstOrDefault(e => e.Id == id);
         if (estudante == null) {
             return NotFound(); // Retorna 404 se o estudante não for encontrado
@@ -166,12 +164,13 @@ public class LoginController : Controller {
         var model = new EstudanteModel {
             Id = estudante.Id,
             Nome = estudante.Nome
-           
+
             // Adicione outros campos necessários
         };
 
         return View(model); // Certifique-se de retornar a view com o modelo preenchido
     }
+    
 
     private bool VerifyPassword(string inputPassword, string storedHashedPassword) {
         // Hasheia a senha de entrada e compara com a senha armazenada

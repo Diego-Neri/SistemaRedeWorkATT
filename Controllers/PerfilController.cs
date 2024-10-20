@@ -77,8 +77,8 @@ namespace SistemaRedeWork.Controllers {
             var estudante = await _context.Estudantes.FindAsync(id);
 
             if (estudante == null) {
-                TempData["MensagemErro"] = "Estudante não encontrado!";
-                return RedirectToAction("EstudanteLogado");
+                TempData["MensagemErro"] = $"Estudante não encontrado!";
+                return RedirectToAction("EstudanteLogado", "Login");
             }
             var nomeCompleto = $"{estudante.Nome} {estudante.Sobrenome}";
 
@@ -112,7 +112,7 @@ namespace SistemaRedeWork.Controllers {
                         Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
                     }
                 }
-                TempData["MensagemErro"] = "Não foi possível salvar o seu currículo!";
+                TempData["MensagemErro"] = $"Não foi possível salvar o seu currículo!";
                 return View("Curriculo", viewModel);  // Retorna a view com os erros
             }
 
@@ -127,7 +127,7 @@ namespace SistemaRedeWork.Controllers {
                 // Editando um currículo existente
                 curriculo = await _context.Curriculo.FindAsync(id);
                 if (curriculo == null) {
-                    TempData["MensagemErro"] = "Currículo não encontrado!";
+                    TempData["MensagemErro"] = $"Currículo não encontrado!";
                     return RedirectToAction("Curriculo");  // Redireciona se o currículo não for encontrado
                 }
             }
@@ -150,8 +150,8 @@ namespace SistemaRedeWork.Controllers {
             // Salva as mudanças no banco de dados
             await _context.SaveChangesAsync();
 
-            TempData["MensagemSucesso"] = "Currículo salvo com sucesso!";
-            return RedirectToAction("Curriculo");
+            TempData["MensagemSucesso"] = $"Currículo salvo com sucesso!";
+            return RedirectToAction("EstudanteLogado", "Login");
         }
 
 
