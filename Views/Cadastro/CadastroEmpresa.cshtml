@@ -54,7 +54,7 @@
                             @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @required = "required", placeholder = "Digite o nome do usuário" })
                             @Html.ValidationMessageFor(m => m.Usuario, "", new { @class = "text-danger" })
                         </div>
-                        
+
                         <div class="form-group">
                             @Html.LabelFor(m => m.RazaoSocial, "Razão Social")
                             @Html.TextBoxFor(m => m.RazaoSocial, new { @class = "form-control", @required = "required", placeholder = "Digite a razão social" })
@@ -220,50 +220,65 @@
 
 </html>
 
-<script>
-    document.getElementById('cep').addEventListener('blur', function () {
-        var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 
-        if (cep.length === 8) {
-            var url = `https://viacep.com.br/ws/${cep}/json/`;
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Quando o botão com a classe 'close-alert' for clicado
+            $('.close-alert').click(function () {
+                // Esconde o elemento pai (a div com a mensagem)
+                $(this).closest('.alert').fadeOut();
+            });
+        });
+        document.getElementById('cep').addEventListener('blur', function () {
+            var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (!("erro" in data)) {
-                        // Preencher o campo "rua" com o valor retornado
-                        document.getElementById('rua').value = data.logradouro;
-                    } else {
-                        alert('CEP não encontrado.');
-                    }
-                })
-                .catch(error => console.log('Erro ao buscar o CEP: ', error));
-        } else {
-            alert('Por favor, insira um CEP válido.');
-        }
-    });
+            if (cep.length === 8) {
+                var url = `https://viacep.com.br/ws/${cep}/json/`;
 
-    document.querySelector("#submit-btn").addEventListener("click", function (e) {
-        var senha = document.querySelector("#Senha").value;
-        var confirmarSenha = document.querySelector("#ConfirmarSenha").value;
-        var senhaError = document.querySelector("#senha-error");
-        var confirmarSenhaError = document.querySelector("#confirmarSenha-error");
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!("erro" in data)) {
+                            // Preencher o campo "rua" com o valor retornado
+                            document.getElementById('rua').value = data.logradouro;
+                        } else {
+                            alert('CEP não encontrado.');
+                        }
+                    })
+                    .catch(error => console.log('Erro ao buscar o CEP: ', error));
+            } else {
+                alert('Por favor, insira um CEP válido.');
+            }
+        });
 
-        //Limpa a mensagem de erro
-        senhaError.textContent = "";
-        confirmarSenhaError.textContent = "";
+        document.querySelector("#submit-btn").addEventListener("click", function (e) {
+            var senha = document.querySelector("#Senha").value;
+            var confirmarSenha = document.querySelector("#ConfirmarSenha").value;
+            var senhaError = document.querySelector("#senha-error");
+            var confirmarSenhaError = document.querySelector("#confirmarSenha-error");
 
-        //Validacao de senha e confirmacao de senha
-        if (senha !== confirmarSenha) {
-            e.preventDefault(); //impede o envio do formulario
-            confirmarSenhaError.textContent = "As senhas não coincidem.";
-        }
+            //Limpa a mensagem de erro
+            senhaError.textContent = "";
+            confirmarSenhaError.textContent = "";
 
-        //Validacao para verificar se a senha tem pelomenos 8 caracteres
-        if (senha.length < 8) {
-            e.preventDefault(); // Impede o envio do form
-            confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
-        }
+            //Validacao de senha e confirmacao de senha
+            if (senha !== confirmarSenha) {
+                e.preventDefault(); //impede o envio do formulario
+                confirmarSenhaError.textContent = "As senhas não coincidem.";
+            }
 
-    });
-</script>
+            //Validacao para verificar se a senha tem pelomenos 8 caracteres
+            if (senha.length < 8) {
+                e.preventDefault(); // Impede o envio do form
+                confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
+            }
+
+        });
+    </script>
+
+
+}
+

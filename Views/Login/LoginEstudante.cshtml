@@ -78,12 +78,17 @@
 
 </body>
 </html>
-<script>
-    $(document).ready(function () {
-        settimeout(function () {
-            $(".alert").fadeout("slow", function () {
-                $(this).alert('close');
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Quando o botão com a classe 'close-alert' for clicado
+            $('.close-alert').click(function () {
+                // Esconde o elemento pai (a div com a mensagem)
+                $(this).closest('.alert').fadeOut();
             });
-        }, 5000);
-    });
-</script>
+        });
+    </script>
+}

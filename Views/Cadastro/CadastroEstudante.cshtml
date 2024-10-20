@@ -329,8 +329,9 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary" id="submit-btn">CADASTRAR-SE</button>
-                <p class="mt-3 text-center">Você é uma empresa? <a asp-action="CadastroEmpresa" asp-controller="Cadastro">Cadastre-se aqui.</a
-                    ></p>
+                <p class="mt-3 text-center">
+                    Você é uma empresa? <a asp-action="CadastroEmpresa" asp-controller="Cadastro">Cadastre-se aqui.</a>
+                </p>
             }
         </main>
 
@@ -342,53 +343,68 @@
 </body>
 
 </html>
-<script>
-    document.getElementById('CEP').addEventListener('blur', function () {
-        var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
 
-        if (cep.length === 8) {
-            var url = `https://viacep.com.br/ws/${cep}/json/`;
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (!("erro" in data)) {
-                        document.getElementById('Rua').value = data.logradouro;
-                    } else {
-                        alert('CEP não encontrado.');
-                    }
-                })
-                .catch(error => {
-                    console.log('Erro ao buscar o CEP: ', error);
-                    alert('Erro ao buscar o CEP. Tente novamente.');
-                });
-        } else {
-            alert('Por favor, insira um CEP válido.');
-        }
-    });
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Quando o botão com a classe 'close-alert' for clicado
+            $('.close-alert').click(function () {
+                // Esconde o elemento pai (a div com a mensagem)
+                $(this).closest('.alert').fadeOut();
+            });
+        });
+        document.getElementById('CEP').addEventListener('blur', function () {
+            var cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
 
-    document.querySelector("#submit-btn").addEventListener("click", function (e) {
-        var senha = document.querySelector("#Senha").value;
-        var confirmarSenha = document.querySelector("#ConfirmarSenha").value;
-        var senhaError = document.querySelector("#senha-error");
-        var confirmarSenhaError = document.querySelector("#confirmarSenha-error");
+            if (cep.length === 8) {
+                var url = `https://viacep.com.br/ws/${cep}/json/`;
 
-        //Limpa a mensagem de erro
-        senhaError.textContent = "";
-        confirmarSenhaError.textContent = "";
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!("erro" in data)) {
+                            document.getElementById('Rua').value = data.logradouro;
+                        } else {
+                            alert('CEP não encontrado.');
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Erro ao buscar o CEP: ', error);
+                        alert('Erro ao buscar o CEP. Tente novamente.');
+                    });
+            } else {
+                alert('Por favor, insira um CEP válido.');
+            }
+        });
 
-        //Validacao de senha e confirmacao de senha 
-        if (senha !== confirmarSenha) {
-            e.preventDefault(); //impede o envio do formulario
-            confirmarSenhaError.textContent = "As senhas não coincidem.";
-        }
+        document.querySelector("#submit-btn").addEventListener("click", function (e) {
+            var senha = document.querySelector("#Senha").value;
+            var confirmarSenha = document.querySelector("#ConfirmarSenha").value;
+            var senhaError = document.querySelector("#senha-error");
+            var confirmarSenhaError = document.querySelector("#confirmarSenha-error");
 
-        //Validacao para verificar se a senha tem pelomenos 8 caracteres
-        if (senha.length < 8) {
-            e.preventDefault(); // Impede o envio do form
-            confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
-        }
+            //Limpa a mensagem de erro
+            senhaError.textContent = "";
+            confirmarSenhaError.textContent = "";
 
-    });
+            //Validacao de senha e confirmacao de senha
+            if (senha !== confirmarSenha) {
+                e.preventDefault(); //impede o envio do formulario
+                confirmarSenhaError.textContent = "As senhas não coincidem.";
+            }
 
-</script>
+            //Validacao para verificar se a senha tem pelomenos 8 caracteres
+            if (senha.length < 8) {
+                e.preventDefault(); // Impede o envio do form
+                confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
+            }
+
+        });
+    </script>
+
+
+
+}
