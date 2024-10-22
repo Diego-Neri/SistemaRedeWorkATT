@@ -65,25 +65,18 @@ public class CadastroController : Controller {
 
 
     public IActionResult EmpresaLogado() {
-
-        return View();
-    }
-    public IActionResult ListarEstudantes() {
-        var empresa = ObterEmpresaLogada(); // Obtenha a empresa logada
-        var estudantes = _context.Estudantes.ToList(); // Carregar estudantes do banco de dados
-
         var model = new EmpresaModel {
-            Usuario = empresa.Usuario,
-            Estudantes = estudantes
+            Usuario = ""
         };
 
-        return View(model); // Passando o model para a View
+        return View(model);
     }
+    public IActionResult ListarEstudantes() {
+        // Buscando todos os estudantes do banco de dados
+        var estudantes = _context.Estudantes.ToList();
 
-    public EmpresaModel ObterEmpresaLogada() {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var empresa = _context.Empresas.FirstOrDefault(e => e.Usuario == userId); // Exemplo de busca no banco
-        return empresa;
+        // Passando os estudantes para a View
+        return View(estudantes);
     }
 
 
