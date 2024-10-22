@@ -27,11 +27,11 @@ public class LoginController : Controller {
         return View();
     }
 
-    [Authorize]
-    public IActionResult EmpresaLogado() {
+    //[Authorize]
+    //public IActionResult EmpresaLogado() {
 
-        return View();
-    }
+    //    return View();
+    //}
 
     [HttpPost]
     public async Task<IActionResult> LoginEmpresa(LoginEmpresaModel loginEmpresa) {
@@ -69,13 +69,30 @@ public class LoginController : Controller {
                     authProperties);
 
                 TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
-                return RedirectToAction("EmpresaLogado", "Login");
+                return RedirectToAction("EmpresaLogado", "Cadastro");
             }
 
             TempData["MensagemErro"] = $"E-mail ou senha inválidos! Tente novamente.";
         }
 
         return View(loginEmpresa);
+    }
+
+    public IActionResult EmpresaLogado(int id) {
+        var empresa = _context.Empresas.FirstOrDefault(e => e.Id == id);
+        if (empresa == null) {
+            return NotFound(); // Retorna 404 se o estudante não for encontrado
+        }
+
+        // Preencher o modelo com os dados do estudante
+        var model = new EmpresaModel {
+            Id = empresa.Id,
+            Usuario = empresa.Usuario
+
+            // Adicione outros campos necessários
+        };
+
+        return View(model); // Certifique-se de retornar a view com o modelo preenchido
     }
 
     //private bool VerificaSenha(string inputPassword, string storedHashedPassword) {

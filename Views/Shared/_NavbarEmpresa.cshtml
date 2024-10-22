@@ -1,0 +1,93 @@
+﻿@model SistemaRedeWork.Models.EmpresaModel
+
+@if (ViewData["NavBarLogadoEmpresa"] == null || (bool)ViewData["NavBarLogadoEmpresa"] == false) {
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid">
+            <img src="~/content/img/LogoRedeWork2.png" alt="Logo" class="logo" />
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">@(!string.IsNullOrEmpty(Model.Usuario) ? $"Olá, {Model.Usuario}" : "Olá, visitante")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" style="color:black" asp-controller="Perfil" asp-action="PerfilEstudante" asp-route-id="@Model.Id">Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:black" asp-controller="SeuController" asp-action="Curriculo">Currículo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+}
+<style>
+    .offcanvas-header {
+        background: linear-gradient(135deg, #6a0dad, #b03f7f); /* Cor do fundo do cabeçalho do menu lateral */
+        color: white; /* Cor do texto do cabeçalho */
+        padding: 15px; /* Adiciona espaçamento interno */
+    }
+
+    .offcanvas-body {
+        background-color: #f8f9fa; /* Fundo claro para a área do menu */
+        padding: 20px; /* Adiciona mais espaçamento interno */
+        border-right: 2px solid #343a40; /* Adiciona uma borda ao lado direito do menu */
+    }
+
+    .nav-item a {
+        display: block; /* Garante que os links ocupem toda a largura do container */
+        padding: 10px 15px; /* Adiciona espaçamento interno aos links */
+        margin-bottom: 10px; /* Espaço entre os links */
+        background: linear-gradient(135deg, #6a0dad, #b03f7f); /* Cor de fundo do link */
+        color: white; /* Cor do texto dos links */
+        border-radius: 5px; /* Bordas arredondadas */
+        text-align: center; /* Centraliza o texto dos links */
+        text-decoration: none; /* Remove sublinhado */
+        transition: background-color 0.3s ease; /* Animação suave no hover */
+    }
+
+    img.logo {
+        height: 40px;
+        max-width: 100%;
+    }
+
+    .navbar-toggler-icon {
+        background-color: black;
+    }
+
+    .navbar {
+        margin-bottom: 50px;
+    }
+
+    .row {
+        margin-bottom: 20px; /* Adiciona espaço entre as fileiras de cards */
+    }
+
+
+
+
+
+    .container {
+        margin-top: 60px;
+    }
+
+</style>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Quando o botão com a classe 'close-alert' for clicado
+            $('.close-alert').click(function () {
+                // Esconde o elemento pai (a div com a mensagem)
+                $(this).closest('.alert').fadeOut();
+            });
+        });
+    </script>
+}

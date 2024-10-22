@@ -49,6 +49,7 @@ namespace SistemaRedeWork.Models {
 
         //[Required(ErrorMessage = "A confirmação da senha é obrigatória.")]
         public string ConfirmarSenha { get; set; }
+        public List<EstudanteModel> Estudantes { get; set; }
     }
 
     public class LoginEmpresaModel {

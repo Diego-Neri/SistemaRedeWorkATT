@@ -2,6 +2,7 @@
 using SistemaRedeWork.Data;
 using SistemaRedeWork.Models;
 using SistemaRedeWork.Controllers;
+using System.Security.Claims;
 
 public class CadastroController : Controller {
 
@@ -51,7 +52,7 @@ public class CadastroController : Controller {
                 _context.LoginEmpresas.Add(loginEmpresa);
                 _context.SaveChanges();
 
-                return RedirectToAction("Sucesso");  // Redireciona para uma página de sucesso
+                return RedirectToAction("EmpresaLogado");  // Redireciona para uma página de sucesso
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
                 // Registra o erro e exibe uma mensagem apropriada
@@ -61,6 +62,31 @@ public class CadastroController : Controller {
         }
         return View(empresa);   // Retorna a view com os dados preenchidos caso haja erro de validação
     }
+
+
+    public IActionResult EmpresaLogado() {
+
+        return View();
+    }
+    public IActionResult ListarEstudantes() {
+        var empresa = ObterEmpresaLogada(); // Obtenha a empresa logada
+        var estudantes = _context.Estudantes.ToList(); // Carregar estudantes do banco de dados
+
+        var model = new EmpresaModel {
+            Usuario = empresa.Usuario,
+            Estudantes = estudantes
+        };
+
+        return View(model); // Passando o model para a View
+    }
+
+    public EmpresaModel ObterEmpresaLogada() {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var empresa = _context.Empresas.FirstOrDefault(e => e.Usuario == userId); // Exemplo de busca no banco
+        return empresa;
+    }
+
+
 
     // Action para a página de sucesso
     public IActionResult Sucesso() {
@@ -103,7 +129,7 @@ public class CadastroController : Controller {
                 _context.SaveChanges();
 
                 TempData["MensagemSucesso"] = $"Cadastro criado com sucesso. Seja Bem-Vindo!!";
-                return RedirectToAction("Sucesso");
+                return RedirectToAction("EstudanteLogado", "Login");
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
 
@@ -113,4 +139,5 @@ public class CadastroController : Controller {
         }
         return View(estudante);
     }
+
 }

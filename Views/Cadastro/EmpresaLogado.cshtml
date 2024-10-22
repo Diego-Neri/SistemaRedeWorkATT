@@ -1,0 +1,96 @@
+﻿@model EmpresaModel
+
+@{
+    ViewData["HideFooter"] = true;
+    ViewData["HideNavBar"] = true;
+}
+
+@if (ViewData["NavBarLogado"] == null || !(ViewData["NavBarLogado"] is bool isLogged && isLogged)) {
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="EmpresaLogado">
+                <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+                        @if (Model != null && !string.IsNullOrEmpty(Model.Usuario)) {
+                            @($"Olá, {Model.Usuario}")
+                        } else {
+                            @("Olá")
+                        }
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" style="color:black"
+                               asp-controller="Perfil" asp-action="ListarEstudantes">Ver Estudantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:black"
+                               asp-controller="Perfil" asp-action="CadastrarVagas">Cadastrar Vagas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:black"
+                               asp-controller="Login" asp-action="Logout">Sair</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+}
+
+@if (Model?.Estudantes != null && Model.Estudantes.Any()) {
+    <div class="row">
+        @foreach (var estudante in Model.Estudantes) {
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@estudante.Nome</h5>
+                        <h5 class="card-title">@estudante.Sobrenome</h5>
+                        <p class="card-text">Curso: @estudante.Curso</p>
+                        <p class="card-text">Semestre: @estudante.Semestre</p>
+                        <a href="@Url.Action("VisualizarCurriculo", "Perfil", new { id = estudante.Id })" class="btn btn-primary">Ver Currículo</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+} else {
+    <p>Nenhum estudante encontrado.</p>
+}
+
+
+<style>
+    .card {
+        transition: transform 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .navbar {
+        background-color: #343a40;
+    }
+
+    .container {
+        margin-top: 80px;
+    }
+
+    .btn-primary {
+        background-color: #6a0dad;
+        border-color: #6a0dad;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
