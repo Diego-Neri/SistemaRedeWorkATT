@@ -1,127 +1,10 @@
-﻿@model IEnumerable<EstudanteModel>
+﻿@model IEnumerable<SistemaRedeWork.Models.EmpresaEstudanteViewModel>
 
 @{
     ViewData["HideFooter"] = true;
     ViewData["HideNavBar"] = true;
 
 }
-
-@if (ViewData["NavBarLogado"] == null || !(ViewData["NavBarLogado"] is bool isLogged && isLogged)) {
-    <nav class="navbar navbar-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Cadastro" asp-action="EmpresaLogado">
-                <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-                        @* @if (Model != null && !string.IsNullOrEmpty(Model.Usuario)) {
-                            @($"Olá, {Model.Usuario}")
-                        } else {
-                            @("Olá")
-                        } *@
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" style="color:black"
-                               asp-controller="Perfil" asp-action="ListarEstudantes">Estudantes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color:black"
-                               asp-controller="Perfil" asp-action="CadastrarVagas">Cadastrar Vagas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color:black"
-                               asp-controller="Login" asp-action="Logout">Sair</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-}
-
-<div class="container">
-    @if (!string.IsNullOrEmpty("")) {
-        <div class="welcome-message">
-            <h2 class="welcome-message">Olá!</h2>
-            <br />
-            <p class="welcome-message">Estamos aqui para ajudar você a encontrar a vaga perfeita. Explore as opções e dê o próximo passo na sua carreira!</p>
-        </div>
-    } else {
-        <h2 class="welcome-message">Bem-Vindo(a)!</h2>
-    }
-
-    @for (int i = 0; i < (Model.Count() + 2) / 3; i++) {
-        <div class="row mb-3">
-            @for (int j = 0; j < 3; j++) {
-                var index = i * 3 + j;
-                if (index < Model.Count() ) {
-                    var estudante = Model.ElementAt(index);
-                    <div class="col-sm">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                @estudante.Nome, @estudante.Sobrenome
-
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">@estudante.Nome, @estudante.Sobrenome</h5>
-                                <p class="card-text">@estudante.Curso,@estudante.Instituicao, @estudante.Periodo, @estudante.Semestre, @estudante.DataNascimento, @estudante.Email, @estudante.Telefone, @estudante.Sexo, @estudante.Estado</p>
-                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal" onclick="openModal('@estudante.Nome, @estudante.Sobrenome', '@estudante.Curso,@estudante.Instituicao, @estudante.Periodo, @estudante.Semestre, @estudante.DataNascimento, @estudante.Email, @estudante.Telefone, @estudante.Sexo, @estudante.Estado')">Ver mais</a>
-                            </div>
-                            <div class="card-footer text-body-secondary">
-                                <small>2 days ago</small>
-                            </div>
-                        </div>
-                    </div>
-                } else {
-                    <div class="col-sm">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                Sem Vaga
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Sem Vaga</h5>
-                                <p class="card-text">No momento, não há vagas cadastradas.</p>
-                                <a href="#" class="btn btn-primary" disabled>Ver mais</a>
-                            </div>
-                            <div class="card-footer text-body-secondary">
-                                <small>N/A</small>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-    }
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="vagaModalLabel">Nome do Estudante</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5 id="vagaTitulo" class="text-primary"></h5>
-                <p id="vagaDescricao"></p>
-                <a href="#" class="btn btn-success">Baixar Currículo</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 
 <style>
     .offcanvas-header {
@@ -214,6 +97,139 @@
             display: block; /* Garantir que o parágrafo esteja em um bloco */
         }
 </style>
+
+
+
+@if (ViewData["NavBarLogado"] == null || !(ViewData["NavBarLogado"] is bool isLogged && isLogged)) {
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Cadastro" asp-action="EmpresaLogado">
+                <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+                        @* @if (Model != null && !string.IsNullOrEmpty(Model.Usuario)) {
+                    @($"Olá, {Model.Usuario}")
+                    } else {
+                    @("Olá")
+                    } *@
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" style="color:black"
+                               asp-controller="Perfil" asp-action="ListarEstudantes">Estudantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:black"
+                               asp-controller="Perfil" asp-action="CadastrarVagas">Cadastrar Vagas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:black"
+                               asp-controller="Login" asp-action="Logout">Sair</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+}
+
+<div class="container">
+    @if (!string.IsNullOrEmpty("")) {
+        <div class="welcome-message text-center">
+            <h2>Olá!</h2>
+            <br />
+            <p>Estamos aqui para ajudar você a encontrar a vaga perfeita. Explore as opções e dê o próximo passo na sua carreira!</p>
+        </div>
+    } else {
+        <h2 class="welcome-message text-center">Bem-Vindo(a)!</h2>
+    }
+
+    @if (Model != null && Model.Any()) {
+        @for (int i = 0; i < (Model.Count() + 2) / 3; i++) {
+            <div class="row mb-3">
+                @for (int j = 0; j < 3; j++) {
+                    var index = i * 3 + j;
+                    if (index < Model.Count()) {
+                        var empresaEstudanteViewModel = Model.ElementAt(index);
+                        <div class="col-sm">
+                            <div class="card text-center mb-4 shadow-sm">
+                                <div class="card-header bg-primary text-white">
+                                    @empresaEstudanteViewModel.Estudante.Nome @empresaEstudanteViewModel.Estudante.Sobrenome
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><strong>Curso:</strong> @empresaEstudanteViewModel.Estudante.Curso</h5>
+                                    <p class="card-text">
+                                        <strong>Instituição:</strong> @empresaEstudanteViewModel.Estudante.Instituicao <br />
+                                        <strong>Período:</strong> @empresaEstudanteViewModel.Estudante.Periodo <br />
+                                        <strong>Semestre:</strong> @empresaEstudanteViewModel.Estudante.Semestre <br />
+                                        <strong>Data de Nascimento:</strong> @(empresaEstudanteViewModel.Estudante.DataNascimento.HasValue ? empresaEstudanteViewModel.Estudante.DataNascimento.Value.ToString("dd/MM/yyyy") : "Data não informada")<br />
+                                        <strong>Email:</strong> @empresaEstudanteViewModel.Estudante.Email <br />
+                                        <strong>Telefone:</strong> @empresaEstudanteViewModel.Estudante.Telefone <br />
+                                        <strong>Sexo:</strong> @empresaEstudanteViewModel.Estudante.Sexo <br />
+                                        <strong>Estado:</strong> @empresaEstudanteViewModel.Estudante.Estado
+                                    </p>
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal"
+                                       onclick="openModal(
+                                       '@empresaEstudanteViewModel.Estudante.Nome',
+                                       '@empresaEstudanteViewModel.Estudante.Sobrenome',
+                                       '@empresaEstudanteViewModel.Estudante.Curso',
+                                       '@empresaEstudanteViewModel.Estudante.Instituicao',
+                                       '@empresaEstudanteViewModel.Estudante.Periodo',
+                                       '@empresaEstudanteViewModel.Estudante.Semestre',
+                                       '@(empresaEstudanteViewModel.Estudante.DataNascimento.HasValue ? empresaEstudanteViewModel.Estudante.DataNascimento.Value.ToString("dd/MM/yyyy") : "Data não informada")',
+                                       '@empresaEstudanteViewModel.Estudante.Email',
+                                       '@empresaEstudanteViewModel.Estudante.Telefone',
+                                       '@empresaEstudanteViewModel.Estudante.Sexo',
+                                       '@empresaEstudanteViewModel.Estudante.Estado',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Objetivo : "Objetivo não informado")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Educacao : "Educação não informada")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Certificado : "Certificado não informado")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Experiencia : "Experiência não informada")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Habilidade : "Habilidade não informada")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Idioma : "Idioma não informado")')">
+                                        Ver mais
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    } else {
+        <p class="alert alert-warning text-center">Nenhum estudante encontrado.</p>
+    }
+
+
+<!-- Modal -->
+<div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vagaModalLabel">Nome do Estudante</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 id="vagaTitulo" class="text-primary"></h5>
+                <p id="vagaDescricao"></p>
+                <a href="#" class="btn btn-success">Baixar Currículo</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
@@ -246,9 +262,38 @@
             type();
         });
 
-        function openModal(nome, descricao) {
-            document.getElementById('Nome').innerText = nome;
-            document.getElementById('Descricao').innerText = descricao;
+
+        function openModal(nome, sobrenome, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, habilidade, idioma) {
+            // Definindo o nome do estudante no título do modal
+            document.getElementById('vagaModalLabel').textContent = nome + ' ' + sobrenome;
+
+            // Exibindo as informações no modal com separação por categorias
+            document.getElementById('vagaDescricao').innerHTML = `
+                        <strong>Dados Pessoais:</strong><br>
+                        Nome Completo: ${nome} ${sobrenome}<br>
+                        Data de Nascimento: ${dataNascimento}<br>
+                        Email: ${email}<br>
+                        Telefone: ${telefone}<br>
+                        Sexo: ${sexo}<br>
+                        Estado: ${estado}<br><br>
+
+                        <strong>Informações Acadêmicas:</strong><br>
+                        Curso: ${curso}<br>
+                        Instituição: ${instituicao}<br>
+                        Período: ${periodo}<br>
+                        Semestre: ${semestre}<br><br>
+
+                        <strong>Informações Profissionais:</strong><br>
+                        Objetivo: ${objetivo}<br>
+                        Educação: ${educacao}<br>
+                        Certificados: ${certificado}<br>
+                        Experiência: ${experiencia}<br>
+                        Habilidades: ${habilidade}<br>
+                        Idiomas: ${idioma}
+                    `;
         }
+
+
+
     </script>
 }

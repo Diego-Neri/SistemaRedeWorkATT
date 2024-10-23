@@ -45,6 +45,12 @@ namespace SistemaRedeWork.Models {
         public static implicit operator List<object>(EstudanteModel v) {
             throw new NotImplementedException();
         }
+
+        // Propriedade de navegação para múltiplos arquivos
+        public ICollection<Arquivos>? Arquivos { get; set; }
+
+
+        public CurriculoModel? Curriculo { get; set; }
     }
     public class LoginEstudanteModel {
 

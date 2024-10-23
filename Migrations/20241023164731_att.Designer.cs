@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaRedeWork.Data;
 
@@ -11,9 +12,11 @@ using SistemaRedeWork.Data;
 namespace SistemaRedeWork.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    partial class BancoContextModelSnapshot : ModelSnapshot
+    [Migration("20241023164731_att")]
+    partial class att
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,12 +45,7 @@ namespace SistemaRedeWork.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("EstudanteId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("EstudanteId");
 
                     b.ToTable("Arquivos");
                 });
@@ -78,9 +76,6 @@ namespace SistemaRedeWork.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<int>("EstudanteId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Experiencia")
                         .IsRequired()
@@ -115,9 +110,6 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EstudanteId")
-                        .IsUnique();
 
                     b.ToTable("Curriculo");
                 });
@@ -397,28 +389,6 @@ namespace SistemaRedeWork.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
-            modelBuilder.Entity("SistemaRedeWork.Models.Arquivos", b =>
-                {
-                    b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
-                        .WithMany("Arquivos")
-                        .HasForeignKey("EstudanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estudante");
-                });
-
-            modelBuilder.Entity("SistemaRedeWork.Models.CurriculoModel", b =>
-                {
-                    b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
-                        .WithOne("Curriculo")
-                        .HasForeignKey("SistemaRedeWork.Models.CurriculoModel", "EstudanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estudante");
-                });
-
             modelBuilder.Entity("SistemaRedeWork.Models.EstudanteModel", b =>
                 {
                     b.HasOne("SistemaRedeWork.Models.EmpresaModel", null)
@@ -447,14 +417,6 @@ namespace SistemaRedeWork.Migrations
             modelBuilder.Entity("SistemaRedeWork.Models.EmpresaModel", b =>
                 {
                     b.Navigation("Estudantes");
-                });
-
-            modelBuilder.Entity("SistemaRedeWork.Models.EstudanteModel", b =>
-                {
-                    b.Navigation("Arquivos");
-
-                    b.Navigation("Curriculo")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

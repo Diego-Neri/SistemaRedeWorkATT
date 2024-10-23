@@ -35,48 +35,50 @@ public class LoginController : Controller {
 
     [HttpPost]
     public async Task<IActionResult> LoginEmpresa(LoginEmpresaModel loginEmpresa) {
+        // Verifica se o ModelState é inválido e exibe os erros no console
         if (!ModelState.IsValid) {
             foreach (var entry in ModelState) {
                 foreach (var error in entry.Value.Errors) {
                     Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
                 }
             }
+            return View(loginEmpresa); // Retorna a view com os erros
         }
 
-        if (ModelState.IsValid) {
-            // Busca o usuário no banco de dados
-            var login = await _context.LoginEmpresas
-                .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email);
+        // Busca o usuário no banco de dados
+        var login = await _context.LoginEmpresas
+            .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email);
 
-            if (login != null) {
-                // Criar as claims do usuário
-                var claims = new List<Claim> {
-                new Claim(ClaimTypes.Name, login.Email),
-                new Claim("FullName", login.Email),
-                new Claim(ClaimTypes.Role, "User") // Pode definir o papel do usuário
-            };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var authProperties = new AuthenticationProperties {
-                    IsPersistent = loginEmpresa.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
-                };
-
-                // Configurar a autenticação do usuário
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
-
-                TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
-                return RedirectToAction("EmpresaLogado", "Cadastro");
-            }
-
+        if (login == null) {
             TempData["MensagemErro"] = $"E-mail ou senha inválidos! Tente novamente.";
+            return View(loginEmpresa); // Retorna a view caso o login falhe
         }
 
-        return View(loginEmpresa);
+        // Criar as claims do usuário
+        var claims = new List<Claim> {
+        new Claim(ClaimTypes.Name, login.Email),
+        new Claim("FullName", login.Email), // Pode ser outro dado relevante
+        new Claim(ClaimTypes.Role, "User")  // Definir o papel do usuário, se necessário
+    };
+
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+        var authProperties = new AuthenticationProperties {
+            IsPersistent = loginEmpresa.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
+        };
+
+        // Configurar a autenticação do usuário
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(claimsIdentity),
+            authProperties);
+
+        TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
+
+        // Redireciona para a página de empresa logada após o login
+        return RedirectToAction("EmpresaLogado", "Cadastro");
     }
+
 
     public IActionResult EmpresaLogado(int id) {
         var empresa = _context.Empresas.FirstOrDefault(e => e.Id == id);

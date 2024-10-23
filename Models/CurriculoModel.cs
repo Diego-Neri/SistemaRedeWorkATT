@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaRedeWork.Models {
     public class CurriculoModel {
@@ -28,6 +29,9 @@ namespace SistemaRedeWork.Models {
 
         public string Idioma { get; set; }
 
+        [ForeignKey("EstudanteModel")]
+        public int EstudanteId { get; set; } // Chave estrangeira
+        public EstudanteModel Estudante { get; set; } // Propriedade de navegação
 
     }
 
@@ -36,5 +40,9 @@ namespace SistemaRedeWork.Models {
         public string Descricao { get; set; }
         public byte[] Dados { get; set; }
         public string ContentType { get; set; }
+
+        [ForeignKey("EstudanteModel")]
+        public int EstudanteId { get; set; } // Chave estrangeira
+        public EstudanteModel Estudante { get; set; } // Propriedade de navegação
     }
 }

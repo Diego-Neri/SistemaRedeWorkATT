@@ -3,6 +3,7 @@ using SistemaRedeWork.Data;
 using SistemaRedeWork.Models;
 using SistemaRedeWork.Controllers;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 public class CadastroController : Controller {
 
@@ -65,12 +66,21 @@ public class CadastroController : Controller {
 
 
     public IActionResult EmpresaLogado() {
-        var model = new EmpresaModel {
-            Usuario = ""
-        };
+        var estudantes = _context.Estudantes
+            .Include(e => e.Curriculo) // Inclui o Currículo
+            .ToList();
+
+        var model = estudantes.Select(e => new EmpresaEstudanteViewModel {
+            Estudante = e,
+            Curriculo = e.Curriculo // Associa o currículo ao view model
+        }).ToList();
 
         return View(model);
     }
+
+
+
+
     public IActionResult ListarEstudantes() {
         // Buscando todos os estudantes do banco de dados
         var estudantes = _context.Estudantes.ToList();
