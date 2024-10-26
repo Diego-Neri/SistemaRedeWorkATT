@@ -54,11 +54,16 @@ public class LoginController : Controller {
             return View(loginEmpresa); // Retorna a view caso o login falhe
         }
 
-        // Criar as claims do usuário
+        // Verifique se a senha está correta (essa parte deve ser implementada)
+        // Exemplo: if (!VerifyPassword(login, loginEmpresa.Senha)) { ... }
+
+        // Adicione o ID da empresa nas claims
         var claims = new List<Claim> {
         new Claim(ClaimTypes.Name, login.Email),
         new Claim("FullName", login.Email), // Pode ser outro dado relevante
-        new Claim(ClaimTypes.Role, "User")  // Definir o papel do usuário, se necessário
+        new Claim(ClaimTypes.Role, "User"),  // Definir o papel do usuário, se necessário
+        new Claim(ClaimTypes.NameIdentifier, login.Id.ToString()), // ID do usuário
+        new Claim("EmpresaId", login.EmpresaId.ToString()) // Aqui você deve ter a propriedade EmpresaId
     };
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -78,6 +83,8 @@ public class LoginController : Controller {
         // Redireciona para a página de empresa logada após o login
         return RedirectToAction("EmpresaLogado", "Cadastro");
     }
+
+
 
 
     public IActionResult EmpresaLogado(int id) {
@@ -173,6 +180,12 @@ public class LoginController : Controller {
     }
 
 
+    [HttpGet("estudante/logado")]
+    public IActionResult EstudanteLogado() {
+        return View();
+    }
+
+    [HttpGet("estudante/logado/{id}")]
     public IActionResult EstudanteLogado(int id) {
         var estudante = _context.Estudantes.FirstOrDefault(e => e.Id == id);
         if (estudante == null) {
@@ -183,13 +196,12 @@ public class LoginController : Controller {
         var model = new EstudanteModel {
             Id = estudante.Id,
             Nome = estudante.Nome
-
             // Adicione outros campos necessários
         };
 
         return View(model); // Certifique-se de retornar a view com o modelo preenchido
     }
-    
+
 
     private bool VerifyPassword(string inputPassword, string storedHashedPassword) {
         // Hasheia a senha de entrada e compara com a senha armazenada
