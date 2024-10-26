@@ -13,6 +13,31 @@ namespace SistemaRedeWork.Controllers {
             _context = context;
         }
 
+        public IActionResult PerfilEmpresa(int id) {
+            var empresa = _context.Empresas.FirstOrDefault(e => e.Id == id);
+            if (empresa == null) {
+                return NotFound();
+            }
+
+            var model = new EmpresaModel {
+                Id = empresa.Id,
+                Usuario = empresa.Usuario,
+                CNPJ = empresa.CNPJ,
+                RazaoSocial = empresa.RazaoSocial,
+                Email = empresa.Email,
+                Telefone = empresa.Telefone,
+                Site = empresa.Site,
+                Linkedin = empresa.Linkedin,
+                Estado = empresa.Estado,
+                Cidade = empresa.Cidade,
+                CEP = empresa.CEP,
+                Rua = empresa.Rua,
+                Numero = empresa.Numero,
+            };
+            return View(model);
+        }
+
+
         public IActionResult PerfilEstudante(int id) {
             var estudante = _context.Estudantes.FirstOrDefault(e => e.Id == id);
             if (estudante == null) {
@@ -36,6 +61,34 @@ namespace SistemaRedeWork.Controllers {
 
             return View(model); // Retorne a view com o modelo preenchido
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AtualizarPerfilEmpresa(int id, EmpresaModel model) {
+            var empresa = await _context.Empresas.FindAsync(id);
+
+            if (empresa == null) {
+                return NotFound("Empresa não encotrada.");
+            }
+
+            empresa.Usuario = model.Usuario;
+            empresa.CNPJ = model.CNPJ;
+            empresa.RazaoSocial = model.RazaoSocial;
+            empresa.Email = model.Email;
+            empresa.Telefone = model.Telefone;
+            empresa.Site = model.Site;
+            empresa.Linkedin = model.Linkedin;
+            empresa.Estado = model.Estado;
+            empresa.Cidade = model.Cidade;
+            empresa.CEP = model.CEP;
+            empresa.Rua = model.Rua;
+            empresa.Numero = model.Numero;
+
+            _context.Empresas.Update(empresa);
+            await _context.SaveChangesAsync();
+
+            TempData["MensagemSucesso"] = $"Dados atualizados!";
+            return RedirectToAction("PerfilEmpresa", new { id = empresa.Id });
         }
 
         [HttpPost]
