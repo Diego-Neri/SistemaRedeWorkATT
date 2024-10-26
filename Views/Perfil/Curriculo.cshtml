@@ -4,11 +4,11 @@
 @{
     ViewData["HideFooter"] = true;
     ViewData["HideNavBar"] = true;
-    ViewData["Title"] = "Preencha seu Currículo";
+    // ViewData["Title"] = "Preencha seu Currículo";
 
 }
 
-@await Html.PartialAsync("_NavbarEstudante", Model.Estudante)
+@* @await Html.PartialAsync("_NavbarEstudante", Model.Estudante) *@
 
 
 @if (Model != null) {
@@ -30,6 +30,13 @@
     <h2 class="mb-4">Formulário de Currículo</h2>
     <form method="post" enctype="multipart/form-data" asp-action="SalvarCurriculo">
             <input type="hidden" asp-for="Curriculo.Id" />
+
+            <div class="mb-3">
+                <a href="@Url.Action("EstudanteLogado", "Login", new { id = Model.Estudante.Id })" class="btn btn-primary">
+                    Voltar
+                </a>
+            </div>
+
         <div class="row">
             <!-- Nome Completo -->
                 <div class="col-md-6 mb-3">
@@ -145,12 +152,12 @@
 
 <!-- Upload de Arquivo -->
 <div class="container mt-5">
-    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+    <h2 class="text-center mb-4">Anexe seu currículo</h2>
 
     <form action="/PerfilEstudante/UploadImagem" enctype="multipart/form-data" method="post" class="mb-4">
         <div class="input-group">
             <input type="file" name="arquivos" multiple class="form-control" />
-            <button type="submit" class="btn btn-primary">Enviar Imagem</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
         </div>
 
         <div class="table-responsive">

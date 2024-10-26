@@ -5,8 +5,10 @@
     ViewData["HideNavBar"] = true;
 }
 
-@await Html.PartialAsync("_NavbarEmpresa", Model) <!-- Incluindo a Navbar -->
+@* @await Html.PartialAsync("_NavbarEmpresa", Model) <!-- Incluindo a Navbar --> *@
 @if (Model != null) {
+
+
     <div class="container mt-5">
 
         @if (TempData["MensagemErro"] != null) {
@@ -26,6 +28,14 @@
         <form asp-action="AtualizarPerfilEmpresa" method="post" class="mt-4">
             <input type="hidden" asp-for="Id" />
             <h3 style="color: indigo">Atualizar Informações</h3>
+
+            <!-- Botão de Voltar -->
+            <div class="mb-3">
+                <a href="@Url.Action("EmpresaLogado", "Cadastro")" class="btn btn-primary">
+                    Voltar
+                </a>
+            </div>
+
 
             <!-- Usuário -->
             <div class="form-group">

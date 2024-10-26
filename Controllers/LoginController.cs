@@ -156,7 +156,8 @@ public class LoginController : Controller {
             var claims = new List<Claim> {
             new Claim(ClaimTypes.Name, login.Email),
             new Claim("FullName", $"{login.Nome} {login.Sobrenome}"),
-            new Claim(ClaimTypes.Role, "User") // Pode definir o papel do usuário
+            new Claim(ClaimTypes.Role, "User"), // Pode definir o papel do usuário
+            new Claim("EstudanteId", login.EstudanteId.ToString())
         };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -192,15 +193,40 @@ public class LoginController : Controller {
             return NotFound(); // Retorna 404 se o estudante não for encontrado
         }
 
-        // Preencher o modelo com os dados do estudante
-        var model = new EstudanteModel {
-            Id = estudante.Id,
-            Nome = estudante.Nome
-            // Adicione outros campos necessários
-        };
+        // Buscar todas as vagas e suas respectivas empresas
+        var vagas = _context.Vagas
+            .Include(v => v.Empresa)  // Inclui os dados da empresa (se necessário)
+            .Where(v => v.EmpresaId != null)
+            .ToList();
 
-        return View(model); // Certifique-se de retornar a view com o modelo preenchido
+        // Criar uma lista de EmpresaEstudanteViewModel
+        var model = new List<EmpresaEstudanteViewModel>();
+
+        // Agrupar as vagas por empresa
+        var vagasAgrupadas = vagas.GroupBy(v => v.EmpresaId);
+
+        foreach (var grupo in vagasAgrupadas) {
+            // Criar um modelo para cada grupo de vagas
+            var empresa = _context.Empresas.FirstOrDefault(e => e.Id == grupo.Key);
+
+            // Buscar o currículo do estudante (se existir)
+            //var curriculo = _context.Curriculos.FirstOrDefault(c => c.EstudanteId == id);
+
+            var viewModel = new EmpresaEstudanteViewModel {
+                Empresa = empresa,
+                Estudante = estudante,
+                //Curriculo = curriculo,
+                Vagas = grupo.ToList()
+            };
+
+            model.Add(viewModel);
+        }
+
+        return View(model);
     }
+
+
+
 
 
     private bool VerifyPassword(string inputPassword, string storedHashedPassword) {
@@ -216,6 +242,13 @@ public class LoginController : Controller {
         }
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout() {
+        await HttpContext.SignOutAsync(); // Faz o logout do usuário
+        TempData["MensagemSucesso"] = "Você saiu com sucesso!";
+        return RedirectToAction("LoginEstudante", "Login"); // Redireciona para a página de login ou outra página desejada
+    }
 }
 
 

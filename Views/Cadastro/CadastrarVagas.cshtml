@@ -43,8 +43,9 @@
             }
     </style>
 </head>
-<body>
 
+<body>
+    <!-- Botão de Voltar -->
     @if (TempData["MensagemErro"] != null) {
         <div class="alert alert-danger" role="alert">
             <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
@@ -66,13 +67,18 @@
             @Html.HiddenFor(m => m.CadastrarVagas.EmpresaId)
             // Não precisa de Value aqui
 
+            <div class="mb-3">
+                <a href="@Url.Action("EmpresaLogado", "Cadastro")" class="btn btn-primary">
+                    Voltar
+                </a>
+            </div>
 
             <!-- Informações da Vaga -->
             <div class="form-section">
                 <div class="section-title">Informações da Vaga</div>
                 <hr class="divider">
 
-              
+
 
                 <!-- Título da Vaga -->
                 <div class="mb-3">

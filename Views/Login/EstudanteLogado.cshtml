@@ -1,143 +1,37 @@
-﻿@model EstudanteModel
+﻿@using System.Security.Claims 
+@model IEnumerable<SistemaRedeWork.Models.EmpresaEstudanteViewModel>
 @{
     ViewData["HideFooter"] = true;
     ViewData["HideNavBar"] = true;
-
-    var vagasCadastradas = new List<(string Titulo, string Descricao)>
-                    {
-        ("Vaga 1", "Descrição detalhada da Vaga 1."),
-        ("Vaga 2", "Descrição detalhada da Vaga 2."),
-        ("Vaga 3", "Descrição detalhada da Vaga 3."),
-        ("Vaga 4", "Descrição detalhada da Vaga 4."),
-        ("Vaga 5", "Descrição detalhada da Vaga 5.")
-    };
 }
-@if (ViewData["NavBarLogado"] == null || (bool)ViewData["NavBarLogado"] == false)
-{
-    <nav class="navbar navbar-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="EstudanteLogado" >
-                <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">@(!string.IsNullOrEmpty(Model.Nome) ? $"Olá, {Model.Nome}" : "Olá, visitante")</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" style="color:black" asp-controller="Perfil" asp-action="PerfilEstudante" asp-route-id="@Model.Id">Perfil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color:black" asp-controller="Perfil" asp-action="Curriculo" asp-route-id="@Model.Id">Currículo</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-}
-<div class="container">
-    @if (!string.IsNullOrEmpty(Model.Nome)) {
-        <div class="welcome-message">
-            <h2 class="welcome-message">Olá, @Model.Nome!</h2>
-            <br />
-            <p class="welcome-message">Estamos aqui para ajudar você a encontrar a vaga perfeita. Explore as opções e dê o próximo passo na sua carreira!</p>
-        </div>
-    } else {
-        <h2 class="welcome-message">Olá, estudante</h2>
-    }
-    @for (int i = 0; i < (vagasCadastradas.Count + 2) / 3; i++) {
-        <div class="row mb-3">
-            <!-- Adiciona uma margem inferior para espaçamento -->
-            @for (int j = 0; j < 3; j++) {
-                var index = i * 3 + j;
-                if (index < vagasCadastradas.Count) {
-                    <div class="col-sm">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                @vagasCadastradas[index].Titulo
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">@vagasCadastradas[index].Titulo</h5>
-                                <p class="card-text">Um exemplo de texto de suporte abaixo como uma introdução natural ao conteúdo adicional.</p>
-                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal" onclick="openModal('@vagasCadastradas[index].Titulo', '@vagasCadastradas[index].Descricao')">Ver mais</a>
-                            </div>
-                            <div class="card-footer text-body-secondary">
-                                <!-- Aqui você pode adicionar informações adicionais, como a data da vaga, se necessário -->
-                                <small>2 days ago</small>
-                            </div>
-                        </div>
-                    </div>
-                } else {
-                    <div class="col-sm">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                Sem Vaga
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Sem Vaga</h5>
-                                <p class="card-text">No momento, não há vagas cadastradas.</p>
-                                <a href="#" class="btn btn-primary" disabled>Ver mais</a>
-                            </div>
-                            <div class="card-footer text-body-secondary">
-                                <!-- Você pode adicionar um texto fixo ou deixar em branco -->
-                                <small>N/A</small>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-    }
-
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="vagaModalLabel">Detalhes da Vaga</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5 id="vagaTitulo" class="text-primary"></h5>
-                <p id="vagaDescricao"></p>
-                <a href="#" class="btn btn-success">Inscrever-se</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 <style>
+    body {
+        background-color: #f1f3f5; /* Fundo geral da página */
+    }
+
     .offcanvas-header {
-        background: linear-gradient(135deg, #6a0dad, #b03f7f); /* Cor do fundo do cabeçalho do menu lateral */
-        color: white; /* Cor do texto do cabeçalho */
-        padding: 15px; /* Adiciona espaçamento interno */
+        background: linear-gradient(135deg, #6a0dad, #b03f7f);
+        color: white;
+        padding: 15px;
     }
 
     .offcanvas-body {
-        background-color: #f8f9fa; /* Fundo claro para a área do menu */
-        padding: 20px; /* Adiciona mais espaçamento interno */
-        border-right: 2px solid #343a40; /* Adiciona uma borda ao lado direito do menu */
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-right: 2px solid #343a40;
     }
 
     .nav-item a {
-        display: block; /* Garante que os links ocupem toda a largura do container */
-        padding: 10px 15px; /* Adiciona espaçamento interno aos links */
-        margin-bottom: 10px; /* Espaço entre os links */
-        background: linear-gradient(135deg, #6a0dad, #b03f7f); /* Cor de fundo do link */
-        color: white; /* Cor do texto dos links */
-        border-radius: 5px; /* Bordas arredondadas */
-        text-align: center; /* Centraliza o texto dos links */
-        text-decoration: none; /* Remove sublinhado */
-        transition: background-color 0.3s ease; /* Animação suave no hover */
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #6a0dad, #b03f7f);
+        color: white;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
     }
 
     img.logo {
@@ -154,12 +48,34 @@
     }
 
     .row {
-        margin-bottom: 20px; /* Adiciona espaço entre as fileiras de cards */
+        margin-bottom: 20px;
     }
 
     .card {
         transition: transform 0.3s;
-        margin-bottom: 20px; /* Opcional, caso você queira mais espaço entre os próprios cards */
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 10px; /* Bordas arredondadas nos cards */
+        overflow: hidden; /* Esconde o overflow dos cards */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave para os cards */
+    }
+
+    .card:hover {
+        transform: scale(1.05); /* Efeito de zoom no hover */
+    }
+
+    .card-header {
+        background-color: #6a0dad; /* Cor de fundo do cabeçalho do card */
+        color: white;
+        font-weight: bold;
+    }
+
+    .modal-content {
+        border-radius: 10px; /* Bordas arredondadas no modal */
+    }
+
+    .modal-header {
+        border-bottom: none; /* Remove a borda inferior do cabeçalho do modal */
     }
 
     .modal-body {
@@ -189,62 +105,243 @@
         transition: opacity 0.5s ease-in-out;
     }
 
-        .welcome-message h2 {
-            display: block; /* Garantir que h2 esteja em um bloco */
-            margin-bottom: 10px; /* Ajuste o espaço entre o h2 e o p */
-        }
+    .welcome-message h2 {
+        display: block;
+        margin-bottom: 10px;
+    }
 
-        .welcome-message p {
-            font-size: 1.5em; /* Pode reduzir um pouco o tamanho para melhor proporção */
-            color: black;
-            background: linear-gradient(135deg, #6a0dad, #b03f7f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: block; /* Garantir que o parágrafo esteja em um bloco */
-        }
-
+    .welcome-message p {
+        font-size: 1.5em;
+        color: black;
+        background: linear-gradient(135deg, #6a0dad, #b03f7f);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        display: block;
+    }
 </style>
 
+@if (!(ViewData["NavBarLogado"] as bool? ?? false)) {
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="EstudanteLogado" >
+                <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" style="color:black"
+                               asp-controller="Perfil" asp-action="PerfilEstudante"
+                               asp-route-id="@User.FindFirstValue("EstudanteId")">Perfil</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:black" asp-controller="Perfil" asp-action="Curriculo" asp-route-id="@User.FindFirstValue("EstudanteId")">Currículo</a>
+                        </li>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Quando o botão com a classe 'close-alert' for clicado
-            $('.close-alert').click(function () {
-                // Esconde o elemento pai (a div com a mensagem)
-                $(this).closest('.alert').fadeOut();
-            });
-        });
-    document.addEventListener('DOMContentLoaded', function () {
-        const welcomeMessage = document.querySelector('.welcome-message');
-        const text = welcomeMessage.textContent;
-        welcomeMessage.textContent = '';
-
-        let index = 0;
-
-        function type() {
-            if (index < text.length) {
-                welcomeMessage.textContent += text.charAt(index);
-                index++;
-                setTimeout(type, 3);
-            } else {
-                welcomeMessage.style.opacity = 1;
-            }
-        }
-
-        type();
-    });
-
-    function openModal(titulo, descricao) {
-        document.getElementById('vagaTitulo').innerText = titulo;
-        document.getElementById('vagaDescricao').innerText = descricao;
-    }
-    </script>
+                        <li class="nav-item">
+                            <form asp-controller="Login" asp-action="Logout" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken() <!-- Adiciona token CSRF -->
+                                <button type="submit" class="nav-link" style="border:none; background:none; color:black; cursor:pointer;">
+                                    Sair
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 }
+<div class="welcome-message">
+    <h2>Bem-vindo ao RedeWork!</h2>
+    <p>Conecte-se com oportunidades de estágio e trabalho que se alinham com seus objetivos de carreira.</p>
+</div>
+
+@if (Model != null && Model.Any()) {
+    @for (int i = 0; i < (Model.Count() + 2) / 3; i++) {
+        <div class="row mb-3">
+            @for (int j = 0; j < 3; j++) {
+                var index = i * 3 + j;
+                if (index < Model.Count()) {
+                    var empresaEstudanteViewModel = Model.ElementAt(index);
+                    <div class="col-sm">
+                        @foreach (var vaga in empresaEstudanteViewModel.Vagas) {
+                            <div class="card text-center mb-4">
+                                <div class="card-header">
+                                    @vaga.Titulo 
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><strong>Descrição:</strong> @vaga.Descricao</h5>
+                                    <p class="card-text">
+                                        <strong>Requisitos:</strong> @vaga.Requisitos <br />
+                                        <strong>Modelo:</strong> @vaga.TipoTrabalho <br />
+                                        <strong>Nível:</strong> @vaga.NivelExperiencia <br />
+                                        <strong>Faixa Salarial Mínima:</strong> @vaga.FaixaSalarialMin <br />
+                                        <strong>Faixa Salarial Máxima:</strong> @vaga.FaixaSalarialMax <br />
+                                        <strong>Localização:</strong> @vaga.Localizacao <br />
+                                        <strong>Modalidade de Contrato:</strong> @vaga.ModalidadeContratacao <br />
+                                        <strong>Benefícios:</strong> @vaga.Beneficios <br />
+                                        <strong>Candidate-se até:</strong> @vaga.DataLimiteCandidatura <br />
+                                        <strong>Empresa:</strong> @empresaEstudanteViewModel.Empresa.RazaoSocial <br />
+                                    </p>
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal"
+                                       onclick="openModal(
+                                       '@empresaEstudanteViewModel.Estudante.Nome',
+                                       '@empresaEstudanteViewModel.Estudante.Sobrenome',
+                                       '@empresaEstudanteViewModel.Estudante.Curso',
+                                       '@empresaEstudanteViewModel.Estudante.Instituicao',
+                                       '@empresaEstudanteViewModel.Estudante.Periodo',
+                                       '@empresaEstudanteViewModel.Estudante.Semestre',
+                                       '@(empresaEstudanteViewModel.Estudante.DataNascimento.HasValue ? empresaEstudanteViewModel.Estudante.DataNascimento.Value.ToString("dd/MM/yyyy") : "Data não informada")',
+                                       '@empresaEstudanteViewModel.Estudante.Email',
+                                       '@empresaEstudanteViewModel.Estudante.Telefone',
+                                       '@empresaEstudanteViewModel.Estudante.Sexo',
+                                       '@empresaEstudanteViewModel.Estudante.Estado',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Objetivo : "Objetivo não informado")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Educacao : "Educação não informada")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Certificado : "Certificado não informado")',
+                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Experiencia : "Experiência não informada")',
+                                       '@vaga.Titulo',
+                                       '@vaga.Descricao')">
+                                        Candidatar-se
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+} else {
+    <h3 class="text-center">Nenhuma vaga disponível no momento.</h3>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vagaModalLabel">Candidatar-se à Vaga</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="@Url.Action("Candidatar", "Vaga")">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="vagaTitulo" name="vagaTitulo" />
+                    <input type="hidden" id="vagaDescricao" name="vagaDescricao" />
+                    <div class="mb-3">
+                        <label for="estudanteNome" class="form-label">Nome:</label>
+                        <input type="text" class="form-control" id="estudanteNome" name="estudanteNome" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteSobrenome" class="form-label">Sobrenome:</label>
+                        <input type="text" class="form-control" id="estudanteSobrenome" name="estudanteSobrenome" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteCurso" class="form-label">Curso:</label>
+                        <input type="text" class="form-control" id="estudanteCurso" name="estudanteCurso" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteInstituicao" class="form-label">Instituição:</label>
+                        <input type="text" class="form-control" id="estudanteInstituicao" name="estudanteInstituicao" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudantePeriodo" class="form-label">Período:</label>
+                        <input type="text" class="form-control" id="estudantePeriodo" name="estudantePeriodo" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteSemestre" class="form-label">Semestre:</label>
+                        <input type="text" class="form-control" id="estudanteSemestre" name="estudanteSemestre" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteDataNascimento" class="form-label">Data de Nascimento:</label>
+                        <input type="text" class="form-control" id="estudanteDataNascimento" name="estudanteDataNascimento" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteEmail" class="form-label">Email:</label>
+                        <input type="text" class="form-control" id="estudanteEmail" name="estudanteEmail" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteTelefone" class="form-label">Telefone:</label>
+                        <input type="text" class="form-control" id="estudanteTelefone" name="estudanteTelefone" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteSexo" class="form-label">Sexo:</label>
+                        <input type="text" class="form-control" id="estudanteSexo" name="estudanteSexo" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estudanteEstado" class="form-label">Estado:</label>
+                        <input type="text" class="form-control" id="estudanteEstado" name="estudanteEstado" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="curriculoObjetivo" class="form-label">Objetivo:</label>
+                        <input type="text" class="form-control" id="curriculoObjetivo" name="curriculoObjetivo" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="curriculoEducacao" class="form-label">Educação:</label>
+                        <input type="text" class="form-control" id="curriculoEducacao" name="curriculoEducacao" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="curriculoCertificado" class="form-label">Certificado:</label>
+                        <input type="text" class="form-control" id="curriculoCertificado" name="curriculoCertificado" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="curriculoExperiencia" class="form-label">Experiência:</label>
+                        <input type="text" class="form-control" id="curriculoExperiencia" name="curriculoExperiencia" readonly />
+                    </div>
+                        <form action="/PerfilEstudante/UploadImagem" enctype="multipart/form-data" method="post" class="mb-4">
+                            <div class="input-group">
+                                <input type="file" name="arquivos" multiple class="form-control" />
+                                
+                            </div>
+                        </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Candidatura</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(nome, sobrenome, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, vagaTitulo, vagaDescricao) {
+        document.getElementById("vagaTitulo").value = vagaTitulo;
+        document.getElementById("vagaDescricao").value = vagaDescricao;
+        document.getElementById("estudanteNome").value = nome;
+        document.getElementById("estudanteSobrenome").value = sobrenome;
+        document.getElementById("estudanteCurso").value = curso;
+        document.getElementById("estudanteInstituicao").value = instituicao;
+        document.getElementById("estudantePeriodo").value = periodo;
+        document.getElementById("estudanteSemestre").value = semestre;
+        document.getElementById("estudanteDataNascimento").value = dataNascimento;
+        document.getElementById("estudanteEmail").value = email;
+        document.getElementById("estudanteTelefone").value = telefone;
+        document.getElementById("estudanteSexo").value = sexo;
+        document.getElementById("estudanteEstado").value = estado;
+        document.getElementById("curriculoObjetivo").value = objetivo;
+        document.getElementById("curriculoEducacao").value = educacao;
+        document.getElementById("curriculoCertificado").value = certificado;
+        document.getElementById("curriculoExperiencia").value = experiencia;
+    }
+
+    // Para animar a mensagem de boas-vindas ao carregar a página
+    window.onload = function () {
+        const welcomeMessage = document.querySelector('.welcome-message');
+        welcomeMessage.style.opacity = 1; // Torna a mensagem visível
+    };
+</script>
+
 

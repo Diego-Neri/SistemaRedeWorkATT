@@ -6,7 +6,7 @@
             // ViewBag.Title = "Editar Perfil";
 }
 
-@await Html.PartialAsync("_NavbarEstudante", Model) <!-- Incluindo a Navbar -->
+@* @await Html.PartialAsync("_NavbarEstudante", Model) <!-- Incluindo a Navbar --> *@
 @if (Model != null) {
     <div class="container mt-5">
 
@@ -30,6 +30,12 @@
         <form asp-action="AtualizarPerfil" method="post" class="mt-4">
             <input type="hidden" asp-for="Id" />
             <h3 style="color: indigo">Atualizar Informações</h3>
+
+            <div class="mb-3">
+                <a href="@Url.Action("EstudanteLogado", "Login", new { id = Model.Id })" class="btn btn-primary">
+                    Voltar
+                </a>
+            </div>
 
             <!-- Nome -->
             <div class="form-group">
