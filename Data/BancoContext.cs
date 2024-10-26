@@ -15,6 +15,7 @@ namespace SistemaRedeWork.Data {
         public DbSet<CurriculoModel> Curriculo { get; set; }
         public DbSet<Arquivos> Arquivos { get; set; }
 
+        public DbSet<CadastrarVagasModel> Vagas { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
@@ -44,6 +45,14 @@ namespace SistemaRedeWork.Data {
                 .HasOne(a => a.Estudante)
                 .WithMany(e => e.Arquivos)
                 .HasForeignKey(a => a.EstudanteId);
+
+
+            // Relacionamento um para muitos entre EmpresaModel e CadastrarVagasModel
+            modelBuilder.Entity<CadastrarVagasModel>()
+                .HasOne(v => v.Empresa)
+                .WithMany(e => e.Vagas)
+                .HasForeignKey(v => v.EmpresaId)
+                .OnDelete(DeleteBehavior.Cascade);  // Configuração de exclusão em cascata (opcional)
 
             // Adicione mais configurações, se necessário
         }

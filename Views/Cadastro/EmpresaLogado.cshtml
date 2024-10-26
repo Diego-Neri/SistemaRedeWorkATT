@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SistemaRedeWork.Models.EmpresaEstudanteViewModel>
+﻿@using System.Security.Claims
+@model IEnumerable<SistemaRedeWork.Models.EmpresaEstudanteViewModel>
 
 @{
     ViewData["HideFooter"] = true;
@@ -124,15 +125,32 @@
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" style="color:black"
-                               asp-controller="Perfil" asp-action="ListarEstudantes">Estudantes</a>
+                               asp-controller="Perfil" asp-action="PerfilEmpresa"
+                               asp-route-id="@User.FindFirstValue("EmpresaId")">Perfil</a>
                         </li>
+
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" style="color:black"
+                               asp-controller="Cadastro" asp-action="EmpresaLogado">Estudantes</a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" style="color:black"
-                               asp-controller="Perfil" asp-action="CadastrarVagas">Cadastrar Vagas</a>
+                               asp-controller="Cadastro" asp-action="CadastrarVagas" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Cadastrar Vagas</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" style="color:black"
-                               asp-controller="Login" asp-action="Logout">Sair</a>
+                            <a class="nav-link" style="color:black" asp-controller="Cadastro" asp-action="MinhasVagasView">Minhas Vagas</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <form asp-controller="Cadastro" asp-action="Logout" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken() <!-- Adiciona token CSRF -->
+                                <button type="submit" class="nav-link" style="border:none; background:none; color:black; cursor:pointer;">
+                                    Sair
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -209,25 +227,25 @@
     }
 
 
-<!-- Modal -->
-<div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="vagaModalLabel">Nome do Estudante</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5 id="vagaTitulo" class="text-primary"></h5>
-                <p id="vagaDescricao"></p>
-                <a href="#" class="btn btn-success">Baixar Currículo</a>
+    <!-- Modal -->
+    <div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vagaModalLabel">Nome do Estudante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 id="vagaTitulo" class="text-primary"></h5>
+                    <p id="vagaDescricao"></p>
+                    <a href="#" class="btn btn-success">Baixar Currículo</a>
+                </div>
             </div>
         </div>
     </div>
+
+
 </div>
-
-
-
 
 
 @section Scripts {
@@ -269,28 +287,28 @@
 
             // Exibindo as informações no modal com separação por categorias
             document.getElementById('vagaDescricao').innerHTML = `
-                        <strong>Dados Pessoais:</strong><br>
-                        Nome Completo: ${nome} ${sobrenome}<br>
-                        Data de Nascimento: ${dataNascimento}<br>
-                        Email: ${email}<br>
-                        Telefone: ${telefone}<br>
-                        Sexo: ${sexo}<br>
-                        Estado: ${estado}<br><br>
+                                                <strong>Dados Pessoais:</strong><br>
+                                                Nome Completo: ${nome} ${sobrenome}<br>
+                                                Data de Nascimento: ${dataNascimento}<br>
+                                                Email: ${email}<br>
+                                                Telefone: ${telefone}<br>
+                                                Sexo: ${sexo}<br>
+                                                Estado: ${estado}<br><br>
 
-                        <strong>Informações Acadêmicas:</strong><br>
-                        Curso: ${curso}<br>
-                        Instituição: ${instituicao}<br>
-                        Período: ${periodo}<br>
-                        Semestre: ${semestre}<br><br>
+                                                <strong>Informações Acadêmicas:</strong><br>
+                                                Curso: ${curso}<br>
+                                                Instituição: ${instituicao}<br>
+                                                Período: ${periodo}<br>
+                                                Semestre: ${semestre}<br><br>
 
-                        <strong>Informações Profissionais:</strong><br>
-                        Objetivo: ${objetivo}<br>
-                        Educação: ${educacao}<br>
-                        Certificados: ${certificado}<br>
-                        Experiência: ${experiencia}<br>
-                        Habilidades: ${habilidade}<br>
-                        Idiomas: ${idioma}
-                    `;
+                                                <strong>Informações Profissionais:</strong><br>
+                                                Objetivo: ${objetivo}<br>
+                                                Educação: ${educacao}<br>
+                                                Certificados: ${certificado}<br>
+                                                Experiência: ${experiencia}<br>
+                                                Habilidades: ${habilidade}<br>
+                                                Idiomas: ${idioma}
+                                            `;
         }
 
 

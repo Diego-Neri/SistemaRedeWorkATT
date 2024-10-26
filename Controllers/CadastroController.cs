@@ -4,6 +4,7 @@ using SistemaRedeWork.Models;
 using SistemaRedeWork.Controllers;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
 
 public class CadastroController : Controller {
 
@@ -142,5 +143,131 @@ public class CadastroController : Controller {
         }
         return View(estudante);
     }
+
+    public IActionResult CadastrarVagas(int id) {
+        var empresa = _context.Empresas.FirstOrDefault(e => e.Id == id);
+        if (empresa == null) {
+            return NotFound();
+        }
+
+        var model = new CadastrarVagasViewModel {
+            CadastrarVagas = new CadastrarVagasModel { EmpresaId = empresa.Id }, // Define o EmpresaId
+            Empresas = _context.Empresas.ToList(), // Preencher a lista de empresas, se necessário
+            RazaoSocial = empresa.RazaoSocial // Obtém a razão social da empresa
+
+        };
+
+        return View(model);
+    }
+
+
+
+
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CadastrarVagas(CadastrarVagasViewModel model) {
+        var vaga = model.CadastrarVagas; // Acesse o modelo CadastrarVagas a partir do view model
+
+        // Verifica se a empresa existe
+        var empresaExists = await _context.Empresas.AnyAsync(e => e.Id == vaga.EmpresaId);
+        if (!empresaExists) {
+            ModelState.AddModelError("EmpresaId", "A empresa associada à vaga não existe.");
+
+            // Preenche a lista de empresas novamente para mostrar na view
+            model.Empresas = await _context.Empresas.ToListAsync();
+            return View(model); // Retorna o ViewModel para a view
+        }
+
+        // Adiciona a nova vaga
+        _context.Vagas.Add(vaga);
+        await _context.SaveChangesAsync();
+        TempData["MensagemSucesso"] = $"Vaga cadastrada com sucesso!";
+        return RedirectToAction("MinhasVagasView");
+    }
+
+    public IActionResult MinhasVagasView() {
+        // Obtém o ID da empresa a partir das claims do usuário
+        var empresaIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+        // Verifica se a claim "EmpresaId" foi encontrada
+        if (empresaIdClaim == null) {
+            // Retorna uma mensagem de erro e redireciona para a tela EmpresaLogado
+            TempData["MensagemErro"] = "ID da empresa não encontrado.";
+            return RedirectToAction("EmpresaLogado", "Cadastro");
+        }
+
+        // Tenta converter a claim para um int
+        if (!int.TryParse(empresaIdClaim.Value, out int empresaId)) {
+            // Retorna uma mensagem de erro e redireciona para a tela EmpresaLogado
+            TempData["MensagemErro"] = "ID da empresa inválido.";
+            return RedirectToAction("EmpresaLogado", "Cadastro");
+        }
+
+        // Filtra as vagas pela empresa
+        var vagas = _context.Vagas.Where(v => v.EmpresaId == empresaId).ToList();
+
+        // Se não houver vagas, adiciona uma mensagem informativa
+        if (!vagas.Any()) {
+            ViewBag.Mensagem = "Você ainda não cadastrou nenhuma vaga.";
+        }
+
+        return View(vagas); // Retorna a lista de vagas para a view
+    }
+
+
+
+
+
+    [HttpPost]
+    public async Task<IActionResult> AtivarDesativar(int id) {
+        // Busca a vaga pelo ID
+        var vaga = await _context.Vagas.FindAsync(id);
+
+        if (vaga == null) {
+            TempData["MensagemErro"] = "Vaga não encontrada.";
+            return RedirectToAction("MinhasVagasView");
+        }
+
+        // Alterna o status da vaga
+        vaga.Ativa = !vaga.Ativa;
+
+        // Atualiza a vaga no banco de dados
+        _context.Vagas.Update(vaga);
+        await _context.SaveChangesAsync();
+
+        TempData["MensagemSucesso"] = $"Vaga {(vaga.Ativa ? "ativada" : "desativada")} com sucesso!";
+        return RedirectToAction("MinhasVagasView");
+    }
+
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Excluir(int id) {
+        // Encontra a vaga pelo ID
+        var vaga = await _context.Vagas.FindAsync(id);
+        if (vaga == null) {
+            TempData["MensagemErro"] = "Vaga não encontrada.";
+            return RedirectToAction("MinhasVagasView");
+        }
+
+        // Remove a vaga
+        _context.Vagas.Remove(vaga);
+        await _context.SaveChangesAsync();
+
+        TempData["MensagemSucesso"] = "Vaga excluída com sucesso.";
+        return RedirectToAction("MinhasVagasView");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout() {
+        await HttpContext.SignOutAsync(); // Faz o logout do usuário
+        TempData["MensagemSucesso"] = "Você saiu com sucesso!";
+        return RedirectToAction("LoginEmpresa", "Login"); // Redireciona para a página de login ou outra página desejada
+    }
+
 
 }

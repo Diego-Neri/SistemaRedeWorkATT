@@ -1,0 +1,209 @@
+﻿@model CadastrarVagasViewModel
+
+
+@{
+    ViewData["HideFooter"] = true;
+    ViewData["HideNavBar"] = true;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Vaga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .divider {
+            border-bottom: 1px solid #dee2e6;
+            margin: 1rem 0;
+        }
+
+        .btn-custom {
+            background-color: #0d6efd;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+            .btn-custom:hover {
+                background-color: #0b5ed7;
+            }
+    </style>
+</head>
+<body>
+
+    @if (TempData["MensagemErro"] != null) {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    @if (TempData["MensagemSucesso"] != null) {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Cadastrar Vaga</h2>
+        @using (Html.BeginForm("CadastrarVagas", "Cadastro", FormMethod.Post)) {
+            @Html.HiddenFor(m => m.CadastrarVagas.EmpresaId)
+            // Não precisa de Value aqui
+
+
+            <!-- Informações da Vaga -->
+            <div class="form-section">
+                <div class="section-title">Informações da Vaga</div>
+                <hr class="divider">
+
+              
+
+                <!-- Título da Vaga -->
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.Titulo, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.CadastrarVagas.Titulo, new { @class = "form-control", placeholder = "Desenvolvedor Web Frontend", @required = "required" })
+                </div>
+
+                <!-- Descrição da Vaga -->
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.Descricao, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.CadastrarVagas.Descricao, new { @class = "form-control", rows = 4, placeholder = "Descreva as responsabilidades e requisitos da vaga", @required = "required" })
+                </div>
+
+                <!-- Requisitos -->
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.Requisitos, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.CadastrarVagas.Requisitos, new { @class = "form-control", rows = 3, placeholder = "Habilidades e qualificações necessárias" })
+                </div>
+
+                <!-- Tipo de Trabalho e Nível de Experiência -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        @Html.Label("Tipo de Trabalho", "Tipo de Trabalho", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.CadastrarVagas.TipoTrabalho, new SelectList(new List<SelectListItem>
+                    {
+                    new SelectListItem { Value = "Remoto", Text = "Remoto" },
+                    new SelectListItem { Value = "Presencial", Text = "Presencial" },
+                    new SelectListItem { Value = "Híbrido", Text = "Híbrido" }
+                    }, "Value", "Text"), "Selecione...", new { @class = "form-select", @required = "required" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.Label("Nível de Experiência", "Nível de Experiência", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.CadastrarVagas.NivelExperiencia, new SelectList(new List<SelectListItem>
+                    {
+                    new SelectListItem { Value = "Estagiário", Text = "Estagiário" },
+                    new SelectListItem { Value = "Júnior", Text = "Júnior" },
+                    new SelectListItem { Value = "Pleno", Text = "Pleno" },
+                    new SelectListItem { Value = "Sênior", Text = "Sênior" }
+                    }, "Value", "Text"), "Selecione...", new { @class = "form-select", @required = "required" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detalhes Adicionais -->
+            <div class="form-section">
+                <div class="section-title">Detalhes Adicionais</div>
+                <hr class="divider">
+
+                <!-- Faixa Salarial e Localização -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Faixa Salárial</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.CadastrarVagas.FaixaSalarialMin, new { @class = "form-control", placeholder = "Mínimo", @required = "required" })
+                            @Html.TextBoxFor(m => m.CadastrarVagas.FaixaSalarialMax, new { @class = "form-control", placeholder = "Máximo", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.CadastrarVagas.Localizacao, "Localização", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.CadastrarVagas.Localizacao, new { @class = "form-control", placeholder = "Exemplo: São Paulo, SP" })
+                    </div>
+                </div>
+
+                <!-- Duração do Projeto e Modalidade de Contratação -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        @Html.Label("Duração do Projeto", "Duração do Projeto", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.CadastrarVagas.DuracaoProjeto, new SelectList(new List<SelectListItem>
+                    {
+                    new SelectListItem { Value = "Indeterminado", Text = "Tempo indeterminado" },
+                    new SelectListItem { Value = "Curto prazo", Text = "Curto prazo (1-3 meses)" },
+                    new SelectListItem { Value = "Médio prazo", Text = "Médio prazo (3-6 meses)" },
+                    new SelectListItem { Value = "Longo prazo", Text = "Longo prazo (6 meses ou mais)" }
+                    }, "Value", "Text"), "Selecione...", new { @class = "form-select", @required = "required" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.Label("Modalidade de Contratação", "Modalidade de Contratação", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.CadastrarVagas.ModalidadeContratacao, new SelectList(new List<SelectListItem>
+                    {
+                    new SelectListItem { Value = "PJ", Text = "PJ" },
+                    new SelectListItem { Value = "CLT", Text = "CLT" },
+                    new SelectListItem { Value = "Freelancer", Text = "Freelancer" }
+                    }, "Value", "Text"), "Selecione...", new { @class = "form-select", @required = "required" })
+                    </div>
+                </div>
+
+                <!-- Benefícios -->
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.Beneficios, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.CadastrarVagas.Beneficios, new { @class = "form-control", rows = 3, placeholder = "Descreva os benefícios oferecidos" })
+                </div>
+
+                <!-- Data Limite para Candidatura -->
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.DataLimiteCandidatura, "Data Limite de Inscrição", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.CadastrarVagas.DataLimiteCandidatura, new { @class = "form-control", type = "date", @required = "required" })
+                </div>
+            </div>
+
+            <!-- Informações de Contato -->
+            <div class="form-section">
+                <div class="section-title">Informações de Contato</div>
+                <hr class="divider">
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.ContatoNome, "Nome", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.CadastrarVagas.ContatoNome, new { @class = "form-control", @required = "required" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.ContatoEmail, "E-mail", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.CadastrarVagas.ContatoEmail, new { @class = "form-control", @required = "required", type = "email" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CadastrarVagas.ContatoTelefone, "Telefone", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.CadastrarVagas.ContatoTelefone, new { @class = "form-control", @required = "required" })
+                </div>
+
+                <!-- Razão Social da Empresa -->
+                <div class="mb-3">
+                    @Html.Label("Razão Social", "Razão Social", new { @class = "form-label" })
+                    @Html.TextBox("RazaoSocial", Model.RazaoSocial, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <!-- Botão de Envio -->
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-custom">Cadastrar Vaga</button>
+            </div>
+        }
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

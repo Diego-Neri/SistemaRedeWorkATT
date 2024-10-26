@@ -52,6 +52,84 @@ namespace SistemaRedeWork.Migrations
                     b.ToTable("Arquivos");
                 });
 
+            modelBuilder.Entity("SistemaRedeWork.Models.CadastrarVagasModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativa")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Beneficios")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ContatoEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ContatoNome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ContatoTelefone")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DataLimiteCandidatura")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DuracaoProjeto")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("FaixaSalarialMax")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("FaixaSalarialMin")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("Localizacao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ModalidadeContratacao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NivelExperiencia")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Requisitos")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TipoTrabalho")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmpresaId");
+
+                    b.ToTable("Vagas");
+                });
+
             modelBuilder.Entity("SistemaRedeWork.Models.CurriculoModel", b =>
                 {
                     b.Property<int>("Id")
@@ -408,6 +486,17 @@ namespace SistemaRedeWork.Migrations
                     b.Navigation("Estudante");
                 });
 
+            modelBuilder.Entity("SistemaRedeWork.Models.CadastrarVagasModel", b =>
+                {
+                    b.HasOne("SistemaRedeWork.Models.EmpresaModel", "Empresa")
+                        .WithMany("Vagas")
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
+                });
+
             modelBuilder.Entity("SistemaRedeWork.Models.CurriculoModel", b =>
                 {
                     b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
@@ -447,14 +536,15 @@ namespace SistemaRedeWork.Migrations
             modelBuilder.Entity("SistemaRedeWork.Models.EmpresaModel", b =>
                 {
                     b.Navigation("Estudantes");
+
+                    b.Navigation("Vagas");
                 });
 
             modelBuilder.Entity("SistemaRedeWork.Models.EstudanteModel", b =>
                 {
                     b.Navigation("Arquivos");
 
-                    b.Navigation("Curriculo")
-                        .IsRequired();
+                    b.Navigation("Curriculo");
                 });
 #pragma warning restore 612, 618
         }

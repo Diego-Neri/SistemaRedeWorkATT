@@ -1,0 +1,72 @@
+﻿@model List<SistemaRedeWork.Models.CadastrarVagasModel>
+
+@{
+    ViewData["Title"] = "Minhas Vagas";
+    ViewData["HideFooter"] = true;
+    ViewData["HideNavBar"] = true;
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Minhas Vagas</h2>
+
+    <!-- Botão de Voltar -->
+    <div class="mb-3">
+        <a href="@Url.Action("EmpresaLogado", "Cadastro")" class="btn btn-primary">
+            Voltar para Minha Empresa
+        </a>
+    </div>
+
+    @if (TempData["MensagemErro"] != null) {
+        <div class="alert alert-danger">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    @if (TempData["MensagemSucesso"] != null) {
+        <div class="alert alert-success">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (Model.Count == 0) {
+        <div class="alert alert-warning text-center" role="alert">
+            Você ainda não cadastrou nenhuma vaga.
+        </div>
+    } else {
+        <div class="row">
+            @foreach (var vaga in Model) {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@vaga.Titulo</h5>
+                            <p class="card-text">@vaga.Descricao</p>
+                            <p class="card-text"><strong>Data Limite:</strong> @vaga.DataLimiteCandidatura.ToString("dd/MM/yyyy")</p>
+                            <p class="card-text">
+                                <span class="badge @(vaga.Ativa ? "bg-success" : "bg-danger")">
+                                    @(vaga.Ativa ? "Ativa" : "Inativa")
+                                </span>
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <!-- Botão para ativar/desativar a vaga -->
+                                <form asp-action="AtivarDesativar" asp-route-id="@vaga.Id" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-warning btn-sm"
+                                            onclick="return confirm('Tem certeza que deseja @(vaga.Ativa ? "desativar" : "ativar") esta vaga?');">
+                                        @(vaga.Ativa ? "Desativar" : "Ativar")
+                                    </button>
+                                </form>
+
+                                <!-- Botão para excluir a vaga -->
+                                <form asp-action="Excluir" asp-route-id="@vaga.Id" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Tem certeza que deseja excluir esta vaga?');">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
