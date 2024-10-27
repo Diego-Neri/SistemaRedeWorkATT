@@ -13,11 +13,13 @@ body {
 .container-login {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1200px;
-    height: 100vh;
-    padding: 0;
+    width: 100%; /* Ajusta a largura para 100% */
+    height: auto; /* Deixa a altura automática */
+    max-width: 1280px; /* Máxima largura */
+    height: 720px; /* Altura fixa */
+    background-color: #2F005F;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .info-box {
@@ -60,39 +62,51 @@ body {
         margin-bottom: 15px;
         border-radius: 5px;
         font-size: 16px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
+        .login-box input:focus {
+            outline: none;
+            border: 2px solid #090020;
+            box-shadow: 0 0 5px rgba(161, 110, 255, 0.5);
+        }
+
     .login-box button {
-        background-color: #00ff00;
-        color: #000;
-        border: none;
+        width: 100%; /* Ajustar a largura do botão */
         padding: 10px;
-        width: 100%;
+        background-color: #7AFFBF; /* Cor inicial do botão */
+        color: #000; /* Deixar o texto do botão transparente */
+        font-size: 18px;
+        font-weight: normal;
+        border: none; /* Remover a borda do botão */
         border-radius: 5px;
-        font-size: 16px;
-        font-weight: bold;
         cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease; /* Transição para transformação e cor de fundo */
+        text-align: center; /* Centraliza o texto */
+        outline: none; /* Remove a borda preta ao clicar */
     }
 
         .login-box button:hover {
-            background-color: #00cc00;
+            background-color: #5DFFA8;
+            transform: scale(1.05);
+        }
+
+        .login-box button:active {
+            transform: scale(0.95);
+            background-color: #4DCC9B;
         }
 
     .login-box a {
-        color: #00ff00;
+        color: #7AFFBF;
         text-decoration: none;
-        font-size: 14px;
+        font-size: 16px;
+        font-weight: bold;
     }
 
         .login-box a:hover {
             text-decoration: underline;
         }
 
-.info-box, .login-box {
-    color: #ffffff;
-}
-
-    /* Estilo para o botão "Voltar" dentro do login-box */
     .login-box .btn-voltar {
         position: absolute;
         top: -40px;
@@ -105,4 +119,53 @@ body {
         cursor: pointer;
     }
 
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+    .container-login {
+        flex-direction: column;
+        height: auto;
+    }
 
+    .info-box {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .login-box {
+        width: 100%;
+    }
+
+    .info-box h4 {
+        font-size: 30px;
+    }
+
+    .login-box h4 {
+        font-size: 24px;
+    }
+
+    .login-box input {
+        font-size: 14px;
+    }
+
+    .login-box button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-box h4 {
+        font-size: 24px;
+    }
+
+    .login-box h4 {
+        font-size: 20px;
+    }
+
+    .login-box input {
+        font-size: 12px;
+    }
+
+    .login-box button {
+        font-size: 12px;
+    }
+}
