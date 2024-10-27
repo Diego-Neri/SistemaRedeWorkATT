@@ -35,14 +35,19 @@ namespace SistemaRedeWork.Models {
 
     }
 
-    public class Arquivos {
-        public int Id { get; set; }
-        public string Descricao { get; set; }
-        public byte[] Dados { get; set; }
-        public string ContentType { get; set; }
+    public class Arquivos { // Nome da classe ajustado conforme convenção
+    public int Id { get; set; }
 
-        [ForeignKey("EstudanteModel")]
-        public int EstudanteId { get; set; } // Chave estrangeira
-        public EstudanteModel Estudante { get; set; } // Propriedade de navegação
-    }
+    public string Descricao { get; set; }
+
+    public byte[] Dados { get; set; }
+
+    public string ContentType { get; set; }
+
+    [ForeignKey("Estudante")]
+    public int EstudanteId { get; set; } // Chave estrangeira obrigatória
+
+    public EstudanteModel Estudante { get; set; } // Propriedade de navegação
+}
+
 }

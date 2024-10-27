@@ -261,6 +261,18 @@ public class CadastroController : Controller {
         return RedirectToAction("MinhasVagasView");
     }
 
+    [HttpGet]
+    public IActionResult DownloadCurriculo(int id) {
+        var arquivo = _context.Arquivos.FirstOrDefault(a => a.Id == id);
+        if (arquivo == null) {
+            TempData["MensagemErro"] = "Currículo não encontrado.";
+            return RedirectToAction("MinhasVagasView");
+        }
+
+        return File(arquivo.Dados, arquivo.ContentType, arquivo.Descricao);
+    }
+
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout() {

@@ -83,5 +83,7 @@ namespace SistemaRedeWork.Models {
 
         // Propriedade para controlar se a vaga está ativa ou inativa
         public bool Ativa { get; set; } = true; // Valor padrão como ativa
+
+        public List<EstudanteModel> Estudantes { get; set; } = new List<EstudanteModel> { new EstudanteModel() };
     }
 }
