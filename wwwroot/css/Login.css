@@ -1,98 +1,122 @@
-﻿
+﻿* {
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
 body {
-    background: linear-gradient(180deg, #4B0082 0%, #2B014C 100%);
-    color: #ffffff;
-    /*height: 100vh;*/
-   /* display: flex;*/
-    justify-content: center;
-    align-items: center;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
+    font-family: "IBM Plex Sans", sans-serif;
+    background-color: #f5f5f5;
+    display: flex; /* Usar flexbox para centralizar o conteúdo */
+    flex-direction: column; /* Coloca os elementos em coluna */
+    height: 100vh; /* Altura total da tela */
 }
 
 .container-login {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1200px;
-    height: 100vh;
-    padding: 0;
+    width: 100%;
+    height: auto;
+    max-width: 1280px;
+    height: 720px;
+    background-color: #2F005F;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .info-box {
     flex: 1;
-    margin-right: 50px;
-    display: flex;
-    align-items: center;
-}
-
-    .info-box h4 {
-        font-size: 36px;
-        font-weight: bold;
-        color: #FFFFFF;
-        max-width: 500px;
-    }
-
-.login-box {
-    background-color: #1e1a32;
-    padding: 40px;
-    border-radius: 10px;
-    width: 350px;
-    height: auto;
+    background-color: #5D2CE7;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #FFFFFF;
+}
+
+    .info-box h4 {
+        font-size: 55px;
+        text-align: center;
+        font-weight: lighter;
+        margin-bottom: 20px; /* Adiciona espaço abaixo do título */
+    }
+
+.login-box {
+    flex: 1;
+    background-color: #5D2CE7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #FFFFFF;
 }
 
     .login-box h4 {
-        font-size: 28px;
-        margin-bottom: 20px;
-        color: #FFFFFF;
-        text-align: center;
+        font-size: 55px; /* Tamanho da fonte ajustado para destaque */
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: center; /* Centraliza o título */
+    }
+
+    .login-box p {
+        font-size: 16px; /* Tamanho do texto explicativo */
+        margin-bottom: 20px; /* Espaçamento abaixo do texto */
     }
 
     .login-box input {
-        background-color: #3d3557;
-        color: #ffffff;
+        background-color: #fff;
         border: none;
         padding: 10px;
         margin-bottom: 15px;
         border-radius: 5px;
         font-size: 16px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
+        .login-box input:focus {
+            outline: none;
+            border: 2px solid #090020;
+            box-shadow: 0 0 5px rgba(161, 110, 255, 0.5);
+        }
+
     .login-box button {
-        background-color: #00ff00;
-        color: #000;
-        border: none;
+        width: 100%; /* Ajustar a largura do botão */
         padding: 10px;
-        width: 100%;
+        background-color: #7AFFBF; /* Cor inicial do botão */
+        color: #000; /* Deixar o texto do botão visível */
+        font-size: 18px;
+        font-weight: normal;
+        border: none; /* Remover a borda do botão */
         border-radius: 5px;
-        font-size: 16px;
-        font-weight: bold;
         cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease; /* Transição para transformação e cor de fundo */
+        text-align: center; /* Centraliza o texto */
+        outline: none; /* Remove a borda preta ao clicar */
     }
 
         .login-box button:hover {
-            background-color: #00cc00;
+            background-color: #5DFFA8;
+            transform: scale(1.05);
+        }
+
+        .login-box button:active {
+            transform: scale(0.95);
+            background-color: #4DCC9B;
         }
 
     .login-box a {
-        color: #00ff00;
+        color: #7AFFBF;
         text-decoration: none;
-        font-size: 14px;
+        font-size: 16px;
+        font-weight: bold;
     }
 
         .login-box a:hover {
             text-decoration: underline;
         }
 
-.info-box, .login-box {
-    color: #ffffff;
-}
-
-    /* Estilo para o botão "Voltar" dentro do login-box */
     .login-box .btn-voltar {
         position: absolute;
         top: -40px;
@@ -105,4 +129,79 @@ body {
         cursor: pointer;
     }
 
+.info-box .centered-image {
+    margin-bottom: 20px; /* Adiciona espaço entre a imagem e o texto */
+    max-width: 400px; /* Ajuste o tamanho conforme necessário */
+}
 
+footer {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #5D2CE7 !important; /* Força a cor de fundo do rodapé */
+    color: #fff; /* Cor do texto no rodapé */
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    padding: 10px 0; /* Reduz o padding superior e inferior */
+    text-align: center; /* Centraliza o texto no rodapé */
+    font-size: 14px; /* Reduz o tamanho da fonte */
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+    .container-login {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .info-box {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .login-box {
+        width: 100%;
+    }
+
+    .info-box h4 {
+        font-size: 30px;
+    }
+
+    .login-box h4 {
+        font-size: 24px;
+    }
+
+    .login-box p {
+        font-size: 16px; /* Ajuste para textos em telas menores */
+    }
+
+    .login-box input {
+        font-size: 14px;
+    }
+
+    .login-box button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-box h4 {
+        font-size: 24px;
+    }
+
+    .login-box h4 {
+        font-size: 20px;
+    }
+
+    .login-box p {
+        font-size: 14px; /* Ajuste para telas pequenas */
+    }
+
+    .login-box input {
+        font-size: 12px;
+    }
+
+    .login-box button {
+        font-size: 12px;
+    }
+}

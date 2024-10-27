@@ -1,11 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Como Funciona";
-}
-
-<div class="container my-5">
+﻿<div class="container my-5">
     <!-- Seção Principal -->
     <div class="text-center mb-5">
-        <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+        <h1 class="display-4">@ViewData["Title"]</h1>
         <p class="lead">Facilitamos a conexão entre empresas e talentos emergentes de TI. Veja abaixo como nossa plataforma funciona.</p>
     </div>
 
@@ -19,8 +15,8 @@
     <section class="bg-light py-5">
         <div class="container">
             <div class="text-center">
-                <h2 class="text-primary">Veja como funciona</h2>
-                <p class="text-muted mb-5">Em três passos simples, você pode contratar um talento ou encontrar um projeto.</p>
+                <h2 class="display-4">Veja como funciona</h2>
+                <p class="lead">Em três passos simples, você pode contratar um talento ou encontrar um projeto.</p>
             </div>
 
             <!-- Ícones e Informações -->
@@ -50,7 +46,7 @@
     <section class="py-5">
         <div class="container text-center">
             <h2>Quanto custa?</h2>
-            <p class="text-muted">Nós garantimos que o preço será justo tanto para freelancers quanto para clientes.</p>
+            <p class="lead">Nós garantimos que o preço será justo tanto para freelancers quanto para clientes.</p>
             <a href="#preco" class="btn btn-outline-primary">Saiba mais sobre preços</a>
         </div>
     </section>
@@ -60,55 +56,55 @@
 <style>
     body {
         font-family: 'IBM Plex Sans', sans-serif;
-        background-color: #f4f4f4;
+        background-color: #f5f5f5;
     }
 
     h1, h2, h4 {
         font-weight: 700;
+        color: #000;
     }
 
-    .btn-primary {
-        background-color: #6f2c91; /* Cor roxa do botão */
+    .btn-primary,
+    .btn-success,
+    .btn-outline-primary {
+        background-color: #5D2CE7; /* Cor roxa padrão */
         border: none;
         color: #fff;
+        font-weight: bold;
         padding: 10px 20px;
         border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .btn-primary:hover {
-        background-color: #5b2275; /* Cor ao passar o mouse */
-        transform: translateY(-2px); /* Efeito de elevação */
-    }
-
-    .btn-success {
-        background-color: #a463c8; /* Cor do segundo botão em tom lilás */
-        border: none;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .btn-success:hover {
-        background-color: #6f2c91; /* Tom mais escuro ao passar o mouse */
-        transform: translateY(-2px);
-    }
+        .btn-primary:hover,
+        .btn-success:hover,
+        .btn-outline-primary:hover {
+            background-color: #997BEA; /* Tom de roxo mais claro ao passar o mouse */
+            box-shadow: 0px 4px 12px rgba(93, 44, 231, 0.4); /* Sombra roxa suave */
+            transform: translateY(-3px); /* Efeito de elevação */
+        }
 
     .lead {
-        font-size: 1.25rem;
-        color: #555;
+        color: #000;
+        font-size: 16px;
     }
 
     .text-primary {
-        color: #6f2c91; /* Gradiente roxo para o título */
+        color: #000;
+    }
+
+    .display-4 {
+        color: #000;
+        font-weight: bold;
+        font-size: 30px;
     }
 
     .text-muted {
-        color: #6c757d;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     section.bg-light {
-        background-color: #f8f9fa;
+        background-color: #000;
     }
 </style>

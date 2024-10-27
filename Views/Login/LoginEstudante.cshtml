@@ -39,6 +39,7 @@
     <div class="container-login">
         <!-- Caixa de informações -->
         <div class="info-box">
+            <img src="~/content/img/livros.png" alt="Imagem de Livros" class="centered-image">
             <h4>Sua empresa + nossos estudantes = soluções criativas e eficientes!</h4>
         </div>
 
@@ -47,7 +48,7 @@
             <a class="btn-voltar" asp-area="" asp-controller="Home" asp-action="Index">
                 <i class="bi bi-arrow-left"></i> Voltar
             </a>
-            <h4>Bem-vindo(a)!</h4>
+            <h4>Login-Estudante!</h4>
             <p>Preencha os campos abaixo com os seus dados de acesso.</p>
             @using (Html.BeginForm("LoginEstudante", "Login", FormMethod.Post)) {
                 <div class="form-group">

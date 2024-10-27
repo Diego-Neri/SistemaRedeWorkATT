@@ -1,7 +1,7 @@
 * {
-    margin: 0;
-    padding: 0;
+    padding: 0px;
     box-sizing: border-box;
+    font-family: "IBM Plex Sans", sans-serif;
 }
 
 body {
@@ -14,19 +14,17 @@ body {
 
 /*header {
     background-color: #5D2CE7;*/ /* Cor de fundo da navbar */
-    /*padding: 10px 0;*/ /* Espaçamento vertical */
-    /*width: 100%;*/ /* Largura total da navbar */
+/*padding: 10px 0;*/ /* Espaçamento vertical */
+/*width: 100%;*/ /* Largura total da navbar */
 /*}*/
 
-./*navbar {
+. /*navbar {
     display: flex;*/ /* Flexbox para centralizar */
-    /*justify-content: center;*/ /* Centraliza horizontalmente */
+/*justify-content: center;*/ /* Centraliza horizontalmente */
 /*}*/
-
 /*.logo {
     width: 180px;*/ /* Ajuste o tamanho da logo */
 /*}*/
-
 main {
     flex: 1; /* Faz o main ocupar o espaço restante */
     overflow-y: auto; /* Adiciona barra de rolagem vertical se necessário */
@@ -103,7 +101,7 @@ button {
 
 /*footer {
     text-align: center;*/ /* Centraliza o texto do footer */
-    /*padding: 10px 0;*/ /* Espaçamento vertical do footer */
+/*padding: 10px 0;*/ /* Espaçamento vertical do footer */
 /*}*/
 
 .informacoes {
@@ -123,6 +121,18 @@ button {
         margin-bottom: 5px; /* Espaço abaixo dos parágrafos */
         color: #000; /* Cor do texto */
     }
+footer {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #5D2CE7 !important; /* Força a cor de fundo do rodapé */
+    color: #fff; /* Cor do texto no rodapé */
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    padding: 10px 0; /* Reduz o padding superior e inferior */
+    text-align: center; /* Centraliza o texto no rodapé */
+    font-size: 14px; /* Reduz o tamanho da fonte */
+}
 
 /* Media Queries para responsividade */
 @media (max-width: 768px) {

@@ -48,6 +48,7 @@ main {
     border-color: #7e159e;
     color: rgb(240, 248, 255);
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -64,9 +65,9 @@ header {
     display: flex;
 }*/
 
-    nav .ferr {
-        margin-right: 20px;
-    }
+nav .ferr {
+    margin-right: 20px;
+}
 
 .teste {
     background-color: #7e159e;
@@ -98,6 +99,15 @@ main {
     border-color: #7e159e;
     color: rgb(240, 248, 255);
 }
-
-
-
+footer {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #5D2CE7 !important; /* Força a cor de fundo do rodapé */
+    color: #fff; /* Cor do texto no rodapé */
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    padding: 10px 0; /* Reduz o padding superior e inferior */
+    text-align: center; /* Centraliza o texto no rodapé */
+    font-size: 14px; /* Reduz o tamanho da fonte */
+}
