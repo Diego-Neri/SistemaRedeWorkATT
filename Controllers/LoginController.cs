@@ -104,24 +104,6 @@ public class LoginController : Controller {
         return View(model); // Certifique-se de retornar a view com o modelo preenchido
     }
 
-    //private bool VerificaSenha(string inputPassword, string storedHashedPassword) {
-    //    // Hasheia a senha de entrada e compara com a senha armazenada
-    //    var hashedInputPassword = HashPasswordEmpresa(inputPassword);
-    //    return hashedInputPassword == storedHashedPassword;
-    //}
-
-    //public string HashPasswordEmpresa(string password) {
-    //    using (var sha256 = SHA256.Create()) {
-    //        var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-    //        return Convert.ToBase64String(bytes);
-    //    }
-    //}
-
-
-
-
-
-
 
 
     [HttpGet]
@@ -196,7 +178,7 @@ public class LoginController : Controller {
         // Buscar todas as vagas e suas respectivas empresas
         var vagas = _context.Vagas
             .Include(v => v.Empresa)  // Inclui os dados da empresa (se necessário)
-            .Where(v => v.EmpresaId != null)
+            .Where(v => v.EmpresaId != null && v.Ativa)
             .ToList();
 
         // Criar uma lista de EmpresaEstudanteViewModel

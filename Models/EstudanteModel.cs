@@ -49,7 +49,7 @@ namespace SistemaRedeWork.Models {
         // Propriedade de navegação para múltiplos arquivos
         public ICollection<Arquivos>? Arquivos { get; set; }
 
-
+        public int CurriculoId { get; set; }
         public CurriculoModel? Curriculo { get; set; }
     }
     public class LoginEstudanteModel {

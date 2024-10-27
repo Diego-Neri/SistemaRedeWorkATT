@@ -62,6 +62,37 @@
                                         Excluir
                                     </button>
                                 </form>
+
+                                <!-- Botão para ver candidatos -->
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#candidatosModal-@vaga.Id">
+                                    Ver Candidatos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para exibir candidatos -->
+                <div class="modal fade" id="candidatosModal-@vaga.Id" tabindex="-1" aria-labelledby="candidatosModalLabel-@vaga.Id" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="candidatosModalLabel-@vaga.Id">Candidatos para @vaga.Titulo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @if (vaga.Estudantes != null && vaga.Estudantes.Any()) {
+                                    <ul class="list-group">
+                                        @foreach (var candidato in vaga.Estudantes) {
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>@candidato.Nome</span>
+                                                <a href="@Url.Action("DownloadCurriculo", "Vaga", new { id = candidato.CurriculoId })" class="btn btn-sm btn-outline-secondary">Baixar Currículo</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                } else {
+                                    <p class="text-center">Nenhum candidato para esta vaga.</p>
+                                }
                             </div>
                         </div>
                     </div>

@@ -92,7 +92,7 @@
     }
 
     .welcome-message {
-        font-size: 2em;
+        font-size: 1em;
         color: black;
         background: linear-gradient(135deg, #6a0dad, #b03f7f);
         -webkit-background-clip: text;
@@ -135,7 +135,9 @@
             <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <span class="mx-auto">Olá, @Model.FirstOrDefault().Estudante.Nome</span>
                 </div>
+
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
@@ -164,7 +166,7 @@
 }
 <div class="welcome-message">
     <h1>Bem-vindo ao RedeWork!</h1>
-    <p>Conecte-se com oportunidades de estágio e trabalho que se alinham com seus objetivos de carreira.</p>
+    <p>@Model.FirstOrDefault().Estudante.Nome, conecte-se com oportunidades de estágio e trabalho que se alinham com seus objetivos de carreira.</p>
 </div>
 
 @if (Model != null && Model.Any()) {
