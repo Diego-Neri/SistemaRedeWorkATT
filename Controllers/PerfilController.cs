@@ -133,18 +133,23 @@ namespace SistemaRedeWork.Controllers {
                 TempData["MensagemErro"] = $"Estudante não encontrado!";
                 return RedirectToAction("EstudanteLogado", "Login");
             }
+
             var nomeCompleto = $"{estudante.Nome} {estudante.Sobrenome}";
 
-            // Preenche os campos do Currículo com os dados do Estudante
+            // Busque o currículo associado ao estudante, se existir
+            var curriculo = await _context.Curriculo
+                .FirstOrDefaultAsync(c => c.EstudanteId == id);
+
             var viewModel = new CurriculoViewModel {
-                Curriculo = new CurriculoModel {
-                    NomeCompleto = nomeCompleto, // Preenchendo automaticamente
+                Curriculo = curriculo ?? new CurriculoModel {
+                    NomeCompleto = nomeCompleto,
                     Email = estudante.Email,
                     DataNascimento = estudante.DataNascimento,
                     Telefone = estudante.Telefone,
                     Universidade = estudante.Instituicao,
                     Curso = estudante.Curso,
-                    Semestre = estudante.Semestre
+                    Semestre = estudante.Semestre,
+                    EstudanteId = estudante.Id
                 },
                 Estudante = estudante,
                 Arquivos = _context.Arquivos.ToList()
@@ -156,36 +161,37 @@ namespace SistemaRedeWork.Controllers {
 
 
 
+
         [HttpPost]
         public async Task<IActionResult> SalvarCurriculo(int id, CurriculoViewModel viewModel) {
-            // Verifica se o estado do modelo é inválido
             if (!ModelState.IsValid) {
                 foreach (var entry in ModelState) {
                     foreach (var error in entry.Value.Errors) {
                         Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
                     }
                 }
-                TempData["MensagemErro"] = $"Não foi possível salvar o seu currículo!";
-                return View("Curriculo", viewModel);  // Retorna a view com os erros
+                TempData["MensagemErro"] = "Não foi possível salvar o seu currículo!";
+                return View("Curriculo", viewModel);
             }
 
-            // Verifica se estamos editando ou criando um novo currículo
-            CurriculoModel curriculo;
+            var estudante = await _context.Estudantes.FindAsync(viewModel.Curriculo.EstudanteId);
+            if (estudante == null) {
+                TempData["MensagemErro"] = "Estudante não encontrado!";
+                return RedirectToAction("Curriculo");
+            }
 
-            if (id == 0) {
-                // Novo currículo
-                curriculo = new CurriculoModel();
-                _context.Curriculo.Add(curriculo);  // Adiciona o novo currículo ao contexto
+            CurriculoModel curriculo;
+            if (id == 0 || viewModel.Curriculo.Id == 0) {
+                curriculo = new CurriculoModel { EstudanteId = viewModel.Curriculo.EstudanteId };
+                _context.Curriculo.Add(curriculo);
             } else {
-                // Editando um currículo existente
-                curriculo = await _context.Curriculo.FindAsync(id);
+                curriculo = await _context.Curriculo.FindAsync(viewModel.Curriculo.Id);
                 if (curriculo == null) {
-                    TempData["MensagemErro"] = $"Currículo não encontrado!";
-                    return RedirectToAction("Curriculo");  // Redireciona se o currículo não for encontrado
+                    TempData["MensagemErro"] = "Currículo não encontrado!";
+                    return RedirectToAction("Curriculo");
                 }
             }
 
-            // Atualiza os dados do currículo a partir do ViewModel
             curriculo.NomeCompleto = viewModel.Curriculo.NomeCompleto;
             curriculo.Email = viewModel.Curriculo.Email;
             curriculo.DataNascimento = viewModel.Curriculo.DataNascimento;
@@ -200,12 +206,18 @@ namespace SistemaRedeWork.Controllers {
             curriculo.Certificado = viewModel.Curriculo.Certificado;
             curriculo.Idioma = viewModel.Curriculo.Idioma;
 
-            // Salva as mudanças no banco de dados
-            await _context.SaveChangesAsync();
+            try {
+                await _context.SaveChangesAsync();
+                TempData["MensagemSucesso"] = "Currículo salvo com sucesso!";
+            } catch (Exception ex) {
+                TempData["MensagemErro"] = $"Erro ao salvar o currículo: {ex.Message}";
+                return View("Curriculo", viewModel);
+            }
 
-            TempData["MensagemSucesso"] = $"Currículo salvo com sucesso!";
-            return RedirectToAction("EstudanteLogado", "Login");
+            return RedirectToAction("EstudanteLogado", "Login", new { id = estudante.Id });
         }
+
+
 
 
         [Authorize]

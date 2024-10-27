@@ -38,7 +38,9 @@ namespace SistemaRedeWork.Data {
             modelBuilder.Entity<CurriculoModel>()
                 .HasOne(c => c.Estudante)
                 .WithOne(e => e.Curriculo)
-                .HasForeignKey<CurriculoModel>(c => c.EstudanteId);
+                .HasForeignKey<CurriculoModel>(c => c.EstudanteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             // Relacionamento um para muitos entre EstudanteModel e Arquivos
             modelBuilder.Entity<Arquivos>()

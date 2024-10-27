@@ -29,9 +29,9 @@ namespace SistemaRedeWork.Models {
 
         public string Idioma { get; set; }
 
-        [ForeignKey("EstudanteModel")]
         public int EstudanteId { get; set; } // Chave estrangeira
-        public EstudanteModel Estudante { get; set; } // Propriedade de navegação
+        [ForeignKey("EstudanteId")]
+        public EstudanteModel? Estudante { get; set; } // Propriedade de navegação
 
     }
 
