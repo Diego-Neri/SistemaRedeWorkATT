@@ -1,7 +1,7 @@
 ﻿@model SistemaRedeWork.Models.EstudanteModel
 
 @if (ViewData["NavBarLogado"] == null || (bool)ViewData["NavBarLogado"] == false) {
-    <nav class="navbar navbar-dark fixed-top">
+    <nav class="navbar navbar-light fixed-top">
         <div class="container-fluid">
             <img src="~/content/img/LogoRedeWork2.png" alt="Logo" class="logo" />
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
                             <a class="nav-link active" aria-current="page" style="color:black" asp-controller="Perfil" asp-action="PerfilEstudante" asp-route-id="@Model.Id">Perfil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color:black" asp-controller="SeuController" asp-action="Curriculo">Currículo</a>
+                            <a class="nav-link" style="color:black" asp-controller="PerfilEstudante" asp-action="Curriculo">Currículo</a>
                         </li>
                     </ul>
                 </div>
@@ -56,9 +56,7 @@
         max-width: 100%;
     }
 
-    .navbar-toggler-icon {
-        background-color: black;
-    }
+    
 
     .navbar {
         margin-bottom: 50px;

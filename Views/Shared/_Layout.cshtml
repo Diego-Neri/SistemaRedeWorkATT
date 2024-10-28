@@ -4,24 +4,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] RedeWork</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SistemaRedeWork.styles.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="~/content/img/LogoFavicon3.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
     <header>
         @if (ViewData["HideNavbar"] == null || (bool)ViewData["HideNavbar"] == false) {
+
+            
+
             <nav class ="navbar navbar-expand-sm navbar-light bg-white border-bottom mb-3 shadow-sm">
                 <div class="container-fluid d-flex justify-content-between align-items-center">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="position: absolute; left: 15px; top: 10px;">
-                        <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+                    <button class="navbar-toggler"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo" >
+                    </a>
+                   
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>

@@ -8,7 +8,7 @@
 }
 
 .navbar-brand img.logo {
-    height: 40px;
+    height: 37px;
     max-width: 100%;
 }
 
@@ -44,9 +44,9 @@
     outline: none;
 }
 
-.navbar-toggler-icon {
-    filter: brightness(0) invert(1); /* Aplica uma inversão de cor para melhorar visibilidade */
-}
+/*.navbar-toggler-icon {
+    filter: brightness(0) invert(1);*/ /* Aplica uma inversão de cor para melhorar visibilidade */
+/*}*/
 
 footer {
     font-family: 'IBM Plex Sans', sans-serif;

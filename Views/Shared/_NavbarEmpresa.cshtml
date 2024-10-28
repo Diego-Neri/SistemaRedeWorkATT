@@ -1,10 +1,10 @@
 ﻿@model SistemaRedeWork.Models.EmpresaModel
 
 @if (ViewData["NavBarLogadoEmpresa"] == null || (bool)ViewData["NavBarLogadoEmpresa"] == false) {
-    <nav class="navbar navbar-dark fixed-top">
+    <nav class="navbar navbar-light fixed-top">
         <div class="container-fluid">
             <img src="~/content/img/LogoRedeWork2.png" alt="Logo" class="logo" />
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasLightNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
@@ -56,9 +56,9 @@
         max-width: 100%;
     }
 
-    .navbar-toggler-icon {
+    /* .navbar-toggler-icon {
         background-color: black;
-    }
+    } */
 
     .navbar {
         margin-bottom: 50px;
