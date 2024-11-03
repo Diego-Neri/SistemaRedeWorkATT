@@ -58,8 +58,8 @@
                                 <!-- Botão para excluir a vaga -->
                                 <form asp-action="Excluir" asp-route-id="@vaga.Id" method="post" style="display:inline;">
                                     <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Tem certeza que deseja excluir esta vaga?');">
-                                        Excluir
+                                            onclick="return confirm('Tem certeza que deseja dar baixa nessa vaga?');">
+                                        Preenchida
                                     </button>
                                 </form>
 
@@ -73,7 +73,7 @@
                 </div>
 
                 <!-- Modal para exibir candidatos -->
-                <div class="modal fade" id="candidatosModal-@vaga.Id" tabindex="-1" aria-labelledby="candidatosModalLabel-@vaga.Id" aria-hidden="true">
+                @* <div class="modal fade" id="candidatosModal-@vaga.Id" tabindex="-1" aria-labelledby="candidatosModalLabel-@vaga.Id" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> *@
             }
         </div>
     }
