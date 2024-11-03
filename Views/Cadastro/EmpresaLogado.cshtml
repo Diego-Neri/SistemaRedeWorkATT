@@ -97,6 +97,19 @@
         }
 </style>
 
+@if (TempData["MensagemErro"] != null) {
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+        @TempData["MensagemErro"]
+    </div>
+}
+
+@if (TempData["MensagemSucesso"] != null) {
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+        @TempData["MensagemSucesso"]
+    </div>
+}
 
 
 @if (ViewData["NavBarLogado"] == null || !(ViewData["NavBarLogado"] is bool isLogged && isLogged)) {
@@ -116,7 +129,7 @@
                     } else {
                     @("Olá")
                     } *@
-                    </h5>
+                    </h5> 
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">

@@ -1,4 +1,6 @@
 ﻿@using System.Security.Claims 
+@using System.Globalization
+
 @model IEnumerable<SistemaRedeWork.Models.EmpresaEstudanteViewModel>
 @{
     ViewData["HideFooter"] = true;
@@ -119,6 +121,20 @@
     }
 </style>
 
+@if (TempData["MensagemErro"] != null) {
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+        @TempData["MensagemErro"]
+            </div>
+}
+
+@if (TempData["MensagemSucesso"] != null) {
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+        @TempData["MensagemSucesso"]
+            </div>
+}
+
 @if (!(ViewData["NavBarLogado"] as bool? ?? false)) {
     <nav class="navbar navbar-light fixed-top">
         <div class="container-fluid">
@@ -167,33 +183,33 @@
 
 @if (Model != null && Model.Any()) {
     @for (int i = 0; i < (Model.Count() + 2) / 3; i++) {
-        <div class="row mb-3">
+                <div class="row mb-3">
             @for (int j = 0; j < 3; j++) {
                 var index = i * 3 + j;
                 if (index < Model.Count()) {
                     var empresaEstudanteViewModel = Model.ElementAt(index);
-                    <div class="col-sm">
+                                    <div class="col-sm">
                         @foreach (var vaga in empresaEstudanteViewModel.Vagas) {
-                            <div class="card text-center mb-4">
-                                <div class="card-header">
+                                                <div class="card text-center mb-4">
+                                                    <div class="card-header">
                                     @vaga.Titulo 
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Descrição:</strong> @vaga.Descricao</h5>
-                                    <p class="card-text">
-                                        <strong>Requisitos:</strong> @vaga.Requisitos <br />
-                                        <strong>Modelo:</strong> @vaga.TipoTrabalho <br />
-                                        <strong>Nível:</strong> @vaga.NivelExperiencia <br />
-                                        <strong>Faixa Salarial Mínima:</strong> @vaga.FaixaSalarialMin <br />
-                                        <strong>Faixa Salarial Máxima:</strong> @vaga.FaixaSalarialMax <br />
-                                        <strong>Localização:</strong> @vaga.Localizacao <br />
-                                        <strong>Modalidade de Contrato:</strong> @vaga.ModalidadeContratacao <br />
-                                        <strong>Benefícios:</strong> @vaga.Beneficios <br />
-                                        <strong>Candidate-se até:</strong> @vaga.DataLimiteCandidatura <br />
-                                        <strong>Empresa:</strong> @empresaEstudanteViewModel.Empresa.RazaoSocial <br />
-                                    </p>
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal"
-                                       onclick="openModal(
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><strong>Descrição:</strong> @vaga.Descricao</h5>
+                                                        <p class="card-text">
+                                                            <strong>Requisitos:</strong> @vaga.Requisitos <br />
+                                                            <strong>Modelo:</strong> @vaga.TipoTrabalho <br />
+                                                            <strong>Nível:</strong> @vaga.NivelExperiencia <br />
+                                                            <strong>Fx. Salarial Min:</strong> @vaga.FaixaSalarialMin.ToString("C", new System.Globalization.CultureInfo("pt-BR")) <br />
+                                                            <strong>Fx. Salarial Máx:</strong> @vaga.FaixaSalarialMax.ToString("C", new System.Globalization.CultureInfo("pt-BR")) <br />
+                                                            <strong>Localização:</strong> @vaga.Localizacao <br />
+                                                            <strong>Modalidade de Contrato:</strong> @vaga.ModalidadeContratacao <br />
+                                                            <strong>Benefícios:</strong> @vaga.Beneficios <br />
+                                                            <strong>Candidate-se até:</strong> @vaga.DataLimiteCandidatura.ToString("dd/MM/yyyy") <br />
+                                                            <strong>Empresa:</strong> @empresaEstudanteViewModel.Empresa.RazaoSocial <br />
+                                                        </p>
+                                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal"
+                                                           onclick="openModal(
                                        '@empresaEstudanteViewModel.Estudante.Nome',
                                        '@empresaEstudanteViewModel.Estudante.Sobrenome',
                                        '@empresaEstudanteViewModel.Estudante.Curso',
@@ -211,19 +227,21 @@
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Experiencia : "Experiência não informada")',
                                        '@vaga.Titulo',
                                        '@vaga.Descricao')">
-                                        Candidatar-se
-                                    </a>
-                                </div>
-                            </div>
+                                                            Candidatar-se
+                                                        </a>
+                                                    </div>
+                                                </div>
                         }
-                    </div>
+                                    </div>
                 }
             }
-        </div>
+                </div>
     }
 } else {
-    <h3 class="text-center">Nenhuma vaga disponível no momento.</h3>
+        <h3 class="text-center">Nenhuma vaga disponível no momento.</h3>
 }
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="vagaModal" tabindex="-1" aria-labelledby="vagaModalLabel" aria-hidden="true">
@@ -314,8 +332,14 @@
     </div>
 </div>
 
-<script>
-    function openModal(nome, sobrenome, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, vagaTitulo, vagaDescricao) {
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function openModal(nome, sobrenome, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, vagaTitulo, vagaDescricao) {
         document.getElementById("vagaTitulo").value = vagaTitulo;
         document.getElementById("vagaDescricao").value = vagaDescricao;
         document.getElementById("estudanteNome").value = nome;
@@ -340,6 +364,13 @@
         const welcomeMessage = document.querySelector('.welcome-message');
         welcomeMessage.style.opacity = 1; // Torna a mensagem visível
     };
-</script>
 
-
+        $(document).ready(function () {
+            // Quando o botão com a classe 'close-alert' for clicado
+            $('.close-alert').click(function () {
+                // Esconde o elemento pai (a div com a mensagem)
+                $(this).closest('.alert').fadeOut();
+            });
+        });
+    </script>
+}

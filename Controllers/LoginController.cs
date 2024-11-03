@@ -44,7 +44,16 @@ public class LoginController : Controller {
             }
             return View(loginEmpresa); // Retorna a view com os erros
         }
+        // Hash da senha de entrada
+        string senhaHash = HashPassword(loginEmpresa.Password);
 
+        // DEBUG: Imprime os hashes para comparação (Remover em produção)
+        var hashArmazenado = await _context.LoginEstudantes
+            .Where(l => l.Email == loginEmpresa.Email)
+            .Select(l => l.Senha)
+            .FirstOrDefaultAsync();
+        Console.WriteLine($"Hash calculado: {senhaHash}");
+        Console.WriteLine($"Hash armazenado: {hashArmazenado}");
         // Busca o usuário no banco de dados
         var login = await _context.LoginEmpresas
             .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email);
@@ -111,59 +120,76 @@ public class LoginController : Controller {
         return View();
     }
 
+//private string GerarHashSHA256(string senha) {
+//    using (SHA256 sha256 = SHA256.Create()) {
+//        byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(senha));
+//        StringBuilder builder = new StringBuilder();
+//        foreach (byte b in bytes) {
+//            builder.Append(b.ToString("x2"));
+//        }
+//        return builder.ToString();
+//    }
+//}
 
-    [HttpPost]
-    public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudante) {
-        // Verifica se o modelo está válido
-        if (!ModelState.IsValid) {
-            foreach (var entry in ModelState) {
-                foreach (var error in entry.Value.Errors) {
-                    Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
-                }
+[HttpPost]
+public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudante) {
+    if (!ModelState.IsValid) {
+        foreach (var entry in ModelState) {
+            foreach (var error in entry.Value.Errors) {
+                Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
             }
-            // Retorna a view com os erros de validação
-            return View(loginEstudante);
         }
-
-        // Busca o usuário no banco de dados
-        var login = await _context.LoginEstudantes
-            .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email && l.Senha == loginEstudante.Senha);
-
-        // Verifica se o login foi encontrado
-        if (login != null) {
-            // Salva o nome do usuário na sessão
-            HttpContext.Session.SetString("NomeUsuario", $"{login.Nome}");
-
-            // Criar as claims do usuário
-            var claims = new List<Claim> {
-            new Claim(ClaimTypes.Name, login.Email),
-            new Claim("FullName", $"{login.Nome} {login.Sobrenome}"),
-            new Claim(ClaimTypes.Role, "User"), // Pode definir o papel do usuário
-            new Claim("EstudanteId", login.EstudanteId.ToString())
-        };
-
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties {
-                IsPersistent = loginEstudante.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
-            };
-
-            // Configurar a autenticação do usuário
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
-
-            TempData["MensagemSucesso"] = "Login realizado com sucesso! Bem-vindo!";
-            return RedirectToAction("EstudanteLogado", new { id = login.Id }); // Redirecionar para EstudanteLogado com o ID
-        }
-
-        TempData["MensagemErro"] = "E-mail ou senha inválidos! Tente novamente.";
         return View(loginEstudante);
     }
 
+    // Hash da senha de entrada
+    string senhaHash = HashPassword(loginEstudante.Senha);
 
-    [HttpGet("estudante/logado")]
+    // DEBUG: Imprime os hashes para comparação (Remover em produção)
+    var hashArmazenado = await _context.LoginEstudantes
+        .Where(l => l.Email == loginEstudante.Email)
+        .Select(l => l.Senha)
+        .FirstOrDefaultAsync();
+    Console.WriteLine($"Hash calculado: {senhaHash}");
+    Console.WriteLine($"Hash armazenado: {hashArmazenado}");
+
+    // Busca o usuário no banco de dados com a senha hashada
+    var login = await _context.LoginEstudantes
+        .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email && l.Senha == senhaHash);
+
+    if (login != null) {
+        HttpContext.Session.SetString("NomeUsuario", $"{login.Nome}");
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, login.Email),
+            new Claim("FullName", $"{login.Nome} {login.Sobrenome}"),
+            new Claim(ClaimTypes.Role, "User"),
+            new Claim("EstudanteId", login.EstudanteId.ToString())
+        };
+
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+        var authProperties = new AuthenticationProperties {
+            IsPersistent = loginEstudante.RememberMe
+        };
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(claimsIdentity),
+            authProperties);
+
+        TempData["MensagemSucesso"] = "Login realizado com sucesso! Bem-vindo!";
+        return RedirectToAction("EstudanteLogado", new { id = login.Id });
+    }
+
+    TempData["MensagemErro"] = "E-mail ou senha inválidos! Tente novamente.";
+    return View(loginEstudante);
+}
+
+
+
+[HttpGet("estudante/logado")]
     public IActionResult EstudanteLogado() {
         return View();
     }

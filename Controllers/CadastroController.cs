@@ -5,6 +5,8 @@ using SistemaRedeWork.Controllers;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
+using System.Text;
+using System.Security.Cryptography;
 
 public class CadastroController : Controller {
 
@@ -25,18 +27,20 @@ public class CadastroController : Controller {
         if (ModelState.IsValid) {
             // Verifica se a senha e a confirmação de senha correspondem
             if (empresa.Senha != empresa.ConfirmarSenha) {
-                ModelState.AddModelError("ConfirmarSenha", "A senha e a confirmação de senha não correspondem.");
+                TempData["MensagemErro"] = $"ConfirmarSenha A senha e a confirmação de senha não correspondem.";
                 return View(empresa);
             }
 
             // Verifica se o email já está cadastrado
             var emailExistente = _context.LoginEmpresas.Any(le => le.Email == empresa.Email);
             if (emailExistente) {
-                ModelState.AddModelError("Email", "O e-mail já está em uso. Por favor, use outro e-mail.");
+                TempData["MensagemErro"] = $"O e-mail já está em uso. Por favor, use outro e-mail."; 
                 return View(empresa);
             }
 
             try {
+
+                empresa.Senha = HashSenha(empresa.Senha);
                 // Adiciona a empresa ao banco de dados
                 _context.Empresas.Add(empresa);
                 _context.SaveChanges();
@@ -54,7 +58,8 @@ public class CadastroController : Controller {
                 _context.LoginEmpresas.Add(loginEmpresa);
                 _context.SaveChanges();
 
-                return RedirectToAction("EmpresaLogado");  // Redireciona para uma página de sucesso
+                TempData["MensagemSucesso"] = $"Cadastro criado com sucesso. Faça seu login!";
+                return RedirectToAction("LoginEmpresa", "Login");  // Redireciona para uma página de sucesso
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
                 // Registra o erro e exibe uma mensagem apropriada
@@ -102,22 +107,24 @@ public class CadastroController : Controller {
     }
 
     [HttpPost]
-
     public IActionResult CadastroEstudante(EstudanteModel estudante) {
         if (ModelState.IsValid) {
             if (estudante.Senha != estudante.ConfirmarSenha) {
-                ModelState.AddModelError("ConfirmarSenha", "A senha e a confirmação de senha não correspondem.");
+                TempData["MensagemErro"] = $"ConfirmarSenha A senha e a confirmação de senha não correspondem.";
                 return View(estudante);
             }
 
             // Verifica se o email já está cadastrado
             var emailExistente = _context.LoginEstudantes.Any(le => le.Email == estudante.Email);
             if (emailExistente) {
-                ModelState.AddModelError("Email", "O e-mail já está em uso. Por favor, use outro e-mail.");
+                TempData["MensagemErro"] = $"Email, O e-mail já está em uso. Por favor, use outro e-mail.";
                 return View(estudante);
             }
 
             try {
+                // Hash da senha
+                estudante.Senha = HashSenha(estudante.Senha);
+
                 _context.Estudantes.Add(estudante);
                 _context.SaveChanges();
 
@@ -132,16 +139,23 @@ public class CadastroController : Controller {
                 _context.LoginEstudantes.Add(loginEstudante);
                 _context.SaveChanges();
 
-                TempData["MensagemSucesso"] = $"Cadastro criado com sucesso. Seja Bem-Vindo!!";
-                return RedirectToAction("EstudanteLogado", "Login");
+                TempData["MensagemSucesso"] = $"Cadastro criado com sucesso. Faça seu login!";
+                return RedirectToAction("LoginEstudante", "Login");
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
-
                 TempData["MensagemErro"] = $"Ocorreu um erro, tente novamente!";
                 return View(estudante);
             }
         }
         return View(estudante);
+    }
+
+    // Método para hashear a senha usando SHA256 e codificá-la em Base64
+    private string HashSenha(string senha) {
+        using (SHA256 sha256 = SHA256.Create()) {
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(senha));
+            return Convert.ToBase64String(bytes);
+        }
     }
 
     public IActionResult CadastrarVagas(int id) {

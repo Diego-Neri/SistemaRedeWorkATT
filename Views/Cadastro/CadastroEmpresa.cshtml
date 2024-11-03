@@ -15,206 +15,204 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
 </head>
 
+
+
 <body class="bg-light">
-
-    @if (TempData["MensagemErro"] != null) {
-        <div class="alert alert-danger" role="alert">
-            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
-            @TempData["MensagemErro"]
-        </div>
-    }
-
-    @if (TempData["MensagemSucesso"] != null) {
-        <div class="alert alert-success" role="alert">
-            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
-            @TempData["MensagemSucesso"]
-        </div>
-    }
-
-    <div class="container my-5">
+    <div class="container mt-5">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="informacoes text-center mb-4">
-                    <h2>DADOS DA EMPRESA</h2>
-                    <p>Segurança e Confidencialidade</p>
-                    <p>A RedeWork garante a segurança e a confidencialidade de todas as informações corporativas fornecidas no cadastro.</p>
+
+            @if (TempData["MensagemErro"] != null) {
+                <div class="alert alert-danger" role="alert">
+                    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
+                    @TempData["MensagemErro"]
                 </div>
+            }
 
-                <main>
-                    @using (Html.BeginForm("CadastroEmpresa", "Cadastro", FormMethod.Post)) {
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Email)
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", placeholder = "Digite o seu e-mail" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            @if (TempData["MensagemSucesso"] != null) {
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
+                    @TempData["MensagemSucesso"]
+                </div>
+            }
+
+            <h2 class="text-center" style="color:#5D2CE7;">Cadastro Empresa</h2>
+            <p class="text-center">Segurança e Confidencialidade</p>
+            <p class="text-center">A RedeWork garante a segurança e a confidencialidade de todas as informações corporativas fornecidas no cadastro.</p>
+
+
+            <main>
+                @using (Html.BeginForm("CadastroEmpresa", "Cadastro", FormMethod.Post)) {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email)
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", placeholder = "Digite o seu e-mail" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Usuario)
+                        @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @required = "required", placeholder = "Digite o nome do usuário" })
+                        @Html.ValidationMessageFor(m => m.Usuario, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.RazaoSocial, "Razão Social")
+                        @Html.TextBoxFor(m => m.RazaoSocial, new { @class = "form-control", @required = "required", placeholder = "Digite a razão social" })
+                        @Html.ValidationMessageFor(m => m.RazaoSocial, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CNPJ)
+                        @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control", @required = "required", placeholder = "Digite o CNPJ" })
+                        @Html.ValidationMessageFor(m => m.CNPJ, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telefone)
+                        @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control", @required = "required", placeholder = "Digite o telefone" })
+                        @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Site)
+                        @Html.TextBoxFor(m => m.Site, new { @class = "form-control", @required = "required", placeholder = "Digite o site da empresa" })
+                        @Html.ValidationMessageFor(m => m.Site, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Linkedin)
+                        @Html.TextBoxFor(m => m.Linkedin, new { @class = "form-control", @required = "required", placeholder = "Digite o perfil do LinkedIn" })
+                        @Html.ValidationMessageFor(m => m.Linkedin, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.Estado, "ESTADO")
+                            @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
+                                     {
+                        new { Value = "", Text = "Selecione" },
+                        new { Value = "Acre", Text = "Acre" },
+                        new { Value = "Alagoas", Text = "Alagoas" },
+                        new { Value = "Amapá", Text = "Amapá" },
+                        new { Value = "Amazonas", Text = "Amazonas" },
+                        new { Value = "Bahia", Text = "Bahia" },
+                        new { Value = "Ceará", Text = "Ceará" },
+                        new { Value = "Distrito Federal", Text = "Distrito Federal" },
+                        new { Value = "Espírito Santo", Text = "Espírito Santo" },
+                        new { Value = "Goiás", Text = "Goiás" },
+                        new { Value = "Maranhão", Text = "Maranhão" },
+                        new { Value = "Mato Grosso", Text = "Mato Grosso" },
+                        new { Value = "Mato Grosso do Sul", Text = "Mato Grosso do Sul" },
+                        new { Value = "Minas Gerais", Text = "Minas Gerais" },
+                        new { Value = "Pará", Text = "Pará" },
+                        new { Value = "Paraíba", Text = "Paraíba" },
+                        new { Value = "Paraná", Text = "Paraná" },
+                        new { Value = "Pernambuco", Text = "Pernambuco" },
+                        new { Value = "Piauí", Text = "Piauí" },
+                        new { Value = "Rio de Janeiro", Text = "Rio de Janeiro" },
+                        new { Value = "Rio Grande do Norte", Text = "Rio Grande do Norte" },
+                        new { Value = "Rio Grande do Sul", Text = "Rio Grande do Sul" },
+                        new { Value = "Rondônia", Text = "Rondônia" },
+                        new { Value = "Roraima", Text = "Roraima" },
+                        new { Value = "Santa Catarina", Text = "Santa Catarina" },
+                        new { Value = "São Paulo", Text = "São Paulo" },
+                        new { Value = "Sergipe", Text = "Sergipe" },
+                        new { Value = "Tocantins", Text = "Tocantins" }
+                        }, "Value", "Text"), new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
                         </div>
 
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.Cidade, "CIDADE")
+                            @Html.DropDownListFor(m => m.Cidade, new SelectList(new[]
+                                     {
+                        new { Value = "", Text = "Selecione" },
+                        // Cidades de São Paulo
+                        new { Value = "sao-paulo", Text = "São Paulo" },
+                        new { Value = "campinas", Text = "Campinas" },
+                        new { Value = "santos", Text = "Santos" },
+                        new { Value = "ribeirao-preto", Text = "Ribeirão Preto" },
+                        new { Value = "rio-de-janeiro", Text = "Rio de Janeiro" },
+                        new { Value = "niteroi", Text = "Niterói" },
+                        new { Value = "petropolis", Text = "Petrópolis" },
+                        new { Value = "belo-horizonte", Text = "Belo Horizonte" },
+                        new { Value = "uberlandia", Text = "Uberlândia" },
+                        new { Value = "juiz-de-fora", Text = "Juiz de Fora" },
+                        new { Value = "salvador", Text = "Salvador" },
+                        new { Value = "feira-de-santana", Text = "Feira de Santana" },
+                        new { Value = "vitoria-da-conquista", Text = "Vitória da Conquista" },
+                        new { Value = "curitiba", Text = "Curitiba" },
+                        new { Value = "londrina", Text = "Londrina" },
+                        new { Value = "maringa", Text = "Maringá" },
+                        new { Value = "porto-alegre", Text = "Porto Alegre" },
+                        new { Value = "caxias-do-sul", Text = "Caxias do Sul" },
+                        new { Value = "recife", Text = "Recife" },
+                        new { Value = "olinda", Text = "Olinda" },
+                        new { Value = "fortaleza", Text = "Fortaleza" },
+                        new { Value = "juazeiro-do-norte", Text = "Juazeiro do Norte" },
+                        new { Value = "sobral", Text = "Sobral" },
+                        new { Value = "brasilia", Text = "Brasília" },
+                        new { Value = "taguatinga", Text = "Taguatinga" },
+                        new { Value = "gama", Text = "Gama" },
+                        new { Value = "manaus", Text = "Manaus" },
+                        new { Value = "belem", Text = "Belém" },
+                        new { Value = "goiania", Text = "Goiânia" },
+                        new { Value = "vitoria", Text = "Vitória" }
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Usuario)
-                            @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @required = "required", placeholder = "Digite o nome do usuário" })
-                            @Html.ValidationMessageFor(m => m.Usuario, "", new { @class = "text-danger" })
+                        // Outras cidades...
+                        }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.RazaoSocial, "Razão Social")
-                            @Html.TextBoxFor(m => m.RazaoSocial, new { @class = "form-control", @required = "required", placeholder = "Digite a razão social" })
-                            @Html.ValidationMessageFor(m => m.RazaoSocial, "", new { @class = "text-danger" })
-                        </div>
+                    </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.CNPJ)
-                            @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control", @required = "required", placeholder = "Digite o CNPJ" })
-                            @Html.ValidationMessageFor(m => m.CNPJ, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CEP)
+                        @Html.TextBoxFor(m => m.CEP, new { @class = "form-control", @required = "required", placeholder = "Digite o CEP", id = "cep" })
+                        @Html.ValidationMessageFor(m => m.CEP, "", new { @class = "text-danger" })
+                    </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Telefone)
-                            @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control", @required = "required", placeholder = "Digite o telefone" })
-                            @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rua)
+                        @Html.TextBoxFor(m => m.Rua, new { @class = "form-control", @required = "required", placeholder = "Digite o nome da rua", id = "rua" })
+                        @Html.ValidationMessageFor(m => m.Rua, "", new { @class = "text-danger" })
+                    </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Site)
-                            @Html.TextBoxFor(m => m.Site, new { @class = "form-control", @required = "required", placeholder = "Digite o site da empresa" })
-                            @Html.ValidationMessageFor(m => m.Site, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Numero)
+                        @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @required = "required", placeholder = "Digite o número" })
+                        @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "text-danger" })
+                    </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Linkedin)
-                            @Html.TextBoxFor(m => m.Linkedin, new { @class = "form-control", @required = "required", placeholder = "Digite o perfil do LinkedIn" })
-                            @Html.ValidationMessageFor(m => m.Linkedin, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Senha)
+                        @Html.PasswordFor(m => m.Senha, new { @class = "form-control", @required = "required", placeholder = "Informe sua senha" })
+                        @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                        <span id="senha-error" class="text-danger"></span>
+                    </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(m => m.Estado, "ESTADO")
-                                @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
-                                         {
-                            new { Value = "", Text = "Selecione" },
-                            new { Value = "ac", Text = "Acre" },
-                            new { Value = "al", Text = "Alagoas" },
-                            new { Value = "ap", Text = "Amapá" },
-                            new { Value = "am", Text = "Amazonas" },
-                            new { Value = "ba", Text = "Bahia" },
-                            new { Value = "ce", Text = "Ceará" },
-                            new { Value = "df", Text = "Distrito Federal" },
-                            new { Value = "es", Text = "Espírito Santo" },
-                            new { Value = "go", Text = "Goiás" },
-                            new { Value = "ma", Text = "Maranhão" },
-                            new { Value = "mt", Text = "Mato Grosso" },
-                            new { Value = "ms", Text = "Mato Grosso do Sul" },
-                            new { Value = "mg", Text = "Minas Gerais" },
-                            new { Value = "pa", Text = "Pará" },
-                            new { Value = "pb", Text = "Paraíba" },
-                            new { Value = "pr", Text = "Paraná" },
-                            new { Value = "pe", Text = "Pernambuco" },
-                            new { Value = "pi", Text = "Piauí" },
-                            new { Value = "rj", Text = "Rio de Janeiro" },
-                            new { Value = "rn", Text = "Rio Grande do Norte" },
-                            new { Value = "rs", Text = "Rio Grande do Sul" },
-                            new { Value = "ro", Text = "Rondônia" },
-                            new { Value = "rr", Text = "Roraima" },
-                            new { Value = "sc", Text = "Santa Catarina" },
-                            new { Value = "sp", Text = "São Paulo" },
-                            new { Value = "se", Text = "Sergipe" },
-                            new { Value = "to", Text = "Tocantins" }
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.ConfirmarSenha, "Confirmar senha")
+                        @Html.PasswordFor(m => m.ConfirmarSenha, new { @class = "form-control", @required = "required", placeholder = "Confirme a sua senha" })
+                        @Html.ValidationMessageFor(m => m.ConfirmarSenha, "", new { @class = "text-danger" })
+                        <span id="confirmarSenha-error" class="text-danger"></span>
+                        <br />
+                        <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
+                    </div>
 
-                            // Adicione os demais estados aqui
-                            }, "Value", "Text"), new { @class = "form-control", @required = "required" })
-                                @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="aceito" required>
+                        <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
+                    </div>
 
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(m => m.Cidade, "CIDADE")
-                                @Html.DropDownListFor(m => m.Cidade, new SelectList(new[]
-                                         {
-                            new { Value = "", Text = "Selecione" },
-                            // Cidades de São Paulo
-                            new { Value = "sao-paulo", Text = "São Paulo" },
-                            new { Value = "campinas", Text = "Campinas" },
-                            new { Value = "santos", Text = "Santos" },
-                            new { Value = "ribeirao-preto", Text = "Ribeirão Preto" },
-                            new { Value = "rio-de-janeiro", Text = "Rio de Janeiro" },
-                            new { Value = "niteroi", Text = "Niterói" },
-                            new { Value = "petropolis", Text = "Petrópolis" },
-                            new { Value = "belo-horizonte", Text = "Belo Horizonte" },
-                            new { Value = "uberlandia", Text = "Uberlândia" },
-                            new { Value = "juiz-de-fora", Text = "Juiz de Fora" },
-                            new { Value = "salvador", Text = "Salvador" },
-                            new { Value = "feira-de-santana", Text = "Feira de Santana" },
-                            new { Value = "vitoria-da-conquista", Text = "Vitória da Conquista" },
-                            new { Value = "curitiba", Text = "Curitiba" },
-                            new { Value = "londrina", Text = "Londrina" },
-                            new { Value = "maringa", Text = "Maringá" },
-                            new { Value = "porto-alegre", Text = "Porto Alegre" },
-                            new { Value = "caxias-do-sul", Text = "Caxias do Sul" },
-                            new { Value = "recife", Text = "Recife" },
-                            new { Value = "olinda", Text = "Olinda" },
-                            new { Value = "fortaleza", Text = "Fortaleza" },
-                            new { Value = "juazeiro-do-norte", Text = "Juazeiro do Norte" },
-                            new { Value = "sobral", Text = "Sobral" },
-                            new { Value = "brasilia", Text = "Brasília" },
-                            new { Value = "taguatinga", Text = "Taguatinga" },
-                            new { Value = "gama", Text = "Gama" },
-                            new { Value = "manaus", Text = "Manaus" },
-                            new { Value = "belem", Text = "Belém" },
-                            new { Value = "goiania", Text = "Goiânia" },
-                            new { Value = "vitoria", Text = "Vitória" }
+                    <button type="submit" class="btn btn-primary" id="submit-btn">CADASTRAR-SE</button>
 
-                            // Outras cidades...
-                            }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
-                                @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.CEP)
-                            @Html.TextBoxFor(m => m.CEP, new { @class = "form-control", @required = "required", placeholder = "Digite o CEP", id = "cep" })
-                            @Html.ValidationMessageFor(m => m.CEP, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Rua)
-                            @Html.TextBoxFor(m => m.Rua, new { @class = "form-control", @required = "required", placeholder = "Digite o nome da rua", id = "rua" })
-                            @Html.ValidationMessageFor(m => m.Rua, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Numero)
-                            @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @required = "required", placeholder = "Digite o número" })
-                            @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.Senha)
-                            @Html.PasswordFor(m => m.Senha, new { @class = "form-control", @required = "required", placeholder = "Informe sua senha" })
-                            @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
-                            <span id="senha-error" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.ConfirmarSenha, "Confirmar senha")
-                            @Html.PasswordFor(m => m.ConfirmarSenha, new { @class = "form-control", @required = "required", placeholder = "Confirme a sua senha" })
-                            @Html.ValidationMessageFor(m => m.ConfirmarSenha, "", new { @class = "text-danger" })
-                            <span id="confirmarSenha-error" class="text-danger"></span>
-                            <br />
-                            <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
-                        </div>
-
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="aceito" required>
-                            <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" id="submit-btn">CADASTRAR-SE</button>
-
-                        <p class="registro text-center mt-3">Você é um estudante? <a asp-action="CadastroEstudante" asp-controller="Cadastro">Cadastre-se aqui.</a></p>
-                    }
-                </main>
-            </div>
+                    <p class="registro text-center mt-3">Você é um estudante? <a asp-action="CadastroEstudante" asp-controller="Cadastro">Cadastre-se aqui.</a></p>
+                }
+            </main>
         </div>
     </div>
+
 
 </body>
 
