@@ -180,7 +180,7 @@ public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudan
             authProperties);
 
         TempData["MensagemSucesso"] = "Login realizado com sucesso! Bem-vindo!";
-        return RedirectToAction("EstudanteLogado", new { id = login.Id });
+        return RedirectToAction("EstudanteLogado", new { id = login.EstudanteId });
     }
 
     TempData["MensagemErro"] = "E-mail ou senha inválidos! Tente novamente.";
