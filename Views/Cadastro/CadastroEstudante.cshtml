@@ -22,14 +22,14 @@
     <div class="container mt-5">
         @if (TempData["MensagemErro"] != null) {
             <div class="alert alert-danger" role="alert">
-                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
                 @TempData["MensagemErro"]
             </div>
         }
 
         @if (TempData["MensagemSucesso"] != null) {
             <div class="alert alert-success" role="alert">
-                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
                 @TempData["MensagemSucesso"]
             </div>
         }
@@ -100,7 +100,7 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        @Html.LabelFor(m => m.Estado, "ESTADO")
+                        @Html.LabelFor(m => m.Estado, "Estado")
                         @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
                                  {
                     new { Value = "", Text = "Selecione" },
@@ -137,7 +137,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        @Html.LabelFor(m => m.Cidade, "CIDADE")
+                        @Html.LabelFor(m => m.Cidade, "Cidade")
                         @Html.DropDownListFor(m => m.Cidade, new SelectList(new[]
                                  {
                     new { Value = "", Text = "Selecione" },

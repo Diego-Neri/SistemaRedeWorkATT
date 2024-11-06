@@ -34,7 +34,7 @@ public class CadastroController : Controller {
             // Verifica se o email já está cadastrado
             var emailExistente = _context.LoginEmpresas.Any(le => le.Email == empresa.Email);
             if (emailExistente) {
-                TempData["MensagemErro"] = $"O e-mail já está em uso. Por favor, use outro e-mail."; 
+                TempData["MensagemErro"] = $"O e-mail já está em uso. Por favor, use outro e-mail.";
                 return View(empresa);
             }
 
@@ -73,12 +73,12 @@ public class CadastroController : Controller {
 
     public IActionResult EmpresaLogado() {
         var estudantes = _context.Estudantes
-            .Include(e => e.Curriculo) // Inclui o Currículo
+            .Include(e => e.Curriculo)
             .ToList();
 
         var model = estudantes.Select(e => new EmpresaEstudanteViewModel {
             Estudante = e,
-            Curriculo = e.Curriculo // Associa o currículo ao view model
+            Curriculo = e.Curriculo
         }).ToList();
 
         return View(model);

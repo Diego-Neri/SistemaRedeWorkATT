@@ -63,9 +63,6 @@ public class LoginController : Controller {
             return View(loginEmpresa); // Retorna a view caso o login falhe
         }
 
-        // Verifique se a senha está correta (essa parte deve ser implementada)
-        // Exemplo: if (!VerifyPassword(login, loginEmpresa.Senha)) { ... }
-
         // Adicione o ID da empresa nas claims
         var claims = new List<Claim> {
         new Claim(ClaimTypes.Name, login.Email),
@@ -120,76 +117,67 @@ public class LoginController : Controller {
         return View();
     }
 
-//private string GerarHashSHA256(string senha) {
-//    using (SHA256 sha256 = SHA256.Create()) {
-//        byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(senha));
-//        StringBuilder builder = new StringBuilder();
-//        foreach (byte b in bytes) {
-//            builder.Append(b.ToString("x2"));
-//        }
-//        return builder.ToString();
-//    }
-//}
 
-[HttpPost]
-public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudante) {
-    if (!ModelState.IsValid) {
-        foreach (var entry in ModelState) {
-            foreach (var error in entry.Value.Errors) {
-                Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
+
+    [HttpPost]
+    public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudante) {
+        if (!ModelState.IsValid) {
+            foreach (var entry in ModelState) {
+                foreach (var error in entry.Value.Errors) {
+                    Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
+                }
             }
+            return View(loginEstudante);
         }
-        return View(loginEstudante);
-    }
 
-    // Hash da senha de entrada
-    string senhaHash = HashPassword(loginEstudante.Senha);
+        // Hash da senha de entrada
+        string senhaHash = HashPassword(loginEstudante.Senha);
 
-    // DEBUG: Imprime os hashes para comparação (Remover em produção)
-    var hashArmazenado = await _context.LoginEstudantes
-        .Where(l => l.Email == loginEstudante.Email)
-        .Select(l => l.Senha)
-        .FirstOrDefaultAsync();
-    Console.WriteLine($"Hash calculado: {senhaHash}");
-    Console.WriteLine($"Hash armazenado: {hashArmazenado}");
+        // DEBUG: Imprime os hashes para comparação (Remover em produção)
+        var hashArmazenado = await _context.LoginEstudantes
+            .Where(l => l.Email == loginEstudante.Email)
+            .Select(l => l.Senha)
+            .FirstOrDefaultAsync();
+        Console.WriteLine($"Hash calculado: {senhaHash}");
+        Console.WriteLine($"Hash armazenado: {hashArmazenado}");
 
-    // Busca o usuário no banco de dados com a senha hashada
-    var login = await _context.LoginEstudantes
-        .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email && l.Senha == senhaHash);
+        // Busca o usuário no banco de dados com a senha hashada
+        var login = await _context.LoginEstudantes
+            .FirstOrDefaultAsync(l => l.Email == loginEstudante.Email && l.Senha == senhaHash);
 
-    if (login != null) {
-        HttpContext.Session.SetString("NomeUsuario", $"{login.Nome}");
+        if (login != null) {
+            HttpContext.Session.SetString("NomeUsuario", $"{login.Nome}");
 
-        var claims = new List<Claim>
-        {
+            var claims = new List<Claim>
+            {
             new Claim(ClaimTypes.Name, login.Email),
             new Claim("FullName", $"{login.Nome} {login.Sobrenome}"),
             new Claim(ClaimTypes.Role, "User"),
             new Claim("EstudanteId", login.EstudanteId.ToString())
         };
 
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        var authProperties = new AuthenticationProperties {
-            IsPersistent = loginEstudante.RememberMe
-        };
+            var authProperties = new AuthenticationProperties {
+                IsPersistent = loginEstudante.RememberMe
+            };
 
-        await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(claimsIdentity),
-            authProperties);
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
 
-        TempData["MensagemSucesso"] = "Login realizado com sucesso! Bem-vindo!";
-        return RedirectToAction("EstudanteLogado", new { id = login.Id });
+            TempData["MensagemSucesso"] = "Login realizado com sucesso! Bem-vindo!";
+            return RedirectToAction("EstudanteLogado", new { id = login.EstudanteId });
+        }
+
+        TempData["MensagemErro"] = "E-mail ou senha inválidos! Tente novamente.";
+        return View(loginEstudante);
     }
 
-    TempData["MensagemErro"] = "E-mail ou senha inválidos! Tente novamente.";
-    return View(loginEstudante);
-}
 
 
-
-[HttpGet("estudante/logado")]
+    [HttpGet("estudante/logado")]
     public IActionResult EstudanteLogado() {
         return View();
     }
@@ -197,6 +185,7 @@ public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudan
     [HttpGet("estudante/logado/{id}")]
     public IActionResult EstudanteLogado(int id) {
         var estudante = _context.Estudantes.FirstOrDefault(e => e.Id == id);
+        var loginEstudantes = _context.LoginEstudantes.FirstOrDefault(e => e.EstudanteId == id);
         if (estudante == null) {
             return NotFound(); // Retorna 404 se o estudante não for encontrado
         }
@@ -217,8 +206,6 @@ public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudan
             // Criar um modelo para cada grupo de vagas
             var empresa = _context.Empresas.FirstOrDefault(e => e.Id == grupo.Key);
 
-            // Buscar o currículo do estudante (se existir)
-            //var curriculo = _context.Curriculos.FirstOrDefault(c => c.EstudanteId == id);
 
             var viewModel = new EmpresaEstudanteViewModel {
                 Empresa = empresa,
@@ -232,9 +219,6 @@ public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudan
 
         return View(model);
     }
-
-
-
 
 
     private bool VerifyPassword(string inputPassword, string storedHashedPassword) {
