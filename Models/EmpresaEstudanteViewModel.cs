@@ -9,8 +9,8 @@
         public CurriculoModel? Curriculo { get; set; }
         public List<CadastrarVagasModel> Vagas { get; set; }
 
-        public int EmpresaId { get; set; } // Ou string, dependendo do tipo de ID
-        public int EstudanteId { get; set; } // Ou string, dependendo do tipo de ID
+        public int ID_EMPRESA { get; set; }
+        public int ID_ESTUDANTE { get; set; } 
 
 
     }

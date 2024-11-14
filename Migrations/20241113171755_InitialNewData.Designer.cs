@@ -12,8 +12,8 @@ using SistemaRedeWork.Data;
 namespace SistemaRedeWork.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20241026024709_initial")]
-    partial class initial
+    [Migration("20241113171755_InitialNewData")]
+    partial class InitialNewData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,11 +25,12 @@ namespace SistemaRedeWork.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("SistemaRedeWork.Models.Arquivos", b =>
+            modelBuilder.Entity("SistemaRedeWork.Models.ArquivoModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_CURRICULO");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
@@ -39,230 +40,298 @@ namespace SistemaRedeWork.Migrations
 
                     b.Property<byte[]>("Dados")
                         .IsRequired()
-                        .HasColumnType("longblob");
+                        .HasColumnType("longblob")
+                        .HasColumnName("DADOS");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("DESCRICAO");
 
-                    b.Property<int>("EstudanteId")
+                    b.Property<int>("ID_ESTUDANTE")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstudanteId");
+                    b.HasIndex("ID_ESTUDANTE");
 
-                    b.ToTable("Arquivos");
+                    b.ToTable("ARQUIVOS");
                 });
 
             modelBuilder.Entity("SistemaRedeWork.Models.CadastrarVagasModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_VAGA");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Beneficios")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ContatoEmail")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ContatoNome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ContatoTelefone")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("BENEFICIOS");
 
                     b.Property<DateTime>("DataLimiteCandidatura")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DATA_LIMITE");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)")
+                        .HasColumnName("DESCRICAO");
 
                     b.Property<string>("DuracaoProjeto")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("EmpresaId")
-                        .HasColumnType("int");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("DURACAO_PROJETO");
 
                     b.Property<decimal>("FaixaSalarialMax")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("MAX_SALARIAL");
 
                     b.Property<decimal>("FaixaSalarialMin")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("MIN_SALARIAL");
+
+                    b.Property<int>("ID_EMPRESA")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_EMPRESA");
 
                     b.Property<string>("Localizacao")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("LOCALIZACAO");
 
                     b.Property<string>("ModalidadeContratacao")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("MODALIDADE_CONTRATO");
 
                     b.Property<string>("NivelExperiencia")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("NIVEL_EXPERIENCIA");
 
                     b.Property<string>("Requisitos")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("REQUISITOS");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("STATUS");
 
                     b.Property<string>("TipoTrabalho")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("TIPO_TRABALHO");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("TITULO");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpresaId");
+                    b.HasIndex("ID_EMPRESA");
 
-                    b.ToTable("Vagas");
+                    b.ToTable("CADASTRAR_VAGAS");
                 });
 
             modelBuilder.Entity("SistemaRedeWork.Models.CurriculoModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_CURRICULO");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Certificado")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Curso")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("CURSO");
 
                     b.Property<DateTime?>("DataNascimento")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DATA_NASC");
 
                     b.Property<string>("Educacao")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EDUCACAO");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("EstudanteId")
-                        .HasColumnType("int");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EMAIL");
 
                     b.Property<string>("Experiencia")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EXPERIENCIA");
 
                     b.Property<string>("Habilidade")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("HABILIDADE");
+
+                    b.Property<int>("ID_ESTUDANTE")
+                        .HasColumnType("int");
 
                     b.Property<string>("Idioma")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("IDIOMA");
 
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("NOME");
 
                     b.Property<string>("Objetivo")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("OBJETIVO");
+
+                    b.Property<string>("Periodo")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("PERIODO");
 
                     b.Property<string>("Semestre")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("SEMESTRE");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("TELEFONE");
 
                     b.Property<string>("Universidade")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UNIVERSIDADE");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstudanteId")
+                    b.HasIndex("ID_ESTUDANTE")
                         .IsUnique();
 
-                    b.ToTable("Curriculo");
+                    b.ToTable("CURRICULO");
                 });
 
             modelBuilder.Entity("SistemaRedeWork.Models.EmpresaModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_EMPRESA");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CEP")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("CEP");
 
                     b.Property<string>("CNPJ")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("CNPJ");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("CIDADE");
 
                     b.Property<string>("ConfirmarSenha")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("CONFIRMAR_SENHA");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EMAIL");
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("ESTADO");
 
                     b.Property<string>("Linkedin")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("LINKEDIN");
 
                     b.Property<string>("Numero")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("NUMERO");
 
                     b.Property<string>("RazaoSocial")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("RAZAO_SOCIAL");
 
                     b.Property<string>("Rua")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("RUA");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("SENHA");
 
                     b.Property<string>("Site")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("SITE");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("TELEFONE");
 
                     b.Property<string>("Usuario")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USUARIO");
 
                     b.HasKey("Id");
 
@@ -273,83 +342,90 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_ESTUDANTE");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CEP")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("CEP");
 
                     b.Property<string>("CPF")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("CPF");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("CIDADE");
 
                     b.Property<string>("ConfirmarSenha")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Curso")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("CONFIRMAR_SENHA");
 
                     b.Property<DateTime?>("DataNascimento")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DATA_NASC");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("EMAIL");
 
                     b.Property<int?>("EmpresaModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("ESTADO");
 
-                    b.Property<string>("Instituicao")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("ID_CURRICULO")
+                        .HasColumnType("int");
 
                     b.Property<string>("Numero")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Periodo")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("NUMERO");
 
                     b.Property<string>("Rua")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Semestre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("LOGRADOURO");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("SENHA");
 
                     b.Property<string>("Sexo")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Sobrenome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("GENERO");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("TELEFONE");
+
+                    b.Property<string>("nomeCompleto")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("NOME");
 
                     b.HasKey("Id");
 
@@ -362,39 +438,47 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_USUARIO");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CNPJ")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("CNPJ");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("EMAIL");
 
-                    b.Property<int?>("EmpresaId")
+                    b.Property<int?>("ID_EMPRESA")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("SENHA");
 
                     b.Property<string>("RazaoSocial")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("RAZAO_SOCIAL");
 
                     b.Property<bool>("RememberMe")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("REMEMBER_ME");
 
                     b.Property<string>("ResetCode")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("RESET_CODE");
 
                     b.Property<DateTime?>("ResetCodeExpiration")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("RESET_CODE_EXPIRATION");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpresaId");
+                    b.HasIndex("ID_EMPRESA");
 
                     b.ToTable("LoginEmpresas");
                 });
@@ -403,83 +487,48 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_USUARIO");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("EMAIL");
 
-                    b.Property<int?>("EstudanteId")
+                    b.Property<int?>("ID_ESTUDANTE")
                         .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("longtext");
 
                     b.Property<bool>("RememberMe")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("REMEMBER_ME");
 
                     b.Property<string>("ResetCode")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("RESET_CODE");
 
                     b.Property<DateTime?>("ResetCodeExpiration")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("RESET_CODE_EXPIRATION");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Sobrenome")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("SENHA");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstudanteId");
+                    b.HasIndex("ID_ESTUDANTE");
 
-                    b.ToTable("LoginEstudantes");
+                    b.ToTable("LOGIN_ESTUDANTE");
                 });
 
-            modelBuilder.Entity("SistemaRedeWork.Models.UsuarioModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Usuarios", (string)null);
-                });
-
-            modelBuilder.Entity("SistemaRedeWork.Models.Arquivos", b =>
+            modelBuilder.Entity("SistemaRedeWork.Models.ArquivoModel", b =>
                 {
                     b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
                         .WithMany("Arquivos")
-                        .HasForeignKey("EstudanteId")
+                        .HasForeignKey("ID_ESTUDANTE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -490,7 +539,7 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.HasOne("SistemaRedeWork.Models.EmpresaModel", "Empresa")
                         .WithMany("Vagas")
-                        .HasForeignKey("EmpresaId")
+                        .HasForeignKey("ID_EMPRESA")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -501,7 +550,7 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
                         .WithOne("Curriculo")
-                        .HasForeignKey("SistemaRedeWork.Models.CurriculoModel", "EstudanteId")
+                        .HasForeignKey("SistemaRedeWork.Models.CurriculoModel", "ID_ESTUDANTE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -519,7 +568,7 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.HasOne("SistemaRedeWork.Models.EmpresaModel", "Empresa")
                         .WithMany()
-                        .HasForeignKey("EmpresaId");
+                        .HasForeignKey("ID_EMPRESA");
 
                     b.Navigation("Empresa");
                 });
@@ -528,7 +577,7 @@ namespace SistemaRedeWork.Migrations
                 {
                     b.HasOne("SistemaRedeWork.Models.EstudanteModel", "Estudante")
                         .WithMany()
-                        .HasForeignKey("EstudanteId");
+                        .HasForeignKey("ID_ESTUDANTE");
 
                     b.Navigation("Estudante");
                 });

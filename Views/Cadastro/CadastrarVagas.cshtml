@@ -64,7 +64,7 @@
     <div class="container my-5">
         <h2 class="text-center mb-4">Cadastrar Vaga</h2>
         @using (Html.BeginForm("CadastrarVagas", "Cadastro", FormMethod.Post)) {
-            @Html.HiddenFor(m => m.CadastrarVagas.EmpresaId)
+            @Html.HiddenFor(m => m.CadastrarVagas.ID_EMPRESA)
             // Não precisa de Value aqui
 
             <div class="mb-3">

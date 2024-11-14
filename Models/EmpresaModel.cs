@@ -3,79 +3,121 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace SistemaRedeWork.Models {
+
+    [Table("EMPRESA")]
     public class EmpresaModel {
         [Key]
+        [Column("ID_EMPRESA")]
         public int Id { get; set; }
 
         //[Required]
         //[EmailAddress]
+        [Column("EMAIL")]
+        [StringLength(255)]
         public string Email { get; set; }
 
 
         //[Required]
+        [Column("USUARIO")]
+        [StringLength(255)]
         public string Usuario { get; set; }
 
         //[Required]
+        [Column("RAZAO_SOCIAL")]
+        [StringLength(255)]
         public string RazaoSocial { get; set; }
 
         //[Required]
         //[RegularExpression(@"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$", ErrorMessage = "O CNPJ deve estar no formato 00.000.000/0000-00.")]
+        [Column("CNPJ")]
+        [StringLength(255)]
         public string CNPJ { get; set; }
 
         //[Phone]
+        [Column("TELEFONE")]
+        [StringLength(255)]
         public string Telefone { get; set; }
 
+        [Column("SITE")]
+        [StringLength(255)]
         public string Site { get; set; }
 
+        [Column("LINKEDIN")]
+        [StringLength(255)]
         public string Linkedin { get; set; }
 
         //[Required]
+        [Column("ESTADO")]
+        [StringLength(255)]
         public string Estado { get; set; }
 
         //[Required]
+        [Column("CIDADE")]
+        [StringLength(255)]
         public string Cidade { get; set; }
 
         //[Required]
         //[RegularExpression(@"\d{5}-\d{3}", ErrorMessage = "O CEP deve estar no formato 00000-000")]
+        [Column("CEP")]
+        [StringLength(255)]
         public string CEP { get; set; }
 
         //[Required]
+        [Column("RUA")]
+        [StringLength(255)]
         public string Rua { get; set; }
 
+        [Column("NUMERO")]
+        [StringLength(255)]
         public string Numero { get; set; }
         //[Required]
         //[DataType(DataType.Password)]
+        [Column("SENHA")]
         public string Senha { get; set; }
 
         //[Required(ErrorMessage = "A confirmação da senha é obrigatória.")]
+        [Column("CONFIRMAR_SENHA")]
         public string ConfirmarSenha { get; set; }
+
         public List<EstudanteModel>? Estudantes { get; set; }
         public List<CadastrarVagasModel>? Vagas { get; set; } = new List<CadastrarVagasModel>();
     }
 
     public class LoginEmpresaModel {
         [Key]
+        [Column("ID_USUARIO")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O e-mail é obrigatório")]
         [EmailAddress(ErrorMessage = "Digite um e-mail válido")]
+        [Column("EMAIL")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "A senha é obrigatória")]
+        [Column("SENHA")]
         public string Password { get; set; }
 
+        [Column("CNPJ")]
         public string? CNPJ { get; set; }
+
+        [Column("RAZAO_SOCIAL")]
         public string? RazaoSocial { get; set; }
 
         // Chave estrangeira para vincular com a Empresa
-        [ForeignKey("EmpresaModel")]
-        public int? EmpresaId { get; set; }
+        [ForeignKey("Empresa")]
+        public int? ID_EMPRESA { get; set; }
 
         public EmpresaModel? Empresa { get; set; }
 
+
+        [Column("RESET_CODE")]
         public string? ResetCode { get; set; }
+
+        [Column("RESET_CODE_EXPIRATION")]
         public DateTime? ResetCodeExpiration { get; set; }
-        public bool RememberMe { get; set; } // Adiciona a propriedade RememberMe
+
+        [Column("REMEMBER_ME")]
+        public bool RememberMe { get; set; } // Adiciona a propriedade RELEMBRAR O USUÁRIO
     }
 
 
