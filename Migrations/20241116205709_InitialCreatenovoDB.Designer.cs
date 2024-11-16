@@ -12,8 +12,8 @@ using SistemaRedeWork.Data;
 namespace SistemaRedeWork.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20241113171755_InitialNewData")]
-    partial class InitialNewData
+    [Migration("20241116205709_InitialCreatenovoDB")]
+    partial class InitialCreatenovoDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,7 +145,7 @@ namespace SistemaRedeWork.Migrations
 
                     b.HasIndex("ID_EMPRESA");
 
-                    b.ToTable("CADASTRAR_VAGAS");
+                    b.ToTable("VAGAS");
                 });
 
             modelBuilder.Entity("SistemaRedeWork.Models.CurriculoModel", b =>
@@ -158,7 +158,6 @@ namespace SistemaRedeWork.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Curso")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("CURSO");
@@ -168,7 +167,6 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnName("DATA_NASC");
 
                     b.Property<string>("Educacao")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("EDUCACAO");
@@ -180,13 +178,11 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnName("EMAIL");
 
                     b.Property<string>("Experiencia")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("EXPERIENCIA");
 
                     b.Property<string>("Habilidade")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("HABILIDADE");
@@ -195,7 +191,6 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Idioma")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("IDIOMA");
@@ -207,18 +202,15 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnName("NOME");
 
                     b.Property<string>("Objetivo")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)")
                         .HasColumnName("OBJETIVO");
 
                     b.Property<string>("Periodo")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("PERIODO");
 
                     b.Property<string>("Semestre")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("SEMESTRE");
@@ -229,7 +221,6 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnName("TELEFONE");
 
                     b.Property<string>("Universidade")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("UNIVERSIDADE");
@@ -335,6 +326,9 @@ namespace SistemaRedeWork.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email", "CNPJ")
+                        .IsUnique();
+
                     b.ToTable("Empresas", (string)null);
                 });
 
@@ -392,6 +386,12 @@ namespace SistemaRedeWork.Migrations
                     b.Property<int>("ID_CURRICULO")
                         .HasColumnType("int");
 
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("NOME");
+
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -421,15 +421,12 @@ namespace SistemaRedeWork.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("TELEFONE");
 
-                    b.Property<string>("nomeCompleto")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("NOME");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EmpresaModelId");
+
+                    b.HasIndex("Email", "CPF")
+                        .IsUnique();
 
                     b.ToTable("Estudantes", (string)null);
                 });
@@ -521,7 +518,7 @@ namespace SistemaRedeWork.Migrations
 
                     b.HasIndex("ID_ESTUDANTE");
 
-                    b.ToTable("LOGIN_ESTUDANTE");
+                    b.ToTable("LOGINESTUDANTES");
                 });
 
             modelBuilder.Entity("SistemaRedeWork.Models.ArquivoModel", b =>

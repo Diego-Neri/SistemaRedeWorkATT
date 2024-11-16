@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SistemaRedeWork.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialNewData : Migration
+    public partial class InitialCreatenovoDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,48 +53,6 @@ namespace SistemaRedeWork.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Empresas", x => x.ID_EMPRESA);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "CADASTRAR_VAGAS",
-                columns: table => new
-                {
-                    ID_VAGA = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TITULO = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DESCRICAO = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    REQUISITOS = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    TIPO_TRABALHO = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NIVEL_EXPERIENCIA = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MIN_SALARIAL = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    MAX_SALARIAL = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    LOCALIZACAO = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DURACAO_PROJETO = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MODALIDADE_CONTRATO = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    BENEFICIOS = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DATA_LIMITE = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ID_EMPRESA = table.Column<int>(type: "int", nullable: false),
-                    STATUS = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CADASTRAR_VAGAS", x => x.ID_VAGA);
-                    table.ForeignKey(
-                        name: "FK_CADASTRAR_VAGAS_Empresas_ID_EMPRESA",
-                        column: x => x.ID_EMPRESA,
-                        principalTable: "Empresas",
-                        principalColumn: "ID_EMPRESA",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -175,6 +133,48 @@ namespace SistemaRedeWork.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "VAGAS",
+                columns: table => new
+                {
+                    ID_VAGA = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    TITULO = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DESCRICAO = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    REQUISITOS = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TIPO_TRABALHO = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NIVEL_EXPERIENCIA = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MIN_SALARIAL = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    MAX_SALARIAL = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    LOCALIZACAO = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DURACAO_PROJETO = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MODALIDADE_CONTRATO = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BENEFICIOS = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DATA_LIMITE = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ID_EMPRESA = table.Column<int>(type: "int", nullable: false),
+                    STATUS = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VAGAS", x => x.ID_VAGA);
+                    table.ForeignKey(
+                        name: "FK_VAGAS_Empresas_ID_EMPRESA",
+                        column: x => x.ID_EMPRESA,
+                        principalTable: "Empresas",
+                        principalColumn: "ID_EMPRESA",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "ARQUIVOS",
                 columns: table => new
                 {
@@ -212,23 +212,23 @@ namespace SistemaRedeWork.Migrations
                     DATA_NASC = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     TELEFONE = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    OBJETIVO = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                    OBJETIVO = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    UNIVERSIDADE = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    UNIVERSIDADE = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CURSO = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    CURSO = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    SEMESTRE = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    SEMESTRE = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PERIODO = table.Column<string>(type: "longtext", nullable: false)
+                    PERIODO = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    EDUCACAO = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    EDUCACAO = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    EXPERIENCIA = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    EXPERIENCIA = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    HABILIDADE = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    HABILIDADE = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IDIOMA = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    IDIOMA = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ID_ESTUDANTE = table.Column<int>(type: "int", nullable: false)
                 },
@@ -245,7 +245,7 @@ namespace SistemaRedeWork.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "LOGIN_ESTUDANTE",
+                name: "LOGINESTUDANTES",
                 columns: table => new
                 {
                     ID_USUARIO = table.Column<int>(type: "int", nullable: false)
@@ -262,9 +262,9 @@ namespace SistemaRedeWork.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LOGIN_ESTUDANTE", x => x.ID_USUARIO);
+                    table.PrimaryKey("PK_LOGINESTUDANTES", x => x.ID_USUARIO);
                     table.ForeignKey(
-                        name: "FK_LOGIN_ESTUDANTE_Estudantes_ID_ESTUDANTE",
+                        name: "FK_LOGINESTUDANTES_Estudantes_ID_ESTUDANTE",
                         column: x => x.ID_ESTUDANTE,
                         principalTable: "Estudantes",
                         principalColumn: "ID_ESTUDANTE");
@@ -277,14 +277,21 @@ namespace SistemaRedeWork.Migrations
                 column: "ID_ESTUDANTE");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CADASTRAR_VAGAS_ID_EMPRESA",
-                table: "CADASTRAR_VAGAS",
-                column: "ID_EMPRESA");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CURRICULO_ID_ESTUDANTE",
                 table: "CURRICULO",
                 column: "ID_ESTUDANTE",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Empresas_EMAIL_CNPJ",
+                table: "Empresas",
+                columns: new[] { "EMAIL", "CNPJ" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Estudantes_EMAIL_CPF",
+                table: "Estudantes",
+                columns: new[] { "EMAIL", "CPF" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -293,13 +300,18 @@ namespace SistemaRedeWork.Migrations
                 column: "EmpresaModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LOGIN_ESTUDANTE_ID_ESTUDANTE",
-                table: "LOGIN_ESTUDANTE",
+                name: "IX_LoginEmpresas_ID_EMPRESA",
+                table: "LoginEmpresas",
+                column: "ID_EMPRESA");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LOGINESTUDANTES_ID_ESTUDANTE",
+                table: "LOGINESTUDANTES",
                 column: "ID_ESTUDANTE");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LoginEmpresas_ID_EMPRESA",
-                table: "LoginEmpresas",
+                name: "IX_VAGAS_ID_EMPRESA",
+                table: "VAGAS",
                 column: "ID_EMPRESA");
         }
 
@@ -310,16 +322,16 @@ namespace SistemaRedeWork.Migrations
                 name: "ARQUIVOS");
 
             migrationBuilder.DropTable(
-                name: "CADASTRAR_VAGAS");
-
-            migrationBuilder.DropTable(
                 name: "CURRICULO");
 
             migrationBuilder.DropTable(
-                name: "LOGIN_ESTUDANTE");
+                name: "LoginEmpresas");
 
             migrationBuilder.DropTable(
-                name: "LoginEmpresas");
+                name: "LOGINESTUDANTES");
+
+            migrationBuilder.DropTable(
+                name: "VAGAS");
 
             migrationBuilder.DropTable(
                 name: "Estudantes");

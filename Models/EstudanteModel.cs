@@ -84,7 +84,7 @@ namespace SistemaRedeWork.Models {
     }
 
 
-    [Table("LOGIN_ESTUDANTE")]
+    [Table("LOGINESTUDANTES")]
     public class LoginEstudanteModel {
 
         [Key]

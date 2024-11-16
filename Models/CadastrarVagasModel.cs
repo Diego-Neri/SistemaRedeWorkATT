@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SistemaRedeWork.Models {
 
 
-    [Table("CADASTRARVAGAS")]
+    [Table("VAGAS")]
     public class CadastrarVagasModel {
         [Key]
         [Column("ID_VAGA")]

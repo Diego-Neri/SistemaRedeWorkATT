@@ -24,15 +24,18 @@ namespace SistemaRedeWork.Data {
                 .ToTable("Empresas")
                 .HasKey(e => e.Id); // Configuração da chave primária
 
-            // Configuração para a entidade UsuarioModel
-            //modelBuilder.Entity<UsuarioModel>()
-            //    .ToTable("Usuarios")
-            //    .HasKey(u => u.Id); // Configuração da chave primária
+            modelBuilder.Entity<EmpresaModel>()
+                .HasIndex(e => new { e.Email, e.CNPJ, })
+                .IsUnique();
 
             // Configuração para a entidade EstudanteModel
             modelBuilder.Entity<EstudanteModel>()
                 .ToTable("Estudantes")
-                .HasKey(u => u.Id); // Configuração da chave primária
+                .HasKey(u => u.Id);
+
+            modelBuilder.Entity<EstudanteModel>()
+                .HasIndex(e => new { e.Email, e.CPF })
+                .IsUnique(); // Configuração da chave primária
 
             // Relacionamento um para um entre EstudanteModel e CurriculoModel
             modelBuilder.Entity<CurriculoModel>()
@@ -47,6 +50,7 @@ namespace SistemaRedeWork.Data {
                 .HasOne(a => a.Estudante)
                 .WithMany(e => e.Arquivos)
                 .HasForeignKey(a => a.ID_ESTUDANTE);
+                
 
 
             // Relacionamento um para muitos entre EmpresaModel e CadastrarVagasModel

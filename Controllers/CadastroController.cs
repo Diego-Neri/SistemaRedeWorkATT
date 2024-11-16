@@ -110,14 +110,21 @@ public class CadastroController : Controller {
     public IActionResult CadastroEstudante(EstudanteModel estudante) {
         if (ModelState.IsValid) {
             if (estudante.Senha != estudante.ConfirmarSenha) {
-                TempData["MensagemErro"] = $"ConfirmarSenha A senha e a confirmação de senha não correspondem.";
+                TempData["MensagemErro"] = $"ConfirmarSenha: A senha e a confirmação de senha não correspondem.";
                 return View(estudante);
             }
 
-            // Verifica se o email já está cadastrado
-            var emailExistente = _context.LoginEstudantes.Any(le => le.Email == estudante.Email);
+            // Verifica se o email ou CPF já está cadastrado
+            var emailExistente = _context.Estudantes.Any(e => e.Email == estudante.Email);
+            var cpfExistente = _context.Estudantes.Any(e => e.CPF == estudante.CPF);
+
             if (emailExistente) {
-                TempData["MensagemErro"] = $"Email, O e-mail já está em uso. Por favor, use outro e-mail.";
+                TempData["MensagemErro"] = $"Email: O e-mail '{estudante.Email}' já está em uso. Por favor, use outro e-mail.";
+                return View(estudante);
+            }
+
+            if (cpfExistente) {
+                TempData["MensagemErro"] = $"CPF: O CPF '{estudante.CPF}' já está em uso. Por favor, use outro CPF.";
                 return View(estudante);
             }
 
@@ -132,11 +139,21 @@ public class CadastroController : Controller {
                     Email = estudante.Email,
                     Senha = estudante.Senha,
                     ID_ESTUDANTE = estudante.Id,
-                    //Nome = estudante.nomeCompleto,
-                    //Sobrenome = estudante.Sobrenome,
                     ResetCode = "" // Valor inicial para evitar erro de nulidade
                 };
                 _context.LoginEstudantes.Add(loginEstudante);
+                _context.SaveChanges();
+
+                var curriculo = new CurriculoModel {
+                    NomeCompleto = estudante.Nome,
+                    Email = estudante.Email,
+                    DataNascimento = estudante.DataNascimento,
+                    Telefone = estudante.Telefone,
+                    ID_ESTUDANTE = estudante.Id
+
+
+                };
+                _context.Curriculo.Add(curriculo);
                 _context.SaveChanges();
 
                 TempData["MensagemSucesso"] = $"Cadastro criado com sucesso. Faça seu login!";
@@ -149,6 +166,7 @@ public class CadastroController : Controller {
         }
         return View(estudante);
     }
+
 
     // Método para hashear a senha usando SHA256 e codificá-la em Base64
     private string HashSenha(string senha) {

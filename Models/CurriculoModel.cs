@@ -27,42 +27,42 @@ namespace SistemaRedeWork.Models {
 
         [StringLength(500)]
         [Column("OBJETIVO")]
-        public string Objetivo { get; set; }
+        public string? Objetivo { get; set; }
 
         [StringLength(255)]
         [Column("UNIVERSIDADE")]
-        public string Universidade { get; set; }
+        public string? Universidade { get; set; }
 
         [StringLength(255)]
         [Column("CURSO")]
-        public string Curso { get; set; }
+        public string? Curso { get; set; }
 
         [StringLength(255)]
         [Column("SEMESTRE")]
-        public string Semestre { get; set; }
+        public string? Semestre { get; set; }
 
 
         [Column("PERIODO")]
-        public string Periodo { get; set; }
+        public string? Periodo { get; set; }
 
         [StringLength(255)]
         [Column("EDUCACAO")]
-        public string Educacao { get; set; }
+        public string? Educacao { get; set; }
 
         [StringLength(255)]
         [Column("EXPERIENCIA")]
-        public string Experiencia { get; set; }
+        public string? Experiencia { get; set; }
 
         [StringLength(255)]
         [Column("HABILIDADE")]
-        public string Habilidade { get; set; }
+        public string? Habilidade { get; set; }
 
         //[Column("NOME")]
         //public string Certificado { get; set; }
 
         [StringLength(255)]
         [Column("IDIOMA")]
-        public string Idioma { get; set; }
+        public string? Idioma { get; set; }
 
         public int ID_ESTUDANTE { get; set; } // Chave estrangeira
 
