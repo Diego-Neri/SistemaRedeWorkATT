@@ -34,7 +34,7 @@ public class CadastroController : Controller {
             // Verifica se o email já está cadastrado
             var emailExistente = _context.LoginEmpresas.Any(le => le.Email == empresa.Email);
             if (emailExistente) {
-                TempData["MensagemErro"] = $"O e-mail já está em uso. Por favor, use outro e-mail."; 
+                TempData["MensagemErro"] = $"O e-mail já está em uso. Por favor, use outro e-mail.";
                 return View(empresa);
             }
 
@@ -49,7 +49,7 @@ public class CadastroController : Controller {
                 var loginEmpresa = new LoginEmpresaModel {
                     Email = empresa.Email,
                     Password = empresa.Senha,
-                    EmpresaId = empresa.Id,
+                    ID_EMPRESA = empresa.Id,
                     CNPJ = empresa.CNPJ,
                     RazaoSocial = empresa.RazaoSocial,
                     ResetCode = "" // Valor inicial para evitar erro de nulidade
@@ -73,12 +73,12 @@ public class CadastroController : Controller {
 
     public IActionResult EmpresaLogado() {
         var estudantes = _context.Estudantes
-            .Include(e => e.Curriculo) // Inclui o Currículo
+            .Include(e => e.Curriculo)
             .ToList();
 
         var model = estudantes.Select(e => new EmpresaEstudanteViewModel {
             Estudante = e,
-            Curriculo = e.Curriculo // Associa o currículo ao view model
+            Curriculo = e.Curriculo
         }).ToList();
 
         return View(model);
@@ -131,9 +131,9 @@ public class CadastroController : Controller {
                 var loginEstudante = new LoginEstudanteModel {
                     Email = estudante.Email,
                     Senha = estudante.Senha,
-                    EstudanteId = estudante.Id,
-                    Nome = estudante.Nome,
-                    Sobrenome = estudante.Sobrenome,
+                    ID_ESTUDANTE = estudante.Id,
+                    //Nome = estudante.nomeCompleto,
+                    //Sobrenome = estudante.Sobrenome,
                     ResetCode = "" // Valor inicial para evitar erro de nulidade
                 };
                 _context.LoginEstudantes.Add(loginEstudante);
@@ -165,7 +165,7 @@ public class CadastroController : Controller {
         }
 
         var model = new CadastrarVagasViewModel {
-            CadastrarVagas = new CadastrarVagasModel { EmpresaId = empresa.Id }, // Define o EmpresaId
+            CadastrarVagas = new CadastrarVagasModel { ID_EMPRESA = empresa.Id }, // Define o EmpresaId
             Empresas = _context.Empresas.ToList(), // Preencher a lista de empresas, se necessário
             RazaoSocial = empresa.RazaoSocial // Obtém a razão social da empresa
 
@@ -185,7 +185,7 @@ public class CadastroController : Controller {
         var vaga = model.CadastrarVagas; // Acesse o modelo CadastrarVagas a partir do view model
 
         // Verifica se a empresa existe
-        var empresaExists = await _context.Empresas.AnyAsync(e => e.Id == vaga.EmpresaId);
+        var empresaExists = await _context.Empresas.AnyAsync(e => e.Id == vaga.ID_EMPRESA);
         if (!empresaExists) {
             ModelState.AddModelError("EmpresaId", "A empresa associada à vaga não existe.");
 
@@ -220,7 +220,7 @@ public class CadastroController : Controller {
         }
 
         // Filtra as vagas pela empresa
-        var vagas = _context.Vagas.Where(v => v.EmpresaId == empresaId).ToList();
+        var vagas = _context.Vagas.Where(v => v.ID_EMPRESA == empresaId).ToList();
 
         // Se não houver vagas, adiciona uma mensagem informativa
         if (!vagas.Any()) {
@@ -245,13 +245,13 @@ public class CadastroController : Controller {
         }
 
         // Alterna o status da vaga
-        vaga.Ativa = !vaga.Ativa;
+        vaga.Status = !vaga.Status;
 
         // Atualiza a vaga no banco de dados
         _context.Vagas.Update(vaga);
         await _context.SaveChangesAsync();
 
-        TempData["MensagemSucesso"] = $"Vaga {(vaga.Ativa ? "ativada" : "desativada")} com sucesso!";
+        TempData["MensagemSucesso"] = $"Vaga {(vaga.Status ? "ativada" : "desativada")} com sucesso!";
         return RedirectToAction("MinhasVagasView");
     }
 

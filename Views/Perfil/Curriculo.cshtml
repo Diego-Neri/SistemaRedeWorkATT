@@ -33,7 +33,7 @@
             <!-- Campo oculto para o id do currículo -->
             <input type="hidden" asp-for="Curriculo.Id" />
             <!-- Campo oculto para o id do estudante -->
-            <input type="hidden" asp-for="Curriculo.EstudanteId"/>
+            <input type="hidden" asp-for="Curriculo.ID_ESTUDANTE"/>
 
             <div class="mb-3">
                 <a href="@Url.Action("EstudanteLogado", "Login", new { id = Model.Estudante.Id })" class="btn btn-primary">
@@ -103,7 +103,14 @@
                     <input asp-for="Curriculo.Semestre" class="form-control" placeholder="Semestre atual" />
                     <span asp-validation-for="Curriculo.Semestre" class="text-danger"></span>
                 </div>
+
+                <div class="col-md-3 mb-3">
+                    <label for="Periodo" class="form-label">Período</label>
+                    <input asp-for="Curriculo.Periodo" class="form-control" placeholder="Período atual" />
+                    <span asp-validation-for="Curriculo.Periodo" class="text-danger"></span>
+                </div>
             </div>
+                
 
             <div class="row">
                 <!-- Educação -->
@@ -132,14 +139,14 @@
                 </div>
             </div>
 
-            <div class="row">
+            @* <div class="row">
                 <!-- Certificados -->
                 <div class="col-md-12 mb-3">
                     <label for="Certificado" class="form-label">Certificados</label>
                     <textarea asp-for="Curriculo.Certificado" class="form-control" placeholder="Liste suas certificações"></textarea>
                     <span asp-validation-for="Curriculo.Certificado" class="text-danger"></span>
                 </div>
-            </div>
+            </div> *@
 
             <div class="row">
                 <!-- Idiomas -->

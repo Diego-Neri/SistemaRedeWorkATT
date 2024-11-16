@@ -187,18 +187,18 @@
                 @for (int j = 0; j < 3; j++) {
                     var index = i * 3 + j;
                     if (index < Model.Count()) {
-                        var empresaEstudanteViewModel = Model.ElementAt(index);
+                        var empresaEstudanteViewModel = Model?.ElementAt(index);
                         <div class="col-sm">
                             <div class="card text-center mb-4 shadow-sm">
                                 <div class="card-header bg-primary text-white">
-                                    @empresaEstudanteViewModel.Estudante.Nome @empresaEstudanteViewModel.Estudante.Sobrenome
+                                    @empresaEstudanteViewModel.Estudante.Nome
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title"><strong>Curso:</strong> @empresaEstudanteViewModel.Estudante.Curso</h5>
+                                    <h5 class="card-title"><strong>Curso:</strong> @empresaEstudanteViewModel.Curriculo.Curso</h5>
                                     <p class="card-text">
-                                        <strong>Instituição:</strong> @empresaEstudanteViewModel.Estudante.Instituicao <br />
-                                        <strong>Período:</strong> @empresaEstudanteViewModel.Estudante.Periodo <br />
-                                        <strong>Semestre:</strong> @empresaEstudanteViewModel.Estudante.Semestre <br />
+                                        <strong>Instituição:</strong> @empresaEstudanteViewModel.Curriculo.Universidade <br />
+                                        <strong>Período:</strong> @empresaEstudanteViewModel.Curriculo.Curso <br />
+                                        <strong>Semestre:</strong> @empresaEstudanteViewModel.Curriculo.Semestre <br />
                                         <strong>Data de Nascimento:</strong> @(empresaEstudanteViewModel.Estudante.DataNascimento.HasValue ? empresaEstudanteViewModel.Estudante.DataNascimento.Value.ToString("dd/MM/yyyy") : "Data não informada")<br />
                                         <strong>Email:</strong> @empresaEstudanteViewModel.Estudante.Email <br />
                                         <strong>Telefone:</strong> @empresaEstudanteViewModel.Estudante.Telefone <br />
@@ -208,11 +208,10 @@
                                     <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal"
                                        onclick="openModal(
                                        '@empresaEstudanteViewModel.Estudante.Nome',
-                                       '@empresaEstudanteViewModel.Estudante.Sobrenome',
-                                       '@empresaEstudanteViewModel.Estudante.Curso',
-                                       '@empresaEstudanteViewModel.Estudante.Instituicao',
-                                       '@empresaEstudanteViewModel.Estudante.Periodo',
-                                       '@empresaEstudanteViewModel.Estudante.Semestre',
+                                       '@empresaEstudanteViewModel.Curriculo.Curso',
+                                       '@empresaEstudanteViewModel.Curriculo.Universidade',
+                                       '@empresaEstudanteViewModel.Curriculo.Periodo',
+                                       '@empresaEstudanteViewModel.Curriculo.Semestre',
                                        '@(empresaEstudanteViewModel.Estudante.DataNascimento.HasValue ? empresaEstudanteViewModel.Estudante.DataNascimento.Value.ToString("dd/MM/yyyy") : "Data não informada")',
                                        '@empresaEstudanteViewModel.Estudante.Email',
                                        '@empresaEstudanteViewModel.Estudante.Telefone',
@@ -220,7 +219,7 @@
                                        '@empresaEstudanteViewModel.Estudante.Estado',
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Objetivo : "Objetivo não informado")',
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Educacao : "Educação não informada")',
-                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Certificado : "Certificado não informado")',
+                              
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Experiencia : "Experiência não informada")',
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Habilidade : "Habilidade não informada")',
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Idioma : "Idioma não informado")')">
@@ -249,7 +248,7 @@
                 <div class="modal-body">
                     <h5 id="vagaTitulo" class="text-primary"></h5>
                     <p id="vagaDescricao"></p>
-                    <a href="#" class="btn btn-success">Baixar Currículo</a>
+                    <a href="/content/exampleCV.pdf" target="_blank" class="btn btn-success">Baixar Currículo</a>
                 </div>
             </div>
         </div>
@@ -292,14 +291,14 @@
         });
 
 
-        function openModal(nome, sobrenome, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, habilidade, idioma) {
+        function openModal(nome, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, habilidade, idioma) {
             // Definindo o nome do estudante no título do modal
-            document.getElementById('vagaModalLabel').textContent = nome + ' ' + sobrenome;
+            document.getElementById('vagaModalLabel').textContent = nome;
 
             // Exibindo as informações no modal com separação por categorias
             document.getElementById('vagaDescricao').innerHTML = `
                                                 <strong>Dados Pessoais:</strong><br>
-                                                Nome Completo: ${nome} ${sobrenome}<br>
+                                                Nome Completo: ${nome}<br>
                                                 Data de Nascimento: ${dataNascimento}<br>
                                                 Email: ${email}<br>
                                                 Telefone: ${telefone}<br>

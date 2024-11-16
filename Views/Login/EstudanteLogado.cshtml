@@ -1,4 +1,4 @@
-﻿@using System.Security.Claims 
+﻿@using System.Security.Claims
 @using System.Globalization
 
 @model IEnumerable<SistemaRedeWork.Models.EmpresaEstudanteViewModel>
@@ -58,9 +58,9 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave para os cards */
     }
 
-    .card:hover {
-        transform: scale(1.05); /* Efeito de zoom no hover */
-    }
+        .card:hover {
+            transform: scale(1.05); /* Efeito de zoom no hover */
+        }
 
     .card-header {
         background-color: #6a0dad; /* Cor de fundo do cabeçalho do card */
@@ -103,42 +103,42 @@
         transition: opacity 0.5s ease-in-out;
     }
 
-    .welcome-message h2 {
-        display: block;
-        margin-bottom: 10px;
-    }
+        .welcome-message h2 {
+            display: block;
+            margin-bottom: 10px;
+        }
 
-    .welcome-message p {
-        font-size: 1.5em;
-        color: black;
-        background: linear-gradient(135deg, #6a0dad, #b03f7f);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        text-align: center;
-        display: block;
-    }
+        .welcome-message p {
+            font-size: 1.5em;
+            color: black;
+            background: linear-gradient(135deg, #6a0dad, #b03f7f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: block;
+        }
 </style>
 
 @if (TempData["MensagemErro"] != null) {
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
         @TempData["MensagemErro"]
-            </div>
+    </div>
 }
 
 @if (TempData["MensagemSucesso"] != null) {
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">X</button>
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
         @TempData["MensagemSucesso"]
-            </div>
+    </div>
 }
 
 @if (!(ViewData["NavBarLogado"] as bool? ?? false)) {
     <nav class="navbar navbar-light fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="EstudanteLogado" >
+            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="EstudanteLogado">
                 <img src="/content/img/LogoRedeWork2.png" alt="RedeWork" class="logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -155,11 +155,11 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" style="color:black"
                                asp-controller="Perfil" asp-action="PerfilEstudante"
-                               asp-route-id="@User.FindFirstValue("EstudanteId")">Perfil</a>
+                               asp-route-id="@User.FindFirstValue("Estudante")">Perfil</a>
                         </li>
-                        
+
                         <li class="nav-item">
-                            <a class="nav-link" style="color:black" asp-controller="Perfil" asp-action="Curriculo" asp-route-id="@User.FindFirstValue("EstudanteId")">Currículo</a>
+                            <a class="nav-link" style="color:black" asp-controller="Perfil" asp-action="Curriculo" asp-route-id="@User.FindFirstValue("Estudante")">Currículo</a>
                         </li>
 
                         <li class="nav-item">
@@ -183,39 +183,38 @@
 
 @if (Model != null && Model.Any()) {
     @for (int i = 0; i < (Model.Count() + 2) / 3; i++) {
-                <div class="row mb-3">
+        <div class="row mb-3">
             @for (int j = 0; j < 3; j++) {
                 var index = i * 3 + j;
                 if (index < Model.Count()) {
                     var empresaEstudanteViewModel = Model.ElementAt(index);
-                                    <div class="col-sm">
+                    <div class="col-sm">
                         @foreach (var vaga in empresaEstudanteViewModel.Vagas) {
-                                                <div class="card text-center mb-4">
-                                                    <div class="card-header">
-                                    @vaga.Titulo 
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <h5 class="card-title"><strong>Descrição:</strong> @vaga.Descricao</h5>
-                                                        <p class="card-text">
-                                                            <strong>Requisitos:</strong> @vaga.Requisitos <br />
-                                                            <strong>Modelo:</strong> @vaga.TipoTrabalho <br />
-                                                            <strong>Nível:</strong> @vaga.NivelExperiencia <br />
-                                                            <strong>Fx. Salarial Min:</strong> @vaga.FaixaSalarialMin.ToString("C", new System.Globalization.CultureInfo("pt-BR")) <br />
-                                                            <strong>Fx. Salarial Máx:</strong> @vaga.FaixaSalarialMax.ToString("C", new System.Globalization.CultureInfo("pt-BR")) <br />
-                                                            <strong>Localização:</strong> @vaga.Localizacao <br />
-                                                            <strong>Modalidade de Contrato:</strong> @vaga.ModalidadeContratacao <br />
-                                                            <strong>Benefícios:</strong> @vaga.Beneficios <br />
-                                                            <strong>Candidate-se até:</strong> @vaga.DataLimiteCandidatura.ToString("dd/MM/yyyy") <br />
-                                                            <strong>Empresa:</strong> @empresaEstudanteViewModel.Empresa.RazaoSocial <br />
-                                                        </p>
-                                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal"
-                                                           onclick="openModal(
+                            <div class="card text-center mb-4">
+                                <div class="card-header">
+                                    @vaga.Titulo
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><strong>Descrição:</strong> @vaga.Descricao</h5>
+                                    <p class="card-text">
+                                        <strong>Requisitos:</strong> @vaga.Requisitos <br />
+                                        <strong>Modelo:</strong> @vaga.TipoTrabalho <br />
+                                        <strong>Nível:</strong> @vaga.NivelExperiencia <br />
+                                        <strong>Fx. Salarial Min:</strong> @vaga.FaixaSalarialMin.ToString("C", new System.Globalization.CultureInfo("pt-BR")) <br />
+                                        <strong>Fx. Salarial Máx:</strong> @vaga.FaixaSalarialMax.ToString("C", new System.Globalization.CultureInfo("pt-BR")) <br />
+                                        <strong>Localização:</strong> @vaga.Localizacao <br />
+                                        <strong>Modalidade de Contrato:</strong> @vaga.ModalidadeContratacao <br />
+                                        <strong>Benefícios:</strong> @vaga.Beneficios <br />
+                                        <strong>Candidate-se até:</strong> @vaga.DataLimiteCandidatura.ToString("dd/MM/yyyy") <br />
+                                        <strong>Empresa:</strong> @empresaEstudanteViewModel.Empresa.RazaoSocial <br />
+                                    </p>
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vagaModal"
+                                       onclick="openModal(
                                        '@empresaEstudanteViewModel.Estudante.Nome',
-                                       '@empresaEstudanteViewModel.Estudante.Sobrenome',
-                                       '@empresaEstudanteViewModel.Estudante.Curso',
-                                       '@empresaEstudanteViewModel.Estudante.Instituicao',
-                                       '@empresaEstudanteViewModel.Estudante.Periodo',
-                                       '@empresaEstudanteViewModel.Estudante.Semestre',
+                                       '@empresaEstudanteViewModel.Curriculo.Curso',
+                                       '@empresaEstudanteViewModel.Curriculo.Universidade',
+                                       '@empresaEstudanteViewModel.Curriculo.Periodo',
+                                       '@empresaEstudanteViewModel.Curriculo.Semestre',
                                        '@(empresaEstudanteViewModel.Estudante.DataNascimento.HasValue ? empresaEstudanteViewModel.Estudante.DataNascimento.Value.ToString("dd/MM/yyyy") : "Data não informada")',
                                        '@empresaEstudanteViewModel.Estudante.Email',
                                        '@empresaEstudanteViewModel.Estudante.Telefone',
@@ -223,22 +222,21 @@
                                        '@empresaEstudanteViewModel.Estudante.Estado',
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Objetivo : "Objetivo não informado")',
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Educacao : "Educação não informada")',
-                                       '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Certificado : "Certificado não informado")',
                                        '@(empresaEstudanteViewModel.Curriculo != null ? empresaEstudanteViewModel.Curriculo.Experiencia : "Experiência não informada")',
                                        '@vaga.Titulo',
                                        '@vaga.Descricao')">
-                                                            Candidatar-se
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                        Candidatar-se
+                                    </a>
+                                </div>
+                            </div>
                         }
-                                    </div>
+                    </div>
                 }
             }
-                </div>
+        </div>
     }
 } else {
-        <h3 class="text-center">Nenhuma vaga disponível no momento.</h3>
+    <h3 class="text-center">Nenhuma vaga disponível no momento.</h3>
 }
 
 
@@ -260,10 +258,10 @@
                         <label for="estudanteNome" class="form-label">Nome:</label>
                         <input type="text" class="form-control" id="estudanteNome" name="estudanteNome" readonly />
                     </div>
-                    <div class="mb-3">
+                    @* <div class="mb-3">
                         <label for="estudanteSobrenome" class="form-label">Sobrenome:</label>
                         <input type="text" class="form-control" id="estudanteSobrenome" name="estudanteSobrenome" readonly />
-                    </div>
+                    </div> *@
                     <div class="mb-3">
                         <label for="estudanteCurso" class="form-label">Curso:</label>
                         <input type="text" class="form-control" id="estudanteCurso" name="estudanteCurso" readonly />
@@ -316,12 +314,12 @@
                         <label for="curriculoExperiencia" class="form-label">Experiência:</label>
                         <input type="text" class="form-control" id="curriculoExperiencia" name="curriculoExperiencia" readonly />
                     </div>
-                        <form action="/PerfilEstudante/UploadImagem" enctype="multipart/form-data" method="post" class="mb-4">
-                            <div class="input-group">
-                                <input type="file" name="arquivos" multiple class="form-control" />
-                                
-                            </div>
-                        </form>
+                    <form action="/PerfilEstudante/UploadImagem" enctype="multipart/form-data" method="post" class="mb-4">
+                        <div class="input-group">
+                            <input type="file" name="arquivos" multiple class="form-control" />
+
+                        </div>
+                    </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Enviar Candidatura</button>
@@ -336,34 +334,33 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function openModal(nome, sobrenome, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, vagaTitulo, vagaDescricao) {
-        document.getElementById("vagaTitulo").value = vagaTitulo;
-        document.getElementById("vagaDescricao").value = vagaDescricao;
-        document.getElementById("estudanteNome").value = nome;
-        document.getElementById("estudanteSobrenome").value = sobrenome;
-        document.getElementById("estudanteCurso").value = curso;
-        document.getElementById("estudanteInstituicao").value = instituicao;
-        document.getElementById("estudantePeriodo").value = periodo;
-        document.getElementById("estudanteSemestre").value = semestre;
-        document.getElementById("estudanteDataNascimento").value = dataNascimento;
-        document.getElementById("estudanteEmail").value = email;
-        document.getElementById("estudanteTelefone").value = telefone;
-        document.getElementById("estudanteSexo").value = sexo;
-        document.getElementById("estudanteEstado").value = estado;
-        document.getElementById("curriculoObjetivo").value = objetivo;
-        document.getElementById("curriculoEducacao").value = educacao;
-        document.getElementById("curriculoCertificado").value = certificado;
-        document.getElementById("curriculoExperiencia").value = experiencia;
-    }
+        function openModal(nomeCompleto, curso, instituicao, periodo, semestre, dataNascimento, email, telefone, sexo, estado, objetivo, educacao, certificado, experiencia, vagaTitulo, vagaDescricao) {
+            document.getElementById("vagaTitulo").value = vagaTitulo;
+            document.getElementById("vagaDescricao").value = vagaDescricao;
+            document.getElementById("estudanteNome").value = nome;
+            document.getElementById("estudanteCurso").value = curso;
+            document.getElementById("estudanteInstituicao").value = instituicao;
+            document.getElementById("estudantePeriodo").value = periodo;
+            document.getElementById("estudanteSemestre").value = semestre;
+            document.getElementById("estudanteDataNascimento").value = dataNascimento;
+            document.getElementById("estudanteEmail").value = email;
+            document.getElementById("estudanteTelefone").value = telefone;
+            document.getElementById("estudanteSexo").value = sexo;
+            document.getElementById("estudanteEstado").value = estado;
+            document.getElementById("curriculoObjetivo").value = objetivo;
+            document.getElementById("curriculoEducacao").value = educacao;
+            document.getElementById("curriculoCertificado").value = certificado;
+            document.getElementById("curriculoExperiencia").value = experiencia;
+        }
 
-    // Para animar a mensagem de boas-vindas ao carregar a página
-    window.onload = function () {
-        const welcomeMessage = document.querySelector('.welcome-message');
-        welcomeMessage.style.opacity = 1; // Torna a mensagem visível
-    };
+        // Para animar a mensagem de boas-vindas ao carregar a página
+        window.onload = function () {
+            const welcomeMessage = document.querySelector('.welcome-message');
+            welcomeMessage.style.opacity = 1; // Torna a mensagem visível
+        };
 
         $(document).ready(function () {
             // Quando o botão com a classe 'close-alert' for clicado

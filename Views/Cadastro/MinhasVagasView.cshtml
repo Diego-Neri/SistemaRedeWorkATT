@@ -42,16 +42,16 @@
                             <p class="card-text">@vaga.Descricao</p>
                             <p class="card-text"><strong>Data Limite:</strong> @vaga.DataLimiteCandidatura.ToString("dd/MM/yyyy")</p>
                             <p class="card-text">
-                                <span class="badge @(vaga.Ativa ? "bg-success" : "bg-danger")">
-                                    @(vaga.Ativa ? "Ativa" : "Inativa")
+                                <span class="badge @(vaga.Status? "bg-success" : "bg-danger")">
+                                    @(vaga.Status ? "Ativa" : "Inativa")
                                 </span>
                             </p>
                             <div class="d-flex justify-content-between">
                                 <!-- Botão para ativar/desativar a vaga -->
                                 <form asp-action="AtivarDesativar" asp-route-id="@vaga.Id" method="post" style="display:inline;">
                                     <button type="submit" class="btn btn-warning btn-sm"
-                                            onclick="return confirm('Tem certeza que deseja @(vaga.Ativa ? "desativar" : "ativar") esta vaga?');">
-                                        @(vaga.Ativa ? "Desativar" : "Ativar")
+                                            onclick="return confirm('Tem certeza que deseja @(vaga.Status ? "desativar" : "ativar") esta vaga?');">
+                                        @(vaga.Status ? "Desativar" : "Ativar")
                                     </button>
                                 </form>
 

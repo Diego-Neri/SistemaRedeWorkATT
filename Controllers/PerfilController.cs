@@ -47,7 +47,7 @@ namespace SistemaRedeWork.Controllers {
             var model = new EstudanteModel {
                 Id = estudante.Id,
                 Nome = estudante.Nome,
-                Sobrenome = estudante.Sobrenome,
+                //Sobrenome = estudante.Sobrenome,
                 CPF = estudante.CPF,
                 Email = estudante.Email,
                 Telefone = estudante.Telefone,
@@ -103,7 +103,7 @@ namespace SistemaRedeWork.Controllers {
 
             // Atualiza apenas os campos que precisam ser modificados
             estudante.Nome = model.Nome;
-            estudante.Sobrenome = model.Sobrenome;
+            //estudante.Sobrenome = model.Sobrenome;
             estudante.Email = model.Email;
             estudante.Telefone = model.Telefone;
             estudante.CEP = model.CEP;
@@ -134,11 +134,11 @@ namespace SistemaRedeWork.Controllers {
                 return RedirectToAction("EstudanteLogado", "Login");
             }
 
-            var nomeCompleto = $"{estudante.Nome} {estudante.Sobrenome}";
+            var nomeCompleto = $"{estudante.Nome}";
 
             // Busque o currículo associado ao estudante, se existir
             var curriculo = await _context.Curriculo
-                .FirstOrDefaultAsync(c => c.EstudanteId == id);
+                .FirstOrDefaultAsync(c => c.ID_ESTUDANTE == id);
 
             var viewModel = new CurriculoViewModel {
                 Curriculo = curriculo ?? new CurriculoModel {
@@ -146,10 +146,10 @@ namespace SistemaRedeWork.Controllers {
                     Email = estudante.Email,
                     DataNascimento = estudante.DataNascimento,
                     Telefone = estudante.Telefone,
-                    Universidade = estudante.Instituicao,
-                    Curso = estudante.Curso,
-                    Semestre = estudante.Semestre,
-                    EstudanteId = estudante.Id
+                    //Universidade = estudante.Instituicao,
+                    //Curso = estudante.Curso,
+                    //Semestre = estudante.Semestre,
+                    ID_ESTUDANTE = estudante.Id
                 },
                 Estudante = estudante,
                 Arquivos = _context.Arquivos.ToList()
@@ -174,7 +174,7 @@ namespace SistemaRedeWork.Controllers {
                 return View("Curriculo", viewModel);
             }
 
-            var estudante = await _context.Estudantes.FindAsync(viewModel.Curriculo.EstudanteId);
+            var estudante = await _context.Estudantes.FindAsync(viewModel.Curriculo.ID_ESTUDANTE);
             if (estudante == null) {
                 TempData["MensagemErro"] = "Estudante não encontrado!";
                 return RedirectToAction("Curriculo");
@@ -182,9 +182,17 @@ namespace SistemaRedeWork.Controllers {
 
             CurriculoModel curriculo;
             if (id == 0 || viewModel.Curriculo.Id == 0) {
-                curriculo = new CurriculoModel { EstudanteId = viewModel.Curriculo.EstudanteId };
-                _context.Curriculo.Add(curriculo);
+                // Verificar se já existe um currículo para este estudante
+                curriculo = await _context.Curriculo
+                    .FirstOrDefaultAsync(c => c.ID_ESTUDANTE == viewModel.Curriculo.ID_ESTUDANTE);
+
+                if (curriculo == null) {
+                    // Se não existe, cria um novo
+                    curriculo = new CurriculoModel { ID_ESTUDANTE = viewModel.Curriculo.ID_ESTUDANTE };
+                    _context.Curriculo.Add(curriculo);
+                }
             } else {
+                // Caso contrário, encontra o currículo existente
                 curriculo = await _context.Curriculo.FindAsync(viewModel.Curriculo.Id);
                 if (curriculo == null) {
                     TempData["MensagemErro"] = "Currículo não encontrado!";
@@ -192,6 +200,7 @@ namespace SistemaRedeWork.Controllers {
                 }
             }
 
+            // Atualiza os campos do currículo
             curriculo.NomeCompleto = viewModel.Curriculo.NomeCompleto;
             curriculo.Email = viewModel.Curriculo.Email;
             curriculo.DataNascimento = viewModel.Curriculo.DataNascimento;
@@ -203,7 +212,11 @@ namespace SistemaRedeWork.Controllers {
             curriculo.Educacao = viewModel.Curriculo.Educacao;
             curriculo.Experiencia = viewModel.Curriculo.Experiencia;
             curriculo.Habilidade = viewModel.Curriculo.Habilidade;
-            curriculo.Certificado = viewModel.Curriculo.Certificado;
+
+            // Garantir que o Periodo não seja nulo
+            curriculo.Periodo = viewModel.Curriculo.Periodo ?? "Período não informado"; // Use um valor padrão se estiver nulo
+
+            // Atualiza outros campos conforme necessário
             curriculo.Idioma = viewModel.Curriculo.Idioma;
 
             try {
@@ -220,6 +233,7 @@ namespace SistemaRedeWork.Controllers {
 
 
 
+
         [Authorize]
         [HttpPost]
         public IActionResult UploadImagem(IList<IFormFile> arquivos) {
@@ -229,7 +243,7 @@ namespace SistemaRedeWork.Controllers {
                 MemoryStream ms = new MemoryStream();
                 imagemCarregada.OpenReadStream().CopyTo(ms);
 
-                Arquivos arqui = new Arquivos() {
+                ArquivoModel arqui = new ArquivoModel() {
                     Descricao = imagemCarregada.FileName,
                     Dados = ms.ToArray(),
                     ContentType = imagemCarregada.ContentType

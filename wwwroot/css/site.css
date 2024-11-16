@@ -60,3 +60,9 @@ footer {
     text-align: center; /* Centraliza o texto no rodapé */
     font-size: 14px; /* Reduz o tamanho da fonte */
 }
+/* Centralizar o menu na versão desktop */
+/*@media (min-width: 768px) {
+    .navbar-Nav {
+        justify-content: center;
+    }
+}*/
