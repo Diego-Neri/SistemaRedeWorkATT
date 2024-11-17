@@ -33,10 +33,18 @@ public class CadastroController : Controller {
 
             // Verifica se o email já está cadastrado
             var emailExistente = _context.LoginEmpresas.Any(le => le.Email == empresa.Email);
+            var cnpjExistente = _context.LoginEmpresas.Any(le => le.CNPJ == empresa.CNPJ);
+
             if (emailExistente) {
-                TempData["MensagemErro"] = $"O e-mail já está em uso. Por favor, use outro e-mail.";
+                TempData["MensagemErro"] = $"O e-mail já existe. Por favor, use outro e-mail.";
                 return View(empresa);
             }
+
+            if (cnpjExistente) {
+                TempData["MensagemErro"] = $"O CNPJ já existe. Por favor, use outro e-mail.";
+                return View(empresa);
+            }
+
 
             try {
 
@@ -119,12 +127,12 @@ public class CadastroController : Controller {
             var cpfExistente = _context.Estudantes.Any(e => e.CPF == estudante.CPF);
 
             if (emailExistente) {
-                TempData["MensagemErro"] = $"Email: O e-mail '{estudante.Email}' já está em uso. Por favor, use outro e-mail.";
+                TempData["MensagemErro"] = $"Email: O e-mail já existe em uso. Por favor, use outro e-mail.";
                 return View(estudante);
             }
 
             if (cpfExistente) {
-                TempData["MensagemErro"] = $"CPF: O CPF '{estudante.CPF}' já está em uso. Por favor, use outro CPF.";
+                TempData["MensagemErro"] = $"CPF: O CPF já existe. Por favor, use outro CPF.";
                 return View(estudante);
             }
 
