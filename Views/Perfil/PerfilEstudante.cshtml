@@ -3,188 +3,59 @@
 @{
     ViewData["HideFooter"] = true;
     ViewData["HideNavBar"] = true;
-            // ViewBag.Title = "Editar Perfil";
 }
 
-@if (Model != null) {
+@if (Model != null)
+{
     <div class="container mt-5">
 
-        @if (TempData["MensagemErro"] != null) {
+        @if (TempData["MensagemErro"] != null)
+        {
             <div class="alert alert-danger" role="alert">
                 <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close" data-dismiss="alert">X</button>
                 @TempData["MensagemErro"]
             </div>
         }
 
-        @if (TempData["MensagemSucesso"] != null) {
+        @if (TempData["MensagemSucesso"] != null)
+        {
             <div class="alert alert-success" role="alert">
                 <button type="button" class="btn btn-success btn-sm close-alert" aria-label="Close" data-dismiss="alert">X</button>
                 @TempData["MensagemSucesso"]
             </div>
         }
 
-        @using (Html.BeginForm("AtualizarPerfil", "PerfilController", FormMethod.Post)) {
-            @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <a href="@Url.Action("EstudanteLogado", "Login", new { id = Model.Id })" class="btn btn-primary">
+                Voltar
+            </a>
+        </div>
 
+        @using (Html.BeginForm("AtualizarPerfil", "Perfil", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
             <input type="hidden" asp-for="Id" />
             <h3 style="color: indigo">Atualizar Informações</h3>
 
-            <div class="mb-3">
-                <a href="@Url.Action("EstudanteLogado", "Login", new { id = Model.Id })" class="btn btn-primary">
-                    Voltar
-                </a>
-            </div>
-
-            <!-- Nome -->
-            <div class="form-group">
-                <label>Nome:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.Nome" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('nome')">Alterar</button>
+            @foreach (var campo in new[] { "Nome", "Email", "Telefone", "CEP", "Rua", "Numero", "Sexo", "Estado" })
+            {
+                <div class="form-group">
+                    <label>@campo:</label>
+                    <div class="input-group">
+                        <input class="form-control" type="text" value="@Model.GetType().GetProperty(campo).GetValue(Model)" disabled readonly />
+                        <button type="button" class="btn btn-outline-secondary" onclick="showInput('@campo')">Alterar</button>
+                    </div>
+                    <input type="text" class="form-control d-none mt-2" id="@campo.ToLower()-input" name="@campo" value="@Model.GetType().GetProperty(campo).GetValue(Model)" />
+                    <button type="submit" id="@campo.ToLower()-save" class="btn btn-primary d-none mt-2">Salvar</button>
+                    <button type="button" id="@campo.ToLower()-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('@campo')">Cancelar</button>
                 </div>
-
-                <input type="text" class="form-control d-none mt-2" id="nome-input" name="Nome" value="@Model.Nome" />
-                <button type="submit" id="nome-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="nome-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('nome')">Cancelar</button>
-            </div>
-
-            <!-- CPF -->
-            <div class="form-group">
-                <label>CPF:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.CPF" disabled readonly />
-                </div>
-            </div>
-
-            <!-- Email -->
-            <div class="form-group">
-                <label>Email:</label>
-                <div class="input-group">
-                    <input class="form-control" type="email" value="@Model.Email" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('email')">Alterar</button>
-                </div>
-                <input type="email" class="form-control d-none mt-2" id="email-input" name="Email" value="@Model.Email" />
-                <button type="submit" id="email-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="email-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('email')">Cancelar</button>
-            </div>
-
-            <!-- Telefone -->
-            <div class="form-group">
-                <label>Telefone:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.Telefone" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('telefone')">Alterar</button>
-                </div>
-                <input type="text" class="form-control d-none mt-2" id="telefone-input" name="Telefone" value="@Model.Telefone" />
-                <button type="submit" id="telefone-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="telefone-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('telefone')">Cancelar</button>
-            </div>
-
-            <!-- Endereço -->
-            <div class="form-group">
-                <label>CEP:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.CEP" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('cep')">Alterar</button>
-                </div>
-                <input type="text" class="form-control d-none mt-2" id="cep-input" name="CEP" value="@Model.CEP" />
-                <button type="submit" id="cep-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="cep-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('cep')">Cancelar</button>
-            </div>
-
-            <!-- Rua -->
-            <div class="form-group">
-                <label>Rua:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.Rua" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('rua')">Alterar</button>
-                </div>
-                <input type="text" class="form-control d-none mt-2" id="rua-input" name="Rua" value="@Model.Rua" />
-                <button type="submit" id="rua-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="rua-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('rua')">Cancelar</button>
-            </div>
-
-            <!-- Número -->
-            <div class="form-group">
-                <label>Número:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.Numero" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('numero')">Alterar</button>
-                </div>
-                <input type="text" class="form-control d-none mt-2" id="numero-input" name="Numero" value="@Model.Numero" />
-                <button type="submit" id="numero-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="numero-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('numero')">Cancelar</button>
-            </div>
-
-            <!-- Sexo -->
-            <div class="form-group">
-                <label>Sexo:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.Sexo" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('sexo')">Alterar</button>
-                </div>
-                @Html.DropDownListFor(m => m.Sexo, new SelectList(new[] {
-        new { Value = "", Text = "Selecione" },
-        new { Value = "M", Text = "Masculino" },
-        new { Value = "F", Text = "Feminino" },
-        new { Value = "?", Text = "Prefiro não informar" }
-        }, "Value", "Text", Model.Sexo), new { @class = "form-control d-none mt-2", id = "sexo-input", required = "required" })
-                @Html.ValidationMessageFor(m => m.Sexo, "", new { @class = "text-danger" })
-                <button type="submit" id="sexo-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="sexo-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('sexo')">Cancelar</button>
-            </div>
-
-            <!-- Estado -->
-            <div class="form-group">
-                <label>Estado:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" value="@Model.Estado" disabled readonly />
-                    <button type="button" class="btn btn-outline-secondary" onclick="showInput('estado')">Alterar</button>
-                </div>
-                @Html.DropDownListFor(m => m.Estado, new SelectList(new[] {
-        new { Value = "", Text = "Selecione" },
-        new { Value = "AC", Text = "Acre" },
-        new { Value = "AL", Text = "Alagoas" },
-        new { Value = "AP", Text = "Amapá" },
-        new { Value = "AM", Text = "Amazonas" },
-        new { Value = "BA", Text = "Bahia" },
-        new { Value = "CE", Text = "Ceará" },
-        new { Value = "DF", Text = "Distrito Federal" },
-        new { Value = "ES", Text = "Espírito Santo" },
-        new { Value = "GO", Text = "Goiás" },
-        new { Value = "MA", Text = "Maranhão" },
-        new { Value = "MT", Text = "Mato Grosso" },
-        new { Value = "MS", Text = "Mato Grosso do Sul" },
-        new { Value = "MG", Text = "Minas Gerais" },
-        new { Value = "PA", Text = "Pará" },
-        new { Value = "PB", Text = "Paraíba" },
-        new { Value = "PR", Text = "Paraná" },
-        new { Value = "PE", Text = "Pernambuco" },
-        new { Value = "PI", Text = "Piauí" },
-        new { Value = "RJ", Text = "Rio de Janeiro" },
-        new { Value = "RN", Text = "Rio Grande do Norte" },
-        new { Value = "RS", Text = "Rio Grande do Sul" },
-        new { Value = "RO", Text = "Rondônia" },
-        new { Value = "RR", Text = "Roraima" },
-        new { Value = "SC", Text = "Santa Catarina" },
-        new { Value = "SP", Text = "São Paulo" },
-        new { Value = "SE", Text = "Sergipe" },
-        new { Value = "TO", Text = "Tocantins" }
-        }, "Value", "Text", Model.Estado), new { @class = "form-control d-none mt-2", id = "estado-input", required = "required" })
-                @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
-                <button type="submit" id="estado-save" class="btn btn-primary d-none mt-2">Salvar</button>
-                <button type="button" id="estado-cancel" class="btn btn-secondary d-none mt-2" onclick="cancelEdit('estado')">Cancelar</button>
-            </div>
+            }
 
             <!-- Botão Atualizar -->
-           
-                <button type="submit" class="btn btn-success">Atualizar Perfil</button>
-            
+            <button type="submit" class="btn btn-success">Atualizar Perfil</button>
         }
     </div>
 }
-
-
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -197,11 +68,10 @@
             });
         });
 
-
         function showInput(field) {
-            const inputField = document.getElementById(`${field}-input`);
-            const saveButton = document.getElementById(`${field}-save`);
-            const cancelButton = document.getElementById(`${field}-cancel`);
+            const inputField = document.getElementById(`${field.toLowerCase()}-input`);
+            const saveButton = document.getElementById(`${field.toLowerCase()}-save`);
+            const cancelButton = document.getElementById(`${field.toLowerCase()}-cancel`);
             const textField = inputField.previousElementSibling; // O campo anterior no DOM
 
             // Mostra o campo de entrada e o botão de salvar/cancelar
@@ -209,15 +79,14 @@
             saveButton.classList.remove('d-none');
             cancelButton.classList.remove('d-none');
             textField.classList.add('d-none');
-
-            // Atualiza o feedback
-            document.getElementById("feedback").innerText = "";
+            inputField.style.opacity = 0;
+            setTimeout(() => inputField.style.opacity = 1, 100);  // Suaviza a transição
         }
 
         function cancelEdit(field) {
-            const inputField = document.getElementById(`${field}-input`);
-            const saveButton = document.getElementById(`${field}-save`);
-            const cancelButton = document.getElementById(`${field}-cancel`);
+            const inputField = document.getElementById(`${field.toLowerCase()}-input`);
+            const saveButton = document.getElementById(`${field.toLowerCase()}-save`);
+            const cancelButton = document.getElementById(`${field.toLowerCase()}-cancel`);
             const textField = inputField.previousElementSibling; // O campo anterior no DOM
 
             // Esconde o campo de entrada e os botões de salvar/cancelar
@@ -225,16 +94,11 @@
             saveButton.classList.add('d-none');
             cancelButton.classList.add('d-none');
             textField.classList.remove('d-none');
-
-            // Limpa o feedback
-            document.getElementById("feedback").innerText = "";
         }
 
-        // Exemplo para lidar com o envio do formulário
+        // Lida com o envio do formulário
         document.querySelector('form').addEventListener('submit', function (event) {
-
-            // Aqui você pode implementar a lógica para enviar os dados via AJAX
-            // ou apenas mostrar uma mensagem de sucesso para o usuário.
+            // Mensagem de feedback
             document.getElementById("feedback").innerText = "Atualizações salvas com sucesso!";
         });
     </script>
