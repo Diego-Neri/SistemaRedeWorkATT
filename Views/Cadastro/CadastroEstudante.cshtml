@@ -20,199 +20,205 @@
 
 <body class="bg-light">
     <div class="container mt-5">
-        @if (TempData["MensagemErro"] != null) {
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
-                @TempData["MensagemErro"]
-            </div>
-        }
+        <div class="row">
 
-        @if (TempData["MensagemSucesso"] != null) {
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
-                @TempData["MensagemSucesso"]
-            </div>
-        }
-        <h2 class="text-center" style="color:#5D2CE7;">Cadastro Estudante</h2>
-        <p class="text-center">Segurança e Confidencialidade<br>A RedeWork garante a segurança e a confidencialidade de todos os dados pessoais introduzidos em meu cadastro.</p>
-
-        <main>
-            @using (Html.BeginForm("CadastroEstudante", "Cadastro", FormMethod.Post)) {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Nome)
-                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @required = "required", placeholder = "Digite o seu nome completo" })
-                    @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+            @if (TempData["MensagemErro"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
+                    @TempData["MensagemErro"]
                 </div>
+            }
 
-                @* <div class="form-group">
+            @if (TempData["MensagemSucesso"] != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label"Close">x</button>
+                    @TempData["MensagemSucesso"]
+                </div>
+            }
+            <h2 class="text-center" style="color:#5D2CE7;">Cadastro Estudante</h2>
+            <p class="text-center">Segurança e Confidencialidade<br>A RedeWork garante a segurança e a confidencialidade de todos os dados pessoais introduzidos em meu cadastro.</p>
+
+            <main>
+                @using (Html.BeginForm("CadastroEstudante", "Cadastro", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nome)
+                        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @required = "required", placeholder = "Digite o seu nome completo" })
+                        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+                    </div>
+
+                    @* <div class="form-group">
                     @Html.LabelFor(m => m.Sobrenome)
                     @Html.TextBoxFor(m => m.Sobrenome, new { @class = "form-control", @required = "required", placeholder = "Digite o seu sobrenome" })
                     @Html.ValidationMessageFor(m => m.Sobrenome, "", new { @class = "text-danger" })
                 </div> *@
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.CPF)
-                    @Html.TextBoxFor(m => m.CPF, new { @class = "form-control", @required = "required", placeholder = "Digite o seu CPF" })
-                    @Html.ValidationMessageFor(m => m.CPF, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(m => m.Sexo)
-                    @Html.DropDownListFor(m => m.Sexo, new SelectList(new[]
-                             {
-                new SelectListItem { Value = "", Text = "Selecione" },
-                new SelectListItem { Value = "Masculino", Text = "Masculino" },
-                new SelectListItem { Value = "Feminino", Text = "Feminino" },
-                new SelectListItem { Value = "Prefiro não informar", Text = "Prefiro não informar" }
-                }, "Value", "Text"), new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(m => m.Sexo, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Telefone)
-                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control", placeholder = "Digite o número do seu telefone", @required = "required" })
-                    @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Email)
-                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type = "email", placeholder = "Digite o seu e-mail", @required = "required" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CEP)
-                    @Html.TextBoxFor(model => model.CEP, new { @class = "form-control", @required = "required", placeholder = "Digite o seu CEP" })
-                    @Html.ValidationMessageFor(m => m.CEP, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Rua)
-                    @Html.TextBoxFor(model => model.Rua, new { @class = "form-control", @required = "required", placeholder = "Informe sua rua" })
-                    @Html.ValidationMessageFor(m => m.Rua, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Numero)
-                    @Html.TextBoxFor(model => model.Numero, new { @class = "form-control", @required = "required", placeholder = "Informe o número da rua" })
-                    @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        @Html.LabelFor(m => m.Estado, "Estado")
-                        @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
-                                 {
-                    new { Value = "", Text = "Selecione" },
-                    new { Value = "Acre", Text = "Acre" },
-                    new { Value = "Alagoas", Text = "Alagoas" },
-                    new { Value = "Amapá", Text = "Amapá" },
-                    new { Value = "Amazonas", Text = "Amazonas" },
-                    new { Value = "Bahia", Text = "Bahia" },
-                    new { Value = "Ceará", Text = "Ceará" },
-                    new { Value = "Distrito Federal", Text = "Distrito Federal" },
-                    new { Value = "Espírito Santo", Text = "Espírito Santo" },
-                    new { Value = "Goiás", Text = "Goiás" },
-                    new { Value = "Maranhão", Text = "Maranhão" },
-                    new { Value = "Mato Grosso", Text = "Mato Grosso" },
-                    new { Value = "Mato Grosso do Sul", Text = "Mato Grosso do Sul" },
-                    new { Value = "Minas Gerais", Text = "Minas Gerais" },
-                    new { Value = "Pará", Text = "Pará" },
-                    new { Value = "Paraíba", Text = "Paraíba" },
-                    new { Value = "Paraná", Text = "Paraná" },
-                    new { Value = "Pernambuco", Text = "Pernambuco" },
-                    new { Value = "Piauí", Text = "Piauí" },
-                    new { Value = "Rio de Janeiro", Text = "Rio de Janeiro" },
-                    new { Value = "Rio Grande do Norte", Text = "Rio Grande do Norte" },
-                    new { Value = "Rio Grande do Sul", Text = "Rio Grande do Sul" },
-                    new { Value = "Rondônia", Text = "Rondônia" },
-                    new { Value = "Roraima", Text = "Roraima" },
-                    new { Value = "Santa Catarina", Text = "Santa Catarina" },
-                    new { Value = "São Paulo", Text = "São Paulo" },
-                    new { Value = "Sergipe", Text = "Sergipe" },
-                    new { Value = "Tocantins", Text = "Tocantins" }
-
-                    }, "Value", "Text"), new { @class = "form-control", @required = "required" })
-                        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CPF)
+                        @Html.TextBoxFor(m => m.CPF, new { @class = "form-control cpf-mask", placeholder = "Digite o seu CPF" })
+                        @Html.ValidationMessageFor(m => m.CPF, "", new { @class = "text-danger" })
                     </div>
 
-                    <div class="form-group col-md-6">
-                        @Html.LabelFor(m => m.Cidade, "Cidade")
-                        @Html.DropDownListFor(m => m.Cidade, new SelectList(new[]
-                                 {
-                    new { Value = "", Text = "Selecione" },
-                    new { Value = "sao-paulo", Text = "São Paulo" },
-                    new { Value = "campinas", Text = "Campinas" },
-                    new { Value = "santos", Text = "Santos" },
-                    new { Value = "ribeirao-preto", Text = "Ribeirão Preto" },
-                    new { Value = "sao-jose-dos-campos", Text = "São José dos Campos" },
-                    new { Value = "sorocaba", Text = "Sorocaba" },
-                    new { Value = "jundiai", Text = "Jundiaí" },
-                    new { Value = "piracicaba", Text = "Piracicaba" },
-                    new { Value = "bauru", Text = "Bauru" },
-                    new { Value = "marilia", Text = "Marília" },
-                    new { Value = "sao-bernardo-do-campo", Text = "São Bernardo do Campo" },
-                    new { Value = "sao-caetano-do-sul", Text = "São Caetano do Sul" },
-                    new { Value = "osasco", Text = "Osasco" },
-                    new { Value = "diadema", Text = "Diadema" },
-                    new { Value = "taboao-da-serra", Text = "Taboão da Serra" },
-                    new { Value = "carapicuiba", Text = "Carapicuíba" },
-                    new { Value = "mauá", Text = "Mauá" },
-                    new { Value = "votuporanga", Text = "Votuporanga" },
-                    new { Value = "biritiba-mirim", Text = "Biritiba Mirim" },
-                    new { Value = "santo-andre", Text = "Santo André" },
-                    new { Value = "barretos", Text = "Barretos" },
-                    new { Value = "franca", Text = "Franca" },
-                    new { Value = "sao-vicente", Text = "São Vicente" },
-                    new { Value = "indaiatuba", Text = "Indaiatuba" },
-                    new { Value = "sao-jose-do-rio-preto", Text = "São José do Rio Preto" },
-                    new { Value = "pindamonhangaba", Text = "Pindamonhangaba" },
-                    new { Value = "taubate", Text = "Taubaté" },
-                    new { Value = "tremembé", Text = "Tremembé" },
-                    new { Value = "cubatão", Text = "Cubatão" },
-                    new { Value = "louveira", Text = "Louveira" },
-                    new { Value = "pirassununga", Text = "Pirassununga" },
-                    new { Value = "araraquara", Text = "Araraquara" },
-                    new { Value = "sorocaba", Text = "Sorocaba" },
-                    new { Value = "itaquaquecetuba", Text = "Itaquaquecetuba" },
-                    new { Value = "fernandopolis", Text = "Fernandópolis" },
-                    new { Value = "lins", Text = "Lins" },
-                    new { Value = "presidente-prudente", Text = "Presidente Prudente" },
-                    new { Value = "mogi-das-cruzes", Text = "Mogi das Cruzes" },
-                    new { Value = "jaboticabal", Text = "Jaboticabal" },
-                    new { Value = "campinas-do-sul", Text = "Campinas do Sul" },
-                    new { Value = "arujá", Text = "Arujá" },
-                    new { Value = "caçapava", Text = "Caçapava" },
-                    new { Value = "guarujá", Text = "Guarujá" },
-                    new { Value = "santa-barbara-do-oeste", Text = "Santa Bárbara do Oeste" },
-                    new { Value = "serra", Text = "Serra" },
-                    new { Value = "casa-branca", Text = "Casa Branca" },
-                    new { Value = "cajamar", Text = "Cajamar" },
-                    new { Value = "hortolandia", Text = "Hortolândia" },
-                    new { Value = "jaguariuna", Text = "Jaguariúna" },
-                    new { Value = "santa-rita-do-sapucaí", Text = "Santa Rita do Sapucaí" },
-                    new { Value = "serra-negra", Text = "Serra Negra" },
-                    new { Value = "itu", Text = "Itu" },
-                    new { Value = "itaquaquecetuba", Text = "Itaquaquecetuba" },
-                    new { Value = "mogi-mirim", Text = "Mogi Mirim" },
-                    new { Value = "pedreira", Text = "Pedreira" },
-                    new { Value = "salto", Text = "Salto" },
-                    new { Value = "santa-izabel-do-ivai", Text = "Santa Izabel do Ivaí" },
-                    new { Value = "santa-izabel-do-parana", Text = "Santa Izabel do Paraná" },
-                    new { Value = "vinhedo", Text = "Vinhedo" },
-                    new { Value = "bandeirantes", Text = "Bandeirantes" },
-                    new { Value = "jacarei", Text = "Jacareí" },
-                    new { Value = "guariba", Text = "Guariba" },
-                    new { Value = "vargem-grande-paulista", Text = "Vargem Grande Paulista" },
 
-                    }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
-                        @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.Sexo)
+                            @Html.DropDownListFor(m => m.Sexo, new SelectList(new[]
+                                     {
+                        new SelectListItem { Value = "", Text = "Selecione" },
+                        new SelectListItem { Value = "Masculino", Text = "Masculino" },
+                        new SelectListItem { Value = "Feminino", Text = "Feminino" },
+                        new SelectListItem { Value = "Prefiro não informar", Text = "Prefiro não informar" }
+                        }, "Value", "Text"), new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Sexo, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telefone)
+                        @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control telefone-mask", placeholder = "Digite o número do seu telefone", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+                    </div>
 
-                <br />
-                <br />
-                @* <h4>INFORMAÇÕES ACADÊMICAS</h4>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type = "email", placeholder = "Digite o seu e-mail", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CEP)
+                        @Html.TextBoxFor(model => model.CEP, new { @class = "form-control cep-mask", @required = "required", placeholder = "Digite o seu CEP" })
+                        @Html.ValidationMessageFor(m => m.CEP, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Rua)
+                        @Html.TextBoxFor(model => model.Rua, new { @class = "form-control", @required = "required", placeholder = "Informe sua rua" })
+                        @Html.ValidationMessageFor(m => m.Rua, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Numero, "Número")
+                        @Html.TextBoxFor(model => model.Numero, new { @class = "form-control", @required = "required", placeholder = "Informe o número da rua" })
+                        @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.Estado, "Estado")
+                            @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
+                                     {
+                        new { Value = "", Text = "Selecione" },
+                        new { Value = "Acre", Text = "Acre" },
+                        new { Value = "Alagoas", Text = "Alagoas" },
+                        new { Value = "Amapá", Text = "Amapá" },
+                        new { Value = "Amazonas", Text = "Amazonas" },
+                        new { Value = "Bahia", Text = "Bahia" },
+                        new { Value = "Ceará", Text = "Ceará" },
+                        new { Value = "Distrito Federal", Text = "Distrito Federal" },
+                        new { Value = "Espírito Santo", Text = "Espírito Santo" },
+                        new { Value = "Goiás", Text = "Goiás" },
+                        new { Value = "Maranhão", Text = "Maranhão" },
+                        new { Value = "Mato Grosso", Text = "Mato Grosso" },
+                        new { Value = "Mato Grosso do Sul", Text = "Mato Grosso do Sul" },
+                        new { Value = "Minas Gerais", Text = "Minas Gerais" },
+                        new { Value = "Pará", Text = "Pará" },
+                        new { Value = "Paraíba", Text = "Paraíba" },
+                        new { Value = "Paraná", Text = "Paraná" },
+                        new { Value = "Pernambuco", Text = "Pernambuco" },
+                        new { Value = "Piauí", Text = "Piauí" },
+                        new { Value = "Rio de Janeiro", Text = "Rio de Janeiro" },
+                        new { Value = "Rio Grande do Norte", Text = "Rio Grande do Norte" },
+                        new { Value = "Rio Grande do Sul", Text = "Rio Grande do Sul" },
+                        new { Value = "Rondônia", Text = "Rondônia" },
+                        new { Value = "Roraima", Text = "Roraima" },
+                        new { Value = "Santa Catarina", Text = "Santa Catarina" },
+                        new { Value = "São Paulo", Text = "São Paulo" },
+                        new { Value = "Sergipe", Text = "Sergipe" },
+                        new { Value = "Tocantins", Text = "Tocantins" }
+
+                        }, "Value", "Text"), new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.Cidade, "Cidade")
+                            @Html.DropDownListFor(m => m.Cidade, new SelectList(new[]
+                                     {
+                        new { Value = "", Text = "Selecione" },
+                        new { Value = "sao-paulo", Text = "São Paulo" },
+                        new { Value = "campinas", Text = "Campinas" },
+                        new { Value = "santos", Text = "Santos" },
+                        new { Value = "ribeirao-preto", Text = "Ribeirão Preto" },
+                        new { Value = "sao-jose-dos-campos", Text = "São José dos Campos" },
+                        new { Value = "sorocaba", Text = "Sorocaba" },
+                        new { Value = "jundiai", Text = "Jundiaí" },
+                        new { Value = "piracicaba", Text = "Piracicaba" },
+                        new { Value = "bauru", Text = "Bauru" },
+                        new { Value = "marilia", Text = "Marília" },
+                        new { Value = "sao-bernardo-do-campo", Text = "São Bernardo do Campo" },
+                        new { Value = "sao-caetano-do-sul", Text = "São Caetano do Sul" },
+                        new { Value = "osasco", Text = "Osasco" },
+                        new { Value = "diadema", Text = "Diadema" },
+                        new { Value = "taboao-da-serra", Text = "Taboão da Serra" },
+                        new { Value = "carapicuiba", Text = "Carapicuíba" },
+                        new { Value = "mauá", Text = "Mauá" },
+                        new { Value = "votuporanga", Text = "Votuporanga" },
+                        new { Value = "biritiba-mirim", Text = "Biritiba Mirim" },
+                        new { Value = "santo-andre", Text = "Santo André" },
+                        new { Value = "barretos", Text = "Barretos" },
+                        new { Value = "franca", Text = "Franca" },
+                        new { Value = "sao-vicente", Text = "São Vicente" },
+                        new { Value = "indaiatuba", Text = "Indaiatuba" },
+                        new { Value = "sao-jose-do-rio-preto", Text = "São José do Rio Preto" },
+                        new { Value = "pindamonhangaba", Text = "Pindamonhangaba" },
+                        new { Value = "taubate", Text = "Taubaté" },
+                        new { Value = "tremembé", Text = "Tremembé" },
+                        new { Value = "cubatão", Text = "Cubatão" },
+                        new { Value = "louveira", Text = "Louveira" },
+                        new { Value = "pirassununga", Text = "Pirassununga" },
+                        new { Value = "araraquara", Text = "Araraquara" },
+                        new { Value = "sorocaba", Text = "Sorocaba" },
+                        new { Value = "itaquaquecetuba", Text = "Itaquaquecetuba" },
+                        new { Value = "fernandopolis", Text = "Fernandópolis" },
+                        new { Value = "lins", Text = "Lins" },
+                        new { Value = "presidente-prudente", Text = "Presidente Prudente" },
+                        new { Value = "mogi-das-cruzes", Text = "Mogi das Cruzes" },
+                        new { Value = "jaboticabal", Text = "Jaboticabal" },
+                        new { Value = "campinas-do-sul", Text = "Campinas do Sul" },
+                        new { Value = "arujá", Text = "Arujá" },
+                        new { Value = "caçapava", Text = "Caçapava" },
+                        new { Value = "guarujá", Text = "Guarujá" },
+                        new { Value = "santa-barbara-do-oeste", Text = "Santa Bárbara do Oeste" },
+                        new { Value = "serra", Text = "Serra" },
+                        new { Value = "casa-branca", Text = "Casa Branca" },
+                        new { Value = "cajamar", Text = "Cajamar" },
+                        new { Value = "hortolandia", Text = "Hortolândia" },
+                        new { Value = "jaguariuna", Text = "Jaguariúna" },
+                        new { Value = "santa-rita-do-sapucaí", Text = "Santa Rita do Sapucaí" },
+                        new { Value = "serra-negra", Text = "Serra Negra" },
+                        new { Value = "itu", Text = "Itu" },
+                        new { Value = "itaquaquecetuba", Text = "Itaquaquecetuba" },
+                        new { Value = "mogi-mirim", Text = "Mogi Mirim" },
+                        new { Value = "pedreira", Text = "Pedreira" },
+                        new { Value = "salto", Text = "Salto" },
+                        new { Value = "santa-izabel-do-ivai", Text = "Santa Izabel do Ivaí" },
+                        new { Value = "santa-izabel-do-parana", Text = "Santa Izabel do Paraná" },
+                        new { Value = "vinhedo", Text = "Vinhedo" },
+                        new { Value = "bandeirantes", Text = "Bandeirantes" },
+                        new { Value = "jacarei", Text = "Jacareí" },
+                        new { Value = "guariba", Text = "Guariba" },
+                        new { Value = "vargem-grande-paulista", Text = "Vargem Grande Paulista" },
+
+                        }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    
+                    @* <h4>INFORMAÇÕES ACADÊMICAS</h4>
 
                 <div class="mb-3">
                     @Html.LabelFor(m => m.Instituicao, "Instituição")
@@ -313,45 +319,43 @@
                     @Html.ValidationMessageFor(m => m.Semestre, "", new { @class = "text-danger" })
                 </div> *@
 
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.DataNascimento, "Data de Nascimento")
-                    @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required", placeholder = "Informe a sua data de nascimento", type = "date" })
-                    @Html.ValidationMessageFor(m => m.DataNascimento, "", new { @class = "text-danger" })
-                </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.DataNascimento, "Data de Nascimento")
+                        @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required", placeholder = "Informe a sua data de nascimento", type = "date" })
+                        @Html.ValidationMessageFor(m => m.DataNascimento, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.Senha)
-                    @Html.PasswordFor(m => m.Senha, new { @class = "form-control", @required = "required", placeholder = "Informe sua senha" })
-                    @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
-                    <span id="senha-error" class="text-danger"></span>
-                </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Senha)
+                        @Html.PasswordFor(m => m.Senha, new { @class = "form-control", @required = "required", placeholder = "Informe sua senha" })
+                        @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                        <span id="senha-error" class="text-danger"></span>
+                    </div>
 
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.ConfirmarSenha, "Confirmar senha")
-                    @Html.PasswordFor(m => m.ConfirmarSenha, new { @class = "form-control", @required = "required", placeholder = "Confirme a sua senha" })
-                    @Html.ValidationMessageFor(m => m.ConfirmarSenha, "", new { @class = "text-danger" })
-                    <span id="confirmarSenha-error" class="text-danger"></span>
-                    <br />
-                    <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
-                </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.ConfirmarSenha, "Confirmar senha")
+                        @Html.PasswordFor(m => m.ConfirmarSenha, new { @class = "form-control", @required = "required", placeholder = "Confirme a sua senha" })
+                        @Html.ValidationMessageFor(m => m.ConfirmarSenha, "", new { @class = "text-danger" })
+                        <span id="confirmarSenha-error" class="text-danger"></span>
+                        <br />
+                        <small class="form-text text-muted">Sua senha deve conter pelo menos 8 caracteres, incluindo números, letras e um caractere especial.</small>
+                    </div>
 
 
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="aceito" required>
-                    <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
-                </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="aceito" required>
+                        <label class="form-check-label" for="aceito">Eu aceito as Condições Legais e a Política de Privacidade.</label>
+                    </div>
 
-                <button type="submit" class="btn btn-primary" id="submit-btn">CADASTRAR-SE</button>
-                <p class="mt-3 text-center">
-                    Você é uma empresa? <a asp-action="CadastroEmpresa" asp-controller="Cadastro">Cadastre-se aqui.</a>
-                </p>
-            }
-        </main>
-
+                    <button type="submit" class="btn btn-primary" id="submit-btn">CADASTRAR-SE</button>
+                    <p class="mt-3 text-center">
+                        Você é uma empresa? <a asp-action="CadastroEmpresa" asp-controller="Cadastro">Cadastre-se aqui.</a>
+                    </p>
+                }
+            </main>
+        </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
@@ -361,6 +365,7 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
     <script>
         $(document).ready(function () {
             // Quando o botão com a classe 'close-alert' for clicado
@@ -415,6 +420,31 @@
                 confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
             }
 
+        });
+
+           $(document).ready(function () {
+            $('.cpf-mask').inputmask({
+                mask: '999.999.999-99',
+                placeholder: '_',
+                autoUnmask: true,
+
+            });
+        });
+
+            $(document).ready(function () {
+             $('.telefone-mask').inputmask({
+                mask: '(99) 99999-9999',
+                placeholder: '_',
+
+            });
+        });
+
+        $(document).ready(function (){
+            $('.cep-mask').inputmask({
+                mask: '99999-999',
+                placeholder: '_',
+                autoUnmask: true,
+            });
         });
     </script>
 
