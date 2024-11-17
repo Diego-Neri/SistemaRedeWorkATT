@@ -101,29 +101,38 @@ namespace SistemaRedeWork.Controllers {
                 return NotFound("Estudante não encontrado.");
             }
 
-            // Atualiza apenas os campos que precisam ser modificados
-            estudante.Nome = model.Nome;
-            //estudante.Sobrenome = model.Sobrenome;
-            estudante.Email = model.Email;
-            estudante.Telefone = model.Telefone;
-            estudante.CEP = model.CEP;
-            estudante.Rua = model.Rua;
-            estudante.Numero = model.Numero;
-            estudante.Sexo = model.Sexo;
-            estudante.Estado = model.Estado;
+            // Verifica se o modelo é válido
+            
 
-            // Opcional: Atualizar a senha, somente se fornecida
-            //if (!string.IsNullOrWhiteSpace(model.Senha)) {
-            //    estudante.Senha = HashSenha(model.Senha); // Função para hashear a senha
-            //}
+            try {
+                // Atualiza apenas os campos que podem ser modificados
+                estudante.Nome = model.Nome;
+                estudante.Email = model.Email;
+                estudante.Telefone = model.Telefone;
+                estudante.CEP = model.CEP;
+                estudante.Rua = model.Rua;
+                estudante.Numero = model.Numero;
+                estudante.Sexo = model.Sexo;
+                estudante.Estado = model.Estado;
 
-            // Atualiza o banco de dados com os campos modificados
-            _context.Estudantes.Update(estudante);
-            await _context.SaveChangesAsync();
+                // Opcional: Atualizar a senha, somente se fornecida
+                //if (!string.IsNullOrWhiteSpace(model.Senha)) {
+                //    estudante.Senha = HashSenha(model.Senha); // Função para hashear a senha
+                //}
 
-            TempData["MensagemSucesso"] = $"Dados atualizados!";
-            return RedirectToAction("PerfilEstudante", new { id = estudante.Id });
+                // Atualiza o banco de dados
+                _context.Estudantes.Update(estudante);
+                await _context.SaveChangesAsync();
+
+                TempData["MensagemSucesso"] = "Dados atualizados com sucesso!";
+                return RedirectToAction("PerfilEstudante", new { id = estudante.Id });
+            } catch (Exception ex) {
+                // Registra o erro (opcional: log para rastreamento)
+                TempData["MensagemErro"] = "Ocorreu um erro ao atualizar o perfil. Tente novamente mais tarde.";
+                return RedirectToAction("PerfilEstudante", new { id });
+            }
         }
+
 
 
         public async Task<IActionResult> Curriculo(int id) {
