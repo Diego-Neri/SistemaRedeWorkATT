@@ -127,7 +127,7 @@ public class CadastroController : Controller {
             var cpfExistente = _context.Estudantes.Any(e => e.CPF == estudante.CPF);
 
             if (emailExistente) {
-                TempData["MensagemErro"] = $"Email: O e-mail já existe em uso. Por favor, use outro e-mail.";
+                TempData["MensagemErro"] = $"Email: O e-mail já existe. Por favor, use outro e-mail.";
                 return View(estudante);
             }
 
