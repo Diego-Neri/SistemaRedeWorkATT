@@ -1,4 +1,90 @@
-﻿<div class="container my-5">
+﻿<!-- Estilos customizados -->
+<style>
+    body {
+        font-family: 'IBM Plex Sans', sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    .info-section {
+        display: none; /* Esconder todas as seções por padrão */
+    }
+
+    #secaoCliente {
+        display: block; /* Mostrar a seção Cliente por padrão */
+        background-color: #f8f9fa; /* Fundo claro */
+    }
+
+    #secaoFreelancer {
+        display: none;
+        background-color: #e8f0ff; /* Fundo escuro */
+    }
+
+    h1, h2, h4 {
+        font-weight: 700;
+    }
+
+    .btn-primary,
+    .btn-success,
+    .btn-outline-primary {
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-outline-primary {
+        color: #007bff;
+        border: 1px solid #007bff;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+    .lead {
+        font-size: 1.25rem;
+    }
+
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .text-light {
+        color: #f8f9fa !important;
+    }
+
+    .text-dark {
+        color: #343a40 !important;
+    }
+</style>
+
+
+
+
+
+
+
+
+<div class="container my-5">
     <!-- Seção Principal -->
     <div class="text-center mb-5">
         <h1 class="display-4">@ViewData["Title"]</h1>
@@ -7,16 +93,16 @@
 
     <!-- Botões de escolha (Cliente/Freelancer) -->
     <div class="d-flex justify-content-center mb-4">
-        <button class="btn btn-primary mx-2">Sou Cliente</button>
-        <button class="btn btn-success mx-2">Sou Freelancer</button>
+        <button class="btn btn-primary mx-2" id="btnCliente">Sou Cliente</button>
+        <button class="btn btn-success mx-2" id="btnFreelancer">Sou Freelancer</button>
     </div>
 
-    <!-- Seção de Explicação (Como Funciona) -->
-    <section class="bg-light py-5">
+    <!-- Seções de Explicação (Como Funciona) -->
+    <section id="secaoCliente" class="bg-light py-5 info-section">
         <div class="container">
             <div class="text-center">
-                <h2 class="display-4">Veja como funciona</h2>
-                <p class="lead">Em três passos simples, você pode contratar um talento ou encontrar um projeto.</p>
+                <h2 class="display-4">Veja como funciona (Cliente)</h2>
+                <p class="lead">Em três passos simples, você pode contratar um talento.</p>
             </div>
 
             <!-- Ícones e Informações -->
@@ -24,7 +110,7 @@
                 <div class="col-md-4">
                     <img src="/content/icones/icon-arquivo.png" alt="Publique uma vaga" class="mb-3" style="width: 50px;">
                     <h4>Publique uma vaga</h4>
-                    <p>Anuncie sua vaga e conecte-se com milhares de profissionais qualificados. Em poucos minutos, você receberá propostas de freelancers talentosos prontos para colaborar com você.</p>
+                    <p>Anuncie sua vaga e conecte-se com milhares de profissionais qualificados.</p>
                 </div>
 
                 <div class="col-md-4">
@@ -42,69 +128,102 @@
         </div>
     </section>
 
-    <!-- Seção de Preço ou FAQ -->
-    <section class="py-5">
-        <div class="container text-center">
-            <h2>Quanto custa?</h2>
-            <p class="lead">Nós garantimos que o preço será justo tanto para freelancers quanto para clientes.</p>
-            <a href="#preco" class="btn btn-outline-primary">Saiba mais sobre preços</a>
+    <section id="secaoFreelancer" class=" text-black py-5 info-section" style="display:none;">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="display-4">Veja como funciona (Freelancer)</h2>
+                <p class="lead">Em três passos simples, você pode encontrar um projeto.</p>
+            </div>
+
+            <!-- Ícones e Informações -->
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <img src="/content/icones/icon-arquivo.png" alt="Encontre um projeto" class="mb-3" style="width: 50px;">
+                    <h4>Encontre um projeto</h4>
+                    <p>Busque e candidate-se a projetos que correspondam às suas habilidades.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <img src="/content/icones/icon-pessoa.png" alt="Trabalhe" class="mb-3" style="width: 50px;">
+                    <h4>Trabalhe</h4>
+                    <p>Colabore com o cliente para entregar o trabalho de alta qualidade.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <img src="/content/icones/icon-seguranca.png" alt="Receba com segurança" class="mb-3" style="width: 50px;">
+                    <h4>Receba com segurança</h4>
+                    <p>Receba o pagamento seguro da plataforma assim que o projeto estiver concluído.</p>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- Seção de FAQ -->
+    <section class="py-5">
+        <div class="container text-center">
+            <h2>Perguntas Frequentes</h2>
+            <p class="lead">Tire suas dúvidas sobre a plataforma.</p>
+        </div>
+        <div class="container">
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faqHeading1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                            O que é a plataforma RedeWork?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            RedeWork é uma plataforma que conecta empresas com talentos emergentes de TI para facilitar a contratação de freelancers para projetos específicos.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faqHeading2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                            Como funciona o pagamento?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            A RedeWork facilita a conexão entre freelancers e empresas, mas não é responsável pela execução dos pagamentos. A responsabilidade pelo pagamento é inteiramente das empresas contratantes.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faqHeading3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                            Como posso encontrar freelancers qualificados?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Você pode publicar uma vaga na nossa plataforma e revisar as propostas de freelancers qualificados. A seleção pode ser feita com base em perfis, avaliações e portfólios.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
-<!-- Estilos customizados -->
-<style>
-    body {
-        font-family: 'IBM Plex Sans', sans-serif;
-        background-color: #f5f5f5;
-    }
 
-    h1, h2, h4 {
-        font-weight: 700;
-        color: #000;
-    }
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+0U3X5QeXU6K4WTOTzXvF5R4m6ykqE8v+E1rN8P" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9f5ETp4U1bDsNf6KOMGR/sE0D0FBXM0D7Jlglv6a8egIb8yBhN5x9+" crossorigin="anonymous"></script>
 
-    .btn-primary,
-    .btn-success,
-    .btn-outline-primary {
-        background-color: #5D2CE7; /* Cor roxa padrão */
-        border: none;
-        color: #fff;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
+<script>
+    $(document).ready(function () {
+        $('#btnCliente').on('click', function () {
+            $('.info-section').hide(); 
+            $('#secaoCliente').show(); 
+        });
 
-        .btn-primary:hover,
-        .btn-success:hover,
-        .btn-outline-primary:hover {
-            background-color: #997BEA; /* Tom de roxo mais claro ao passar o mouse */
-            box-shadow: 0px 4px 12px rgba(93, 44, 231, 0.4); /* Sombra roxa suave */
-            transform: translateY(-3px); /* Efeito de elevação */
-        }
-
-    .lead {
-        color: #000;
-        font-size: 16px;
-    }
-
-    .text-primary {
-        color: #000;
-    }
-
-    .display-4 {
-        color: #000;
-        font-weight: bold;
-        font-size: 30px;
-    }
-
-    .text-muted {
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    section.bg-light {
-        background-color: #000;
-    }
-</style>
+        $('#btnFreelancer').on('click', function () {
+            $('.info-section').hide(); 
+            $('#secaoFreelancer').show(); 
+        });
+    });
+</script>

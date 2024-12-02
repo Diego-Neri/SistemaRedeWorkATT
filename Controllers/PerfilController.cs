@@ -68,7 +68,7 @@ namespace SistemaRedeWork.Controllers {
             var empresa = await _context.Empresas.FindAsync(id);
 
             if (empresa == null) {
-                return NotFound("Empresa não encotrada.");
+                return NotFound("Empresa não encotrada. Entre em contato com o administrador!");
             }
 
             empresa.Usuario = model.Usuario;
@@ -98,7 +98,7 @@ namespace SistemaRedeWork.Controllers {
 
             // Verifica se o registro existe
             if (estudante == null) {
-                return NotFound("Estudante não encontrado.");
+                return NotFound("Estudante não encontrado. Entre em contato com o administrador!");
             }
 
             // Verifica se o modelo é válido
@@ -139,7 +139,7 @@ namespace SistemaRedeWork.Controllers {
             var estudante = await _context.Estudantes.FindAsync(id);
 
             if (estudante == null) {
-                TempData["MensagemErro"] = $"Estudante não encontrado!";
+                TempData["MensagemErro"] = $"Estudante não encontrado. Entre em contato com o administrador!";
                 return RedirectToAction("EstudanteLogado", "Login");
             }
 
