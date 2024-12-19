@@ -12,73 +12,17 @@
     max-width: 100%;
 }
 
-/* Cor do link e efeito ao passar o mouse */
-/*.nav-link {
-    color: #333;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-    .nav-link:hover {
-        color: #00BFFF;*/ /* Cor azul clara ao passar o mouse */
-        /*text-decoration: underline;*/ /* Adiciona sublinhado */
-    /*}*/
-
-/* Dropdown estilo minimalista */
-/*.dropdown-menu {
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-item {
-    transition: background-color 0.2s ease;
-}
-
-    .dropdown-item:hover {
-        background-color: #f5f5f5;*/ /* Efeito de destaque ao passar o mouse */
-    /*}*/
-
-/* Estilo para o botão de menu em dispositivos menores */
-/*.navbar-toggler {
-    border: none;
-    outline: none;
-}*/
-
-/*.navbar-toggler-icon {
-    filter: brightness(0) invert(1);*/ /* Aplica uma inversão de cor para melhorar visibilidade */
-/*}*/
-
-/*footer {
-    font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #5D2CE7 !important;*/ /* Força a cor de fundo do rodapé */
-    /*color: #fff;*/ /* Cor do texto no rodapé */
-    /*width: 100%;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    padding: 10px 0;*/ /* Reduz o padding superior e inferior */
-    /*text-align: center;*/ /* Centraliza o texto no rodapé */
-    /*font-size: 14px;*/ /* Reduz o tamanho da fonte */
-/*}*/
-/* Centralizar o menu na versão desktop */
-/*@media (min-width: 768px) {
-    .navbar-Nav {
-        justify-content: center;
-    }
-}*/
 .navbar-nav.mx-auto {
     position: relative;
     left: 11%;
     transform: translateX(-50%);
 }
-
-    /* Ajuste fino da posição dos itens centrais */
+    
     .navbar-nav.mx-auto.adjusted {
-        left: calc(50% + 10px); /* Ajuste positivo move para a direita */
-        left: calc(50% - 10px); /* Ajuste negativo move para a esquerda */
+        left: calc(50% + 10px); 
+        left: calc(50% - 10px); 
     }
 
-/* Estilos específicos para dispositivos móveis */
 @media (max-width: 767px) {
     .navbar-nav.mx-auto {
         position: static;

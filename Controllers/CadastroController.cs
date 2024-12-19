@@ -67,15 +67,14 @@ public class CadastroController : Controller {
                 _context.SaveChanges();
 
                 TempData["MensagemSucesso"] = $"Cadastro criado com sucesso. Faça seu login!";
-                return RedirectToAction("LoginEmpresa", "Login");  // Redireciona para uma página de sucesso
+                return RedirectToAction("LoginEmpresa", "Login");  
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
-                // Registra o erro e exibe uma mensagem apropriada
                 TempData["MensagemErro"] = $"Ocorreu um erro, tente novamente!";
                 return View(empresa);
             }
         }
-        return View(empresa);   // Retorna a view com os dados preenchidos caso haja erro de validação
+        return View(empresa);
     }
 
 
@@ -92,20 +91,12 @@ public class CadastroController : Controller {
         return View(model);
     }
 
-
-
-
     public IActionResult ListarEstudantes() {
-        // Buscando todos os estudantes do banco de dados
         var estudantes = _context.Estudantes.ToList();
 
-        // Passando os estudantes para a View
         return View(estudantes);
     }
 
-
-
-    // Action para a página de sucesso
     public IActionResult Sucesso() {
         return View();
     }
@@ -113,6 +104,7 @@ public class CadastroController : Controller {
     public IActionResult CadastroEstudante() {
         return View();
     }
+
 
     [HttpPost]
     public IActionResult CadastroEstudante(EstudanteModel estudante) {
@@ -193,7 +185,7 @@ public class CadastroController : Controller {
         var model = new CadastrarVagasViewModel {
             CadastrarVagas = new CadastrarVagasModel { ID_EMPRESA = empresa.Id }, // Define o EmpresaId
             Empresas = _context.Empresas.ToList(), // Preencher a lista de empresas, se necessário
-            RazaoSocial = empresa.RazaoSocial // Obtém a razão social da empresa
+            RazaoSocial = empresa.RazaoSocial
 
         };
 
@@ -210,16 +202,14 @@ public class CadastroController : Controller {
     public async Task<IActionResult> CadastrarVagas(CadastrarVagasViewModel model) {
         var vaga = model.CadastrarVagas; // Acesse o modelo CadastrarVagas a partir do view model
 
-        // Verifica se a empresa existe
-        var empresaExists = await _context.Empresas.AnyAsync(e => e.Id == vaga.ID_EMPRESA);
-        if (!empresaExists) {
+        var empresaExiste = await _context.Empresas.AnyAsync(e => e.Id == vaga.ID_EMPRESA);
+        if (!empresaExiste) {
             ModelState.AddModelError("EmpresaId", "A empresa associada à vaga não existe.");
 
             // Preenche a lista de empresas novamente para mostrar na view
             model.Empresas = await _context.Empresas.ToListAsync();
-            return View(model); // Retorna o ViewModel para a view
+            return View(model); 
         }
-
         // Adiciona a nova vaga
         _context.Vagas.Add(vaga);
         await _context.SaveChangesAsync();
@@ -228,19 +218,15 @@ public class CadastroController : Controller {
     }
 
     public IActionResult MinhasVagasView() {
-        // Obtém o ID da empresa a partir das claims do usuário
         var empresaIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
-        // Verifica se a claim "EmpresaId" foi encontrada
         if (empresaIdClaim == null) {
-            // Retorna uma mensagem de erro e redireciona para a tela EmpresaLogado
             TempData["MensagemErro"] = "ID da empresa não encontrado.";
             return RedirectToAction("EmpresaLogado", "Cadastro");
         }
 
         // Tenta converter a claim para um int
         if (!int.TryParse(empresaIdClaim.Value, out int empresaId)) {
-            // Retorna uma mensagem de erro e redireciona para a tela EmpresaLogado
             TempData["MensagemErro"] = "ID da empresa inválido.";
             return RedirectToAction("EmpresaLogado", "Cadastro");
         }
@@ -253,7 +239,7 @@ public class CadastroController : Controller {
             ViewBag.Mensagem = "Você ainda não cadastrou nenhuma vaga.";
         }
 
-        return View(vagas); // Retorna a lista de vagas para a view
+        return View(vagas); 
     }
 
 
@@ -262,18 +248,15 @@ public class CadastroController : Controller {
 
     [HttpPost]
     public async Task<IActionResult> AtivarDesativar(int id) {
-        // Busca a vaga pelo ID
         var vaga = await _context.Vagas.FindAsync(id);
 
         if (vaga == null) {
             TempData["MensagemErro"] = "Vaga não encontrada.";
             return RedirectToAction("MinhasVagasView");
         }
-
         // Alterna o status da vaga
         vaga.Status = !vaga.Status;
 
-        // Atualiza a vaga no banco de dados
         _context.Vagas.Update(vaga);
         await _context.SaveChangesAsync();
 
@@ -286,13 +269,11 @@ public class CadastroController : Controller {
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Excluir(int id) {
-        // Encontra a vaga pelo ID
         var vaga = await _context.Vagas.FindAsync(id);
         if (vaga == null) {
             TempData["MensagemErro"] = "Vaga não encontrada.";
             return RedirectToAction("MinhasVagasView");
         }
-
         // Remove a vaga
         _context.Vagas.Remove(vaga);
         await _context.SaveChangesAsync();

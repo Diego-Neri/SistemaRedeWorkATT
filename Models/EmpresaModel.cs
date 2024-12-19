@@ -10,30 +10,23 @@ namespace SistemaRedeWork.Models {
         [Column("ID_EMPRESA")]
         public int Id { get; set; }
 
-        //[Required]
-        //[EmailAddress]
         [Column("EMAIL")]
         [StringLength(255)]
         public string Email { get; set; }
 
 
-        //[Required]
         [Column("USUARIO")]
         [StringLength(255)]
         public string Usuario { get; set; }
 
-        //[Required]
         [Column("RAZAO_SOCIAL")]
         [StringLength(255)]
         public string RazaoSocial { get; set; }
 
-        //[Required]
-        //[RegularExpression(@"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$", ErrorMessage = "O CNPJ deve estar no formato 00.000.000/0000-00.")]
         [Column("CNPJ")]
         [StringLength(255)]
         public string CNPJ { get; set; }
 
-        //[Phone]
         [Column("TELEFONE")]
         [StringLength(255)]
         public string Telefone { get; set; }
@@ -46,23 +39,18 @@ namespace SistemaRedeWork.Models {
         [StringLength(255)]
         public string Linkedin { get; set; }
 
-        //[Required]
         [Column("ESTADO")]
         [StringLength(255)]
         public string Estado { get; set; }
 
-        //[Required]
         [Column("CIDADE")]
         [StringLength(255)]
         public string Cidade { get; set; }
 
-        //[Required]
-        //[RegularExpression(@"\d{5}-\d{3}", ErrorMessage = "O CEP deve estar no formato 00000-000")]
         [Column("CEP")]
         [StringLength(255)]
         public string CEP { get; set; }
 
-        //[Required]
         [Column("RUA")]
         [StringLength(255)]
         public string Rua { get; set; }
@@ -70,12 +58,10 @@ namespace SistemaRedeWork.Models {
         [Column("NUMERO")]
         [StringLength(255)]
         public string Numero { get; set; }
-        //[Required]
-        //[DataType(DataType.Password)]
+
         [Column("SENHA")]
         public string Senha { get; set; }
 
-        //[Required(ErrorMessage = "A confirmação da senha é obrigatória.")]
         [Column("CONFIRMAR_SENHA")]
         public string ConfirmarSenha { get; set; }
 
@@ -103,7 +89,6 @@ namespace SistemaRedeWork.Models {
         [Column("RAZAO_SOCIAL")]
         public string? RazaoSocial { get; set; }
 
-        // Chave estrangeira para vincular com a Empresa
         [ForeignKey("Empresa")]
         public int? ID_EMPRESA { get; set; }
 
@@ -117,9 +102,9 @@ namespace SistemaRedeWork.Models {
         public DateTime? ResetCodeExpiration { get; set; }
 
         [Column("REMEMBER_ME")]
-        public bool RememberMe { get; set; } // Adiciona a propriedade RELEMBRAR O USUÁRIO
+        public bool RememberMe { get; set; }
     }
 
 
-    
+
 }

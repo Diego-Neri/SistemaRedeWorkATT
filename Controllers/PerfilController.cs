@@ -41,13 +41,12 @@ namespace SistemaRedeWork.Controllers {
         public IActionResult PerfilEstudante(int id) {
             var estudante = _context.Estudantes.FirstOrDefault(e => e.Id == id);
             if (estudante == null) {
-                return NotFound(); // Retorna 404 se o estudante não for encontrado
+                return NotFound(); 
             }
 
             var model = new EstudanteModel {
                 Id = estudante.Id,
                 Nome = estudante.Nome,
-                //Sobrenome = estudante.Sobrenome,
                 CPF = estudante.CPF,
                 Email = estudante.Email,
                 Telefone = estudante.Telefone,
@@ -56,7 +55,7 @@ namespace SistemaRedeWork.Controllers {
                 Numero = estudante.Numero,
                 Sexo = estudante.Sexo,
                 Estado = estudante.Estado,
-                // Adicione outros campos necessários
+                // adicionar outros campos se necessários
             };
 
             return View(model); // Retorne a view com o modelo preenchido
@@ -93,16 +92,13 @@ namespace SistemaRedeWork.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> AtualizarPerfil(int id, EstudanteModel model) {
-            // Busca o registro no banco de dados
+            
             var estudante = await _context.Estudantes.FindAsync(id);
 
             // Verifica se o registro existe
             if (estudante == null) {
                 return NotFound("Estudante não encontrado. Entre em contato com o administrador!");
             }
-
-            // Verifica se o modelo é válido
-            
 
             try {
                 // Atualiza apenas os campos que podem ser modificados
@@ -115,11 +111,6 @@ namespace SistemaRedeWork.Controllers {
                 estudante.Sexo = model.Sexo;
                 estudante.Estado = model.Estado;
 
-                // Opcional: Atualizar a senha, somente se fornecida
-                //if (!string.IsNullOrWhiteSpace(model.Senha)) {
-                //    estudante.Senha = HashSenha(model.Senha); // Função para hashear a senha
-                //}
-
                 // Atualiza o banco de dados
                 _context.Estudantes.Update(estudante);
                 await _context.SaveChangesAsync();
@@ -127,7 +118,7 @@ namespace SistemaRedeWork.Controllers {
                 TempData["MensagemSucesso"] = "Dados atualizados com sucesso!";
                 return RedirectToAction("PerfilEstudante", new { id = estudante.Id });
             } catch (Exception ex) {
-                // Registra o erro (opcional: log para rastreamento)
+                
                 TempData["MensagemErro"] = "Ocorreu um erro ao atualizar o perfil. Tente novamente mais tarde.";
                 return RedirectToAction("PerfilEstudante", new { id });
             }
@@ -145,7 +136,7 @@ namespace SistemaRedeWork.Controllers {
 
             var nomeCompleto = $"{estudante.Nome}";
 
-            // Busque o currículo associado ao estudante, se existir
+            // busca o currículo associado ao estudante, se existir
             var curriculo = await _context.Curriculo
                 .FirstOrDefaultAsync(c => c.ID_ESTUDANTE == id);
 
@@ -155,9 +146,6 @@ namespace SistemaRedeWork.Controllers {
                     Email = estudante.Email,
                     DataNascimento = estudante.DataNascimento,
                     Telefone = estudante.Telefone,
-                    //Universidade = estudante.Instituicao,
-                    //Curso = estudante.Curso,
-                    //Semestre = estudante.Semestre,
                     ID_ESTUDANTE = estudante.Id
                 },
                 Estudante = estudante,
@@ -238,9 +226,6 @@ namespace SistemaRedeWork.Controllers {
 
             return RedirectToAction("EstudanteLogado", "Login", new { id = estudante.Id });
         }
-
-
-
 
 
         [Authorize]

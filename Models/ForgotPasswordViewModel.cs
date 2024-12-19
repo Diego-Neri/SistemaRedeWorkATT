@@ -6,8 +6,6 @@ namespace SistemaRedeWork.Models {
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
-
     }
 
     public class ResetPasswordViewModel {

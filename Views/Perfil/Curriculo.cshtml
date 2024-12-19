@@ -4,11 +4,7 @@
 @{
     ViewData["HideFooter"] = true;
     ViewData["HideNavBar"] = true;
-    // ViewData["Title"] = "Preencha seu Currículo";
-
 }
-
-@* @await Html.PartialAsync("_NavbarEstudante", Model.Estudante) *@
 
 
 @if (Model != null) {
@@ -139,15 +135,6 @@
                 </div>
             </div>
 
-            @* <div class="row">
-                <!-- Certificados -->
-                <div class="col-md-12 mb-3">
-                    <label for="Certificado" class="form-label">Certificados</label>
-                    <textarea asp-for="Curriculo.Certificado" class="form-control" placeholder="Liste suas certificações"></textarea>
-                    <span asp-validation-for="Curriculo.Certificado" class="text-danger"></span>
-                </div>
-            </div> *@
-
             <div class="row">
                 <!-- Idiomas -->
                 <div class="col-md-12 mb-3">
@@ -161,7 +148,7 @@
         </form>
     </div>
 
-    <!-- Upload de Arquivo -->
+        <!-- Upload de Arquivo -->
     @* <div class="container mt-5">
         <h2 class="text-center mb-4">Anexe seu currículo</h2>
 
@@ -212,9 +199,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Quando o botão com a classe 'close-alert' for clicado
             $('.close-alert').click(function () {
-                // Esconde o elemento pai (a div com a mensagem)
                 $(this).closest('.alert').fadeOut();
             });
         });

@@ -13,8 +13,6 @@ using System.Text;
 
 public class LoginController : Controller {
     private readonly BancoContext _context;
-
-
     // Construtor único para injeção de dependências
     public LoginController(BancoContext context) {
         _context = context;
@@ -27,55 +25,56 @@ public class LoginController : Controller {
         return View();
     }
 
-    //[Authorize]
-    //public IActionResult EmpresaLogado() {
+    [HttpGet]
+    public IActionResult LoginEstudante() {
+        return View();
+    }
 
-    //    return View();
-    //}
+
 
     [HttpPost]
     public async Task<IActionResult> LoginEmpresa(LoginEmpresaModel loginEmpresa) {
-        // Verifica se o ModelState é inválido e exibe os erros no console
         if (!ModelState.IsValid) {
             foreach (var entry in ModelState) {
                 foreach (var error in entry.Value.Errors) {
                     Console.WriteLine($"Error in {entry.Key}: {error.ErrorMessage}");
                 }
             }
-            return View(loginEmpresa); // Retorna a view com os erros
+            return View(loginEmpresa); 
         }
         // Hash da senha de entrada
         string senhaHash = HashPassword(loginEmpresa.Password);
 
-        // DEBUG: Imprime os hashes para comparação (Remover em produção)
+        
         var hashArmazenado = await _context.LoginEstudantes
             .Where(l => l.Email == loginEmpresa.Email)
             .Select(l => l.Senha)
             .FirstOrDefaultAsync();
         Console.WriteLine($"Hash calculado: {senhaHash}");
         Console.WriteLine($"Hash armazenado: {hashArmazenado}");
+
         // Busca o usuário no banco de dados
         var login = await _context.LoginEmpresas
             .FirstOrDefaultAsync(l => l.Email == loginEmpresa.Email);
 
         if (login == null) {
             TempData["MensagemErro"] = $"E-mail ou senha inválidos! Tente novamente.";
-            return View(loginEmpresa); // Retorna a view caso o login falhe
+            return View(loginEmpresa); 
         }
 
         // Adicione o ID da empresa nas claims
         var claims = new List<Claim> {
         new Claim(ClaimTypes.Name, login.Email),
-        new Claim("FullName", login.Email), // Pode ser outro dado relevante
-        new Claim(ClaimTypes.Role, "User"),  // Definir o papel do usuário, se necessário
-        new Claim(ClaimTypes.NameIdentifier, login.Id.ToString()), // ID do usuário
-        new Claim("Empresa", login.ID_EMPRESA.ToString()) // Aqui você deve ter a propriedade EmpresaId
+        new Claim("FullName", login.Email), 
+        new Claim(ClaimTypes.Role, "User"), 
+        new Claim(ClaimTypes.NameIdentifier, login.Id.ToString()), 
+        new Claim("Empresa", login.ID_EMPRESA.ToString()) 
     };
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
         var authProperties = new AuthenticationProperties {
-            IsPersistent = loginEmpresa.RememberMe // Persistência do cookie se o usuário selecionar "lembrar-me"
+            IsPersistent = loginEmpresa.RememberMe 
         };
 
         // Configurar a autenticação do usuário
@@ -85,18 +84,15 @@ public class LoginController : Controller {
             authProperties);
 
         TempData["MensagemSucesso"] = $"Login realizado com sucesso! Bem-vindo!";
-
-        // Redireciona para a página de empresa logada após o login
+      
         return RedirectToAction("EmpresaLogado", "Cadastro");
     }
-
-
 
 
     public IActionResult EmpresaLogado(int id) {
         var empresa = _context.Empresas.FirstOrDefault(e => e.Id == id);
         if (empresa == null) {
-            return NotFound(); // Retorna 404 se o estudante não for encontrado
+            return NotFound(); 
         }
 
         // Preencher o modelo com os dados do estudante
@@ -104,20 +100,10 @@ public class LoginController : Controller {
             Id = empresa.Id,
             Usuario = empresa.Usuario
 
-            // Adicione outros campos necessários
         };
 
-        return View(model); // Certifique-se de retornar a view com o modelo preenchido
+        return View(model);
     }
-
-
-
-    [HttpGet]
-    public IActionResult LoginEstudante() {
-        return View();
-    }
-
-
 
     [HttpPost]
     public async Task<IActionResult> LoginEstudante(LoginEstudanteModel loginEstudante) {
@@ -135,7 +121,7 @@ public class LoginController : Controller {
 
         // Busca o usuário no banco de dados com a senha hashada e incluindo a propriedade `Estudante`
         var login = await _context.LoginEstudantes
-            .Include(le => le.Estudante)  // `le` representa cada `LoginEstudante`
+            .Include(le => le.Estudante)  // le representa cada `LoginEstudante`
             .FirstOrDefaultAsync(le => le.Email == loginEstudante.Email && le.Senha == senhaHash);
 
         if (login != null && login.Estudante != null) {
@@ -180,7 +166,7 @@ public class LoginController : Controller {
         var estudante = _context.Estudantes.FirstOrDefault(e => e.Id == id);
         var loginEstudantes = _context.LoginEstudantes.FirstOrDefault(e => e.ID_ESTUDANTE == id);
         if (estudante == null) {
-            return NotFound(); // Retorna 404 se o estudante não for encontrado
+            return NotFound(); 
         }
         var curriculo = _context.Curriculo.FirstOrDefault(c => c.ID_ESTUDANTE == id);
 
@@ -235,7 +221,7 @@ public class LoginController : Controller {
     public async Task<IActionResult> Logout() {
         await HttpContext.SignOutAsync(); // Faz o logout do usuário
         TempData["MensagemSucesso"] = "Você saiu com sucesso!";
-        return RedirectToAction("LoginEstudante", "Login"); // Redireciona para a página de login ou outra página desejada
+        return RedirectToAction("LoginEstudante", "Login"); 
     }
 }
 

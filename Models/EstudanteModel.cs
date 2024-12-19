@@ -13,7 +13,6 @@ namespace SistemaRedeWork.Models {
         [Column("NOME")]
         [StringLength(255)]
         public string Nome { get; set; }
-        //public string Sobrenome { get; set; }
 
         [Column("CPF")]
         [StringLength(255)]
@@ -52,14 +51,6 @@ namespace SistemaRedeWork.Models {
         [StringLength(255)]
         public string Cidade { get; set; }
 
-        //public string Instituicao { get; set; }
-
-        //public string Periodo { get; set; }
-
-        //public string Curso { get; set; }
-
-        //public string Semestre { get; set; }
-
 
         [Column("DATA_NASC")]
         public DateTime? DataNascimento { get; set; }
@@ -75,7 +66,7 @@ namespace SistemaRedeWork.Models {
             throw new NotImplementedException();
         }
 
-        // Propriedade de navegação para múltiplos arquivos
+        // Propriedade de navegação para varios arquivos 
         public ICollection<ArquivoModel>? Arquivos { get; set; }
 
         [ForeignKey("Curriculo")]
@@ -91,7 +82,6 @@ namespace SistemaRedeWork.Models {
         [Column("ID_USUARIO")]
         public int Id { get; set; }
 
-
         [Required(ErrorMessage = "Digite o login")]
         [Column("EMAIL")]
         public string Email { get; set; }
@@ -100,14 +90,11 @@ namespace SistemaRedeWork.Models {
         [Column("SENHA")]
         public string Senha { get; set; }
 
-
         public string? Nome => Estudante?.Nome;
-
 
         [ForeignKey("Estudante")]   
         public int? ID_ESTUDANTE { get; set; }
         public virtual EstudanteModel? Estudante { get; set; } // Corrigido para EstudanteModel
-
 
         [Column("RESET_CODE")]
         public string? ResetCode { get; set; }

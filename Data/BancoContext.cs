@@ -6,8 +6,6 @@ namespace SistemaRedeWork.Data {
 
         public BancoContext(DbContextOptions<BancoContext> options) : base(options) {
         }
-
-        //public DbSet<UsuarioModel> Usuarios { get; set; }
         public DbSet<EmpresaModel> Empresas { get; set; }
         public DbSet<EstudanteModel> Estudantes { get; set; }
         public DbSet<LoginEmpresaModel> LoginEmpresas { get; set; }
@@ -50,8 +48,6 @@ namespace SistemaRedeWork.Data {
                 .HasOne(a => a.Estudante)
                 .WithMany(e => e.Arquivos)
                 .HasForeignKey(a => a.ID_ESTUDANTE);
-                
-
 
             // Relacionamento um para muitos entre EmpresaModel e CadastrarVagasModel
             modelBuilder.Entity<CadastrarVagasModel>()

@@ -161,7 +161,7 @@ namespace SistemaRedeWork.Controllers {
                                               </body>
                                             </html>",
 
-                IsBodyHtml = true // Usar HTML no corpo do e-mail
+                IsBodyHtml = true // permite usar html no corpo do e-mail
             };
 
             mailMessage.To.Add(toEmail);
@@ -177,7 +177,7 @@ namespace SistemaRedeWork.Controllers {
             var user = _context.LoginEstudantes.FirstOrDefault(u => u.Email == email);
             if (user == null) {
                 TempData["MensagemErro"] = "Usuário não encontrado.";
-                return RedirectToAction("Error"); // Redirecionar para uma página de erro, se necessário
+                return RedirectToAction("Error"); 
             }
 
             var model = new ResetPasswordViewModel { Email = email };
@@ -192,7 +192,7 @@ namespace SistemaRedeWork.Controllers {
             var user = _context.LoginEmpresas.FirstOrDefault(u => u.Email == email);
             if (user == null) {
                 TempData["MensagemErro"] = "Usuário não encontrado.";
-                return RedirectToAction("Error"); // Redirecionar para uma página de erro, se necessário
+                return RedirectToAction("Error"); 
             }
 
             var model = new ResetPasswordViewModel { Email = email };
@@ -204,32 +204,30 @@ namespace SistemaRedeWork.Controllers {
         [HttpPost]
         [Route("ResetPassword")]
         public IActionResult ResetPassword(ResetPasswordViewModel model) {
-            // Certifique-se de que o email está sendo passado corretamente
+            
             var user = _context.LoginEstudantes.FirstOrDefault(u => u.Email == model.Email);
 
             if (user == null) {
                 TempData["MensagemErro"] = "Usuário não encontrado.";
-                return View(); // Certifique-se de que você está retornando a view correta
+                return View(); 
             }
 
             if (string.IsNullOrEmpty(user.ResetCode)) {
                 TempData["MensagemErro"] = "Código de redefinição não encontrado.";
-                return View(); // Retorne a view correta
+                return View(); 
             }
 
             user.Senha = HashPassword(model.NewPassword); // Hash da nova senha
-            //user.ResetCode = null; // Limpar o código após a redefinição
             user.ResetCodeExpiration = null; // Limpar a expiração do código
 
             try {
-                _context.SaveChanges(); // Tente salvar as alterações no banco de dados
+                _context.SaveChanges(); // Tenta salvar as alterações no banco de dados
             } catch (DbUpdateException ex) {
                 TempData["MensagemErro"] = "Erro ao salvar as alterações. Tente novamente.";
-                // Aqui você pode registrar o erro se precisar
-                return View("ResetPassword"); // Retorne a view correta
+                return View("ResetPassword"); 
             }
 
-            return RedirectToAction("LoginEstudante", "Login"); // Redirecionar para a página de login
+            return RedirectToAction("LoginEstudante", "Login"); 
         }
 
 
@@ -237,33 +235,31 @@ namespace SistemaRedeWork.Controllers {
         //MÉTODO EMPRESA
         [HttpPost]
         [Route("ResetPasswordEmpresa")]
-        public IActionResult ResetPasswordEmpresa(ResetPasswordViewModel model) {
-            //  ver se que o email está sendo passado corretamente
+        public IActionResult ResetPasswordEmpresa(ResetPasswordViewModel model) { 
             var user = _context.LoginEmpresas. FirstOrDefault(u => u.Email == model.Email);
 
             if (user == null) {
                 TempData["MensagemErro"] = "Usuário não encontrado.";
-                return View(); // Certifique-se de que você está retornando a view correta
+                return View(); 
             }
 
             if (string.IsNullOrEmpty(user.ResetCode)) {
                 TempData["MensagemErro"] = "Código de redefinição não encontrado.";
-                return View(); // Retorne a view correta
+                return View(); 
             }
 
             user.Password = HashPassword(model.NewPassword); // criptografa a nova senha
-            //user.ResetCode = null; // Limpar o código após a redefinição
             user.ResetCodeExpiration = null; // Limpar a expiração do código
 
             try {
                 _context.SaveChanges(); // Tente salvar as alterações no banco de dados
             } catch (DbUpdateException ex) {
                 TempData["MensagemErro"] = "Erro ao salvar as alterações. Tente novamente.";
-                // Aqui você pode registrar o erro se precisar
-                return View("ResetPasswordEmpresa"); // Retorne a view correta
+                
+                return View("ResetPasswordEmpresa");
             }
 
-            return RedirectToAction("LoginEmpresa", "Login"); // Redirecionar para a página de login
+            return RedirectToAction("LoginEmpresa", "Login"); 
         }
 
         //Método para criptografar essa bosta
@@ -274,6 +270,7 @@ namespace SistemaRedeWork.Controllers {
             }
         }
 
+        //Gera o codigo de reset com os parâmetros aleatórios
         public string GerarCodigoReset(int length = 6) {
             Random random = new Random();
             string codigo = random.Next(0, (int)Math.Pow(10, length)).ToString("D" + length);
@@ -297,7 +294,6 @@ namespace SistemaRedeWork.Controllers {
                 return View("ValidateResetCode");
             }
 
-            // Código válido, redirecionar para a página de redefinição de senha
             return RedirectToAction("ResetPassword", new { email = model.Email });
         }
 
@@ -318,7 +314,6 @@ namespace SistemaRedeWork.Controllers {
                 return View("ValidateResetCode");
             }
 
-            // Código válido, redirecionar para a página de redefinição de senha
             return RedirectToAction("ResetPasswordEmpresa", new { email = model.Email });
         }
 

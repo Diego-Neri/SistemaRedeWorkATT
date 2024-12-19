@@ -9,7 +9,7 @@
 
 <style>
     body {
-        background-color: #f1f3f5; /* Fundo geral da página */
+        background-color: #f1f3f5; 
     }
 
     .offcanvas-header {
@@ -53,27 +53,27 @@
         transition: transform 0.3s;
         margin-bottom: 20px;
         border: none;
-        border-radius: 10px; /* Bordas arredondadas nos cards */
-        overflow: hidden; /* Esconde o overflow dos cards */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave para os cards */
+        border-radius: 10px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
     }
 
         .card:hover {
-            transform: scale(1.05); /* Efeito de zoom no hover */
+            transform: scale(1.05); 
         }
 
     .card-header {
-        background-color: #6a0dad; /* Cor de fundo do cabeçalho do card */
+        background-color: #6a0dad; 
         color: white;
         font-weight: bold;
     }
 
     .modal-content {
-        border-radius: 10px; /* Bordas arredondadas no modal */
+        border-radius: 10px;
     }
 
     .modal-header {
-        border-bottom: none; /* Remove a borda inferior do cabeçalho do modal */
+        border-bottom: none; 
     }
 
     .modal-body {
@@ -257,11 +257,7 @@
                     <div class="mb-3">
                         <label for="estudanteNome" class="form-label">Nome:</label>
                         <input type="text" class="form-control" id="estudanteNome" name="estudanteNome" readonly />
-                    </div>
-                    @* <div class="mb-3">
-                        <label for="estudanteSobrenome" class="form-label">Sobrenome:</label>
-                        <input type="text" class="form-control" id="estudanteSobrenome" name="estudanteSobrenome" readonly />
-                    </div> *@
+                    </div>                 
                     <div class="mb-3">
                         <label for="estudanteCurso" class="form-label">Curso:</label>
                         <input type="text" class="form-control" id="estudanteCurso" name="estudanteCurso" readonly />
@@ -356,7 +352,6 @@
             document.getElementById("curriculoExperiencia").value = experiencia;
         }
 
-        // Para animar a mensagem de boas-vindas ao carregar a página
         window.onload = function () {
             const welcomeMessage = document.querySelector('.welcome-message');
             welcomeMessage.style.opacity = 1; // Torna a mensagem visível

@@ -49,12 +49,6 @@
                         @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
                     </div>
 
-                    @* <div class="form-group">
-                    @Html.LabelFor(m => m.Sobrenome)
-                    @Html.TextBoxFor(m => m.Sobrenome, new { @class = "form-control", @required = "required", placeholder = "Digite o seu sobrenome" })
-                    @Html.ValidationMessageFor(m => m.Sobrenome, "", new { @class = "text-danger" })
-                </div> *@
-
                     <div class="form-group">
                         @Html.LabelFor(m => m.CPF)
                         @Html.TextBoxFor(m => m.CPF, new { @class = "form-control cpf-mask", placeholder = "Digite o seu CPF" })
@@ -217,107 +211,6 @@
                         </div>
                     </div>
 
-                    
-                    @* <h4>INFORMAÇÕES ACADÊMICAS</h4>
-
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.Instituicao, "Instituição")
-                    @Html.DropDownListFor(m => m.Instituicao, new SelectList(new List<SelectListItem>
-                {
-                new SelectListItem { Value = "", Text = "Selecione" },
-                new SelectListItem { Value = "Universidade Cidade de São Paulo (UNICID)", Text = "Universidade Cidade de São Paulo (UNICID)" },
-                new SelectListItem { Value = "Universidade de São Paulo (USP)", Text = "Universidade de São Paulo (USP)" },
-                new SelectListItem { Value = "Universidade Estadual Paulista (UNESP)", Text = "Universidade Estadual Paulista (UNESP)" },
-                new SelectListItem { Value = "Universidade Federal de São Paulo (UNIFESP)", Text = "Universidade Federal de São Paulo (UNIFESP)" },
-                new SelectListItem { Value = "Universidade Presbiteriana Mackenzie", Text = "Universidade Presbiteriana Mackenzie" },
-                new SelectListItem { Value = "Universidade Nove de Julho (UNINOVE)", Text = "Universidade Nove de Julho (UNINOVE)" },
-                new SelectListItem { Value = "Universidade Anhembi Morumbi", Text = "Universidade Anhembi Morumbi" },
-                new SelectListItem { Value = "Faculdade de Ciências e Tecnologia (FCT)", Text = "Faculdade de Ciências e Tecnologia (FCT)" },
-                new SelectListItem { Value = "Faculdade Armando Alvares Penteado (FAAP)", Text = "Faculdade Armando Alvares Penteado (FAAP)" },
-                new SelectListItem { Value = "Faculdade Metropolitana Unesp", Text = "Faculdade Metropolitana Unesp" },
-                new SelectListItem { Value = "Faculdade Senac", Text = "Faculdade Senac" },
-                new SelectListItem { Value = "Centro Universitário Estácio", Text = "Centro Universitário Estácio" },
-                new SelectListItem { Value = "Centro Universitário UniItau", Text = "Centro Universitário UniItau" },
-                new SelectListItem { Value = "Faculdade Técnica", Text = "Faculdade Técnica" },
-                new SelectListItem { Value = "Instituto Tecnológico", Text = "Instituto Tecnológico" },
-                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(m => m.Instituicao, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.Periodo, "Período")
-                    @Html.DropDownListFor(m => m.Periodo, new SelectList(new List<SelectListItem>
-                {
-                new SelectListItem { Value = "", Text = "Selecione" },
-                new SelectListItem { Value = "Integral", Text = "Integral" },
-                new SelectListItem { Value = "Noturno", Text = "Noturno" },
-                new SelectListItem { Value = "Semi-Integral", Text = "Semi-Integral" },
-                new SelectListItem { Value = "A Distância", Text = "A Distância" }
-                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(m => m.Periodo, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.Curso, new { @class = "form-label", style = "color:black" })
-                    @Html.DropDownListFor(m => m.Curso, new SelectList(new List<SelectListItem>
-                {
-                new SelectListItem { Value = "", Text = "Selecione" },
-                new SelectListItem { Value = "Ciências da Computação", Text = "Ciências da Computação" },
-                new SelectListItem { Value = "Engenharia de Software", Text = "Engenharia de Software" },
-                new SelectListItem { Value = "Sistemas de Informação", Text = "Sistemas de Informação" },
-                new SelectListItem { Value = "Análise e Desenvolvimento de Sistemas", Text = "Análise e Desenvolvimento de Sistemas" },
-                new SelectListItem { Value = "Segurança da Informação", Text = "Segurança da Informação" },
-                new SelectListItem { Value = "Redes de Computadores", Text = "Redes de Computadores" },
-                new SelectListItem { Value = "Banco de Dados", Text = "Banco de Dados" },
-                new SelectListItem { Value = "Ciência de Dados", Text = "Ciência de Dados" },
-                new SelectListItem { Value = "Inteligência Artificial", Text = "Inteligência Artificial" },
-                new SelectListItem { Value = "Engenharia de Computação", Text = "Engenharia de Computação" },
-                new SelectListItem { Value = "Gestão de Tecnologia da Informação", Text = "Gestão de Tecnologia da Informação" },
-                new SelectListItem { Value = "Jogos Digitais", Text = "Jogos Digitais" },
-                new SelectListItem { Value = "Tecnologia da Informação", Text = "Tecnologia da Informação" },
-                new SelectListItem { Value = "Engenharia Eletrônica", Text = "Engenharia Eletrônica" },
-                new SelectListItem { Value = "Engenharia de Telecomunicações", Text = "Engenharia de Telecomunicações" },
-                new SelectListItem { Value = "Automação Industrial", Text = "Automação Industrial" },
-                new SelectListItem { Value = "Robótica", Text = "Robótica" },
-                new SelectListItem { Value = "Mecatrônica Industrial", Text = "Mecatrônica Industrial" },
-                new SelectListItem { Value = "Biotecnologia", Text = "Biotecnologia" },
-                new SelectListItem { Value = "Internet das Coisas (IoT)", Text = "Internet das Coisas (IoT)" },
-                new SelectListItem { Value = "Big Data", Text = "Big Data" },
-                new SelectListItem { Value = "Desenvolvimento Web", Text = "Desenvolvimento Web" },
-                new SelectListItem { Value = "Desenvolvimento Mobile", Text = "Desenvolvimento Mobile" },
-                new SelectListItem { Value = "Computação em Nuvem (Cloud Computing)", Text = "Computação em Nuvem (Cloud Computing)" },
-                new SelectListItem { Value = "Realidade Virtual e Aumentada", Text = "Realidade Virtual e Aumentada" },
-                new SelectListItem { Value = "Blockchain", Text = "Blockchain" },
-                new SelectListItem { Value = "Cibersegurança", Text = "Cibersegurança" },
-                new SelectListItem { Value = "Arquitetura de Software", Text = "Arquitetura de Software" },
-                new SelectListItem { Value = "DevOps", Text = "DevOps" },
-                new SelectListItem { Value = "Engenharia de Dados", Text = "Engenharia de Dados" },
-                new SelectListItem { Value = "Testes de Software", Text = "Testes de Software" },
-                new SelectListItem { Value = "Outras", Text = "Outras" },
-
-                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(m => m.Curso, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.Semestre, new { @class = "form-label", style = "color:black" })
-                    @Html.DropDownListFor(m => m.Semestre, new SelectList(new List<SelectListItem>
-                {
-                new SelectListItem { Value = "", Text = "Selecione" },
-                new SelectListItem { Value = "1º", Text = "1º Semestre" },
-                new SelectListItem { Value = "2º", Text = "2º Semestre" },
-                new SelectListItem { Value = "3º", Text = "3º Semestre" },
-                new SelectListItem { Value = "4º", Text = "4º Semestre" },
-                new SelectListItem { Value = "5º", Text = "5º Semestre" },
-                new SelectListItem { Value = "6º", Text = "6º Semestre" },
-                new SelectListItem { Value = "7º", Text = "7º Semestre" },
-                new SelectListItem { Value = "8º", Text = "8º Semestre" },
-                new SelectListItem { Value = "9º", Text = "9º Semestre" },
-                new SelectListItem { Value = "10º", Text = "10º Semestre" },
-                new SelectListItem { Value = "outro", Text = "Outro" }
-                }, "Value", "Text"), htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(m => m.Semestre, "", new { @class = "text-danger" })
-                </div> *@
 
                     <div class="mb-3">
                         @Html.LabelFor(m => m.DataNascimento, "Data de Nascimento")
@@ -413,10 +306,8 @@
                 e.preventDefault(); //impede o envio do formulario
                 confirmarSenhaError.textContent = "As senhas não coincidem.";
             }
-
-            //Validacao para verificar se a senha tem pelomenos 8 caracteres
             if (senha.length < 8) {
-                e.preventDefault(); // Impede o envio do form
+                e.preventDefault();
                 confirmarSenhaError.textContent = "A senha deve conter no mínimo 8 caracteres.";
             }
 

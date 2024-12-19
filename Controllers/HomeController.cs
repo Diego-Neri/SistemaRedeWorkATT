@@ -13,13 +13,6 @@ namespace SistemaRedeWork.Controllers {
         }
 
         public IActionResult Index() {
-            //var usuarios = _context.Usuarios.ToList(); // "Usuarios" � o DbSet na classe BancoContext
-
-            //if (usuarios != null) {
-            //    ViewData["Message"] = $"Conex�o bem-sucedida! N�mero de usu�rios: {usuarios.Count}";
-            //} else {
-            //    ViewData["Message"] = "Falha na conex�o com o banco de dados.";
-            //}
             return View();
         }
 

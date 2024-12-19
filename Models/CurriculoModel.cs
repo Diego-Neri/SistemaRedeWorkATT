@@ -57,14 +57,11 @@ namespace SistemaRedeWork.Models {
         [Column("HABILIDADE")]
         public string? Habilidade { get; set; }
 
-        //[Column("NOME")]
-        //public string Certificado { get; set; }
-
         [StringLength(255)]
         [Column("IDIOMA")]
         public string? Idioma { get; set; }
 
-        public int ID_ESTUDANTE { get; set; } // Chave estrangeira
+        public int ID_ESTUDANTE { get; set; } 
 
         [ForeignKey("ID_ESTUDANTE")]
         public EstudanteModel? Estudante { get; set; } // Propriedade de navegação
@@ -86,7 +83,7 @@ namespace SistemaRedeWork.Models {
         public string ContentType { get; set; }
 
         [ForeignKey("ID_ESTUDANTE")]
-        public int ID_ESTUDANTE { get; set; } // Chave estrangeira obrigatória
+        public int ID_ESTUDANTE { get; set; } // Chave estrangeira 
         public EstudanteModel Estudante { get; set; } // Propriedade de navegação
     }
 
